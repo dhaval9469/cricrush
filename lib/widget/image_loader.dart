@@ -4,8 +4,8 @@ import 'package:cricrush/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
 Widget showFlag({required BuildContext context, required String url, double borderRadius = 50, double w = 0, double h = 0}) {
-  double height = h == 0 ? context.wp(3) : context.wp(h);
-  double width = w == 0 ? context.wp(3) : context.wp(w);
+  double height = h == 0 ? context.wp(5.5) : context.wp(h);
+  double width = w == 0 ? context.wp(5.5) : context.wp(w);
   return ClipRRect(
     borderRadius: BorderRadius.circular(borderRadius),
     child: url.isEmpty

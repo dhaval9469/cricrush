@@ -6,6 +6,7 @@ import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/widget/common_widgets.dart';
 import 'package:cricrush/widget/image_loader.dart';
+import 'package:cricrush/widget/time_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +23,7 @@ class RecentMatch extends StatelessWidget {
         CarouselSlider.builder(
           itemCount: homeCtrl.recentMatches.length,
           options: CarouselOptions(
-            aspectRatio: 2.5,
+            aspectRatio: 2.7,
             viewportFraction: 0.8,
             enlargeCenterPage: true,
             enlargeStrategy: CenterPageEnlargeStrategy.scale,
@@ -49,127 +50,377 @@ class RecentMatch extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    horizontalPadding(
+                    Flexible(
+                      child: padding(
+                        horizontal: context.wp(3),
+                        context,
+                        data.type == "upcoming"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${data.matchnumber}, AT ${data.city}",
+                                    style: stBarlow(context),
+                                  ),
+                                  Text(
+                                    "${data.type}",
+                                    style: stDmSans(context, fontSize: context.sp(13)),
+                                  ),
+                                ],
+                              )
+                            : data.type == "results"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${data.matchdetail?.match?.number}, AT ${data.matchdetail?.match?.city}",
+                                    style: stDmSans(context, fontSize: context.sp(13)),
+                                  ),
+                                ],
+                              )
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${data.matchdetail?.match?.number}, AT ${data.matchdetail?.match?.city}",
+                                    style: stDmSans(context, fontSize: context.sp(13)),
+                                  ),
+                                  data.matchdetail?.status?.toLowerCase() == "play in progress"
+                                      ? liveDot(context)
+                                      : data.matchdetail?.status?.toLowerCase() ==
+                                            "match yet to begin"
+                                      ? Text(
+                                          "YET TO BEGIN",
+                                          style: stDmSans(context, fontSize: context.sp(13)),
+                                        )
+                                      : Text(
+                                          data.matchdetail?.status ?? "",
+                                          style: stDmSans(context, fontSize: context.sp(13)),
+                                        ),
+                                ],
+                              ),
+                      ),
+                    ),
+                    Divider(height: 0, color: AppColor.cDivider),
+                    padding(
+                      vertical: context.hp(1.1),
                       context,
                       data.type == "upcoming"
                           ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text("${data.matchnumber}, AT ${data.city}", style: stBarlow(context)),
-                                Text("${data.type}", style: stBarlow(context)),
+                                SizedBox(
+                                  width: context.wp(50),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Row(
+                                        children: [
+                                          showFlag(context: context, url: data.teamaImage ?? ""),
+                                          SizedBox(width: context.wp(3)),
+                                          Text(
+                                            "${data.teamaShort}",
+                                            style: tDmSans(context, fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(height: context.hp(1)),
+                                      Row(
+                                        children: [
+                                          showFlag(context: context, url: data.teambImage ?? ""),
+                                          SizedBox(width: context.wp(3)),
+                                          Text(
+                                            "${data.teambShort}",
+                                            style: tDmSans(context, fontWeight: FontWeight.w600),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                Expanded(
+                                  child: Text(
+                                    TimeManager.rmTime('${data.matchdateIst} ${data.matchtimeIst}'),
+                                    textAlign: TextAlign.center,
+                                    style: stBarlow(context),
+                                  ),
+                                ),
                               ],
                             )
                           : data.type == "results"
                           ? Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "${data.matchdetail?.match?.number}, AT ${data.matchdetail?.match?.city}",
-                                  style: stBarlow(context),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: context.wp(50),
+                                          child: Row(
+                                            children: [
+                                              showFlag(
+                                                context: context,
+                                                url: data.teamlist?[0].teamImage ?? "",
+                                              ),
+                                              SizedBox(width: context.wp(3)),
+                                              Text(
+                                                "${data.teamlist?[0].nameShort}",
+                                                style: tDmSans(
+                                                  context,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        firstInnings.isEmpty
+                                            ? Text(
+                                                "Yet to Bet",
+                                                style: stDmSans(context, fontSize: context.sp(13)),
+                                              )
+                                            : Row(
+                                                children: [
+                                                  Text(
+                                                    "${firstInnings.last.total}/${firstInnings.last.wickets}",
+                                                    style: tBarlow(
+                                                      context,
+                                                      fontSize: context.sp(15),
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                  ),
+
+                                                  Text("  (", style: stBarlow(context)),
+                                                  Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                      horizontal: context.sp(1),
+                                                    ),
+                                                    child: Text(
+                                                      "${firstInnings.last.overs}",
+                                                      style: stBarlow(
+                                                        context,
+                                                        fontSize: context.sp(13),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(")", style: stBarlow(context)),
+                                                ],
+                                              ),
+                                      ],
+                                    ),
+                                    SizedBox(height: context.hp(1)),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: context.wp(50),
+                                          child: Row(
+                                            children: [
+                                              showFlag(
+                                                context: context,
+                                                url: data.teamlist?[1].teamImage ?? "",
+                                              ),
+                                              SizedBox(width: context.wp(3)),
+                                              Text(
+                                                "${data.teamlist?[1].nameShort}",
+                                                style: tDmSans(
+                                                  context,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        secondInnings.isEmpty
+                                            ? Text(
+                                                "Yet to Bet",
+                                                style: stDmSans(context, fontSize: context.sp(13)),
+                                              )
+                                            : Row(
+                                                children: [
+                                                  Text(
+                                                    "${secondInnings.last.total}/${secondInnings.last.wickets}",
+                                                    style: tBarlow(
+                                                      context,
+                                                      fontSize: context.sp(15),
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                  ),
+
+                                                  Text("  (", style: stBarlow(context)),
+                                                  Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                      horizontal: context.sp(1),
+                                                    ),
+                                                    child: Text(
+                                                      "${secondInnings.last.overs}",
+                                                      style: stBarlow(
+                                                        context,
+                                                        fontSize: context.sp(13),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(")", style: stBarlow(context)),
+                                                ],
+                                              ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ],
                             )
                           : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "${data.matchdetail?.match?.number}, AT ${data.matchdetail?.match?.city}",
-                                  style: stBarlow(context),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: context.wp(50),
+                                          child: Row(
+                                            children: [
+                                              showFlag(
+                                                context: context,
+                                                url: data.teamlist?[0].teamImage ?? "",
+                                              ),
+                                              SizedBox(width: context.wp(3)),
+                                              Text(
+                                                "${data.teamlist?[0].nameShort}",
+                                                style: tDmSans(
+                                                  context,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        firstInnings.isEmpty
+                                            ? Text(
+                                                "Yet to Bet",
+                                                style: stDmSans(context, fontSize: context.sp(13)),
+                                              )
+                                            : Row(
+                                                children: [
+                                                  Text(
+                                                    "${firstInnings.last.total}/${firstInnings.last.wickets}",
+                                                    style: tBarlow(
+                                                      context,
+                                                      fontSize: context.sp(15),
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                  ),
+
+                                                  Text("  (", style: stBarlow(context)),
+                                                  Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                      horizontal: context.sp(1),
+                                                    ),
+                                                    child: Text(
+                                                      "${firstInnings.last.overs}",
+                                                      style: stBarlow(
+                                                        context,
+                                                        fontSize: context.sp(13),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(")", style: stBarlow(context)),
+                                                ],
+                                              ),
+                                      ],
+                                    ),
+                                    SizedBox(height: context.hp(1)),
+                                    Row(
+                                      children: [
+                                        SizedBox(
+                                          width: context.wp(50),
+                                          child: Row(
+                                            children: [
+                                              showFlag(
+                                                context: context,
+                                                url: data.teamlist?[1].teamImage ?? "",
+                                              ),
+                                              SizedBox(width: context.wp(3)),
+                                              Text(
+                                                "${data.teamlist?[1].nameShort}",
+                                                style: tDmSans(
+                                                  context,
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        secondInnings.isEmpty
+                                            ? Text(
+                                                "Yet to Bet",
+                                                style: stDmSans(context, fontSize: context.sp(13)),
+                                              )
+                                            : Row(
+                                                children: [
+                                                  Text(
+                                                    "${secondInnings.last.total}/${secondInnings.last.wickets}",
+                                                    style: tBarlow(
+                                                      context,
+                                                      fontSize: context.sp(15),
+                                                      fontWeight: FontWeight.w600,
+                                                    ),
+                                                  ),
+
+                                                  Text("  (", style: stBarlow(context)),
+                                                  Padding(
+                                                    padding: EdgeInsets.symmetric(
+                                                      horizontal: context.sp(1),
+                                                    ),
+                                                    child: Text(
+                                                      "${secondInnings.last.overs}",
+                                                      style: stBarlow(
+                                                        context,
+                                                        fontSize: context.sp(13),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Text(")", style: stBarlow(context)),
+                                                ],
+                                              ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                data.matchdetail?.status?.toLowerCase() == "play in progress"
-                                    ? liveDot(context)
-                                    : data.matchdetail?.status?.toLowerCase() == "match yet to begin"
-                                    ? Text("YET TO BEGIN", style: stBarlow(context))
-                                    : Text(data.matchdetail?.status ?? "", style: stBarlow(context, color: AppColor.finished)),
                               ],
                             ),
                     ),
-                    Divider(height: 0, color: AppColor.cDivider),
-                    horizontalPadding(
-                      context,
-                      data.type == "upcoming"
-                          ? SizedBox(
-                              height: context.hp(10),
-                              child: Row(
-                                children: [
-                                  Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                    children: [
-                                      SizedBox(
-                                        width: context.wp(55),
-                                        child: Row(
-                                          children: [
-                                            showFlag(context: context, url: data.teamaImage ?? ""),
-                                            SizedBox(width: context.sp(10)),
-                                            Text("${data.teamaShort}", style: tDmSans(context)),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(height: context.sp(7)),
-                                      SizedBox(
-                                        width: context.wp(55),
-                                        child: Row(
-                                          children: [
-                                            showFlag(context: context, url: data.teambImage ?? ""),
-                                            SizedBox(width: context.sp(10)),
-                                            Text("${data.teambShort}", style: tDmSans(context)),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // VerticalDivider(
-                                  //   endIndent: context.sp(7),
-                                  //   indent: context.sp(7),
-                                  //   color: Theme.of(context).dividerColor,
-                                  //   thickness: 1,
-                                  // ),
-                                  // Expanded(
-                                  //   child: Text(
-                                  //     TimeManager.formatMatchDateTime('${data.matchdateIst} ${data.matchtimeIst}'),
-                                  //     textAlign: TextAlign.center,
-                                  //     style: textMontserrat(
-                                  //       context,
-                                  //       fontWeight: FontWeight.w600,
-                                  //       color: Theme.of(context).colorScheme.onPrimary,
-                                  //       height: 0,
-                                  //     ),
-                                  //   ),
-                                  // ),
-                                ],
-                              ),
-                            )
-                          : SizedBox(),
-                    ),
 
                     Divider(height: 0, color: AppColor.cDivider),
-                    horizontalPadding(
-                      context,
-                      data.type == "upcoming"
-                          ? Text(
-                              data.venue ?? "",
-                              maxLines: 1,
-                              textAlign: TextAlign.start,
-                              overflow: TextOverflow.ellipsis,
-                              style: stBarlow(context, fontSize: context.sp(12)),
-                            )
-                          : data.type == "results"
-                          ? Text(
-                              data.matchdetail?.result ?? "",
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.start,
-                              style: stBarlow(context, fontSize: context.sp(12)),
-                            )
-                          : Text(
-                              (data.matchdetail?.equation != null && data.matchdetail!.equation!.isNotEmpty)
-                                  ? data.matchdetail!.equation!
-                                  : (data.matchdetail?.venue?.name ?? ""),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              textAlign: TextAlign.start,
-                              style: stBarlow(context, fontSize: context.sp(12)),
-                            ),
+                    Flexible(
+                      child: padding(
+                        context,
+                        data.type == "upcoming"
+                            ? Text(
+                                data.venue ?? "",
+                                maxLines: 1,
+                                textAlign: TextAlign.start,
+                                overflow: TextOverflow.ellipsis,
+                                style: stDmSans(context, fontSize: context.sp(12)),
+                              )
+                            : data.type == "results"
+                            ? Text(
+                                data.matchdetail?.result ?? "",
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.start,
+                                style: stDmSans(context, fontSize: context.sp(12)),
+                              )
+                            : Text(
+                                (data.matchdetail?.equation != null &&
+                                        data.matchdetail!.equation!.isNotEmpty)
+                                    ? data.matchdetail!.equation!
+                                    : (data.matchdetail?.venue?.name ?? ""),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                textAlign: TextAlign.start,
+                                style: stDmSans(context, fontSize: context.sp(12)),
+                              ),
+                      ),
                     ),
                   ],
                 ),
