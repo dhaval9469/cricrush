@@ -1,7 +1,7 @@
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
+import 'package:cricrush/module/home/widget/must_watch.dart';
 import 'package:cricrush/module/home/widget/recent_match.dart';
 import 'package:cricrush/res/app_color.dart';
-import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,11 +21,12 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: CustomAppBar(),
       backgroundColor: AppColor.background,
-      body: Column(
-        children: [
-          SizedBox(height: context.hp(1.5)),
-          RecentMatch(),
-        ],
+      body: SingleChildScrollView(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [RecentMatch(),
+
+          MustWatch(),
+
+        ]),
       ),
     );
   }
