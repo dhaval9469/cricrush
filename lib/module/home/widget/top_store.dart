@@ -22,8 +22,8 @@ class TopStore extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.only(
-                    left: context.wp(5),
-                    bottom: context.hp(1.5),
+                    left: context.wp(4),
+                    bottom: context.hp(1),
                     top: context.hp(2.5),
                   ),
                   child: Text(

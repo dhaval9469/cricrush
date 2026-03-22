@@ -25,7 +25,7 @@ class RecentMatch extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(1),top: context.hp(1.5)),
+                  padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(1), top: context.hp(1)),
                   child: Text(
                     "Matches",
                     style: stDmSans(context, color: AppColor.text, fontWeight: FontWeight.w600),
@@ -72,7 +72,12 @@ class RecentMatch extends StatelessWidget {
                                           Text("${data.matchnumber}", style: stBarlow(context)),
                                           Text(
                                             "UPCOMING",
-                                            style: stDmSans(context, fontSize: context.sp(12), color: AppColor.upcoming),
+                                            style: stDmSans(
+                                              context,
+                                              color: AppColor.upcoming,
+                                              fontSize: context.sp(13),
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ],
                                       )
@@ -86,7 +91,12 @@ class RecentMatch extends StatelessWidget {
                                           ),
                                           Text(
                                             "RESULT",
-                                            style: stDmSans(context, fontSize: context.sp(12), color: AppColor.finished),
+                                            style: stDmSans(
+                                              context,
+                                              fontSize: context.sp(13),
+                                              color: AppColor.finished,
+                                              fontWeight: FontWeight.bold,
+                                            ),
                                           ),
                                         ],
                                       )
@@ -103,7 +113,12 @@ class RecentMatch extends StatelessWidget {
                                               ? Text("YET TO BEGIN", style: stDmSans(context, fontSize: context.sp(13)))
                                               : Text(
                                                   data.matchdetail?.status ?? "",
-                                                  style: stDmSans(context, fontSize: context.sp(13)),
+                                                  style: stDmSans(
+                                                    context,
+                                                    fontSize: context.sp(13),
+                                                    color: AppColor.status,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
                                                 ),
                                         ],
                                       ),

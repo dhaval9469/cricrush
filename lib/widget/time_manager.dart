@@ -23,6 +23,28 @@ class TimeManager {
     return "$formattedDate\n$formattedTime";
   }
 
+  static String upMDT(String dateTimeStr) {
+    final inputFormat = DateFormat("dd MMM yyyy hh:mm a");
+    DateTime dateTime = inputFormat.parse(dateTimeStr).toLocal();
+
+    DateTime now = DateTime.now();
+
+    if (dateTime.isBefore(now)) {
+      return '';
+    }
+
+    Duration difference = dateTime.difference(now);
+
+    if (difference.inHours < 2) {
+      return _countdownString(difference);
+    }
+
+    String formattedDate = DateFormat("d MMM").format(dateTime); // 22 Nov
+    String formattedTime = DateFormat("h:mm a").format(dateTime); // 9:00 PM
+
+    return "$formattedDate\n$formattedTime";
+  }
+
   static String _countdownString(Duration duration) {
     int hours = duration.inHours;
     int minutes = duration.inMinutes % 60;
@@ -31,6 +53,23 @@ class TimeManager {
     String minutesPart = '${minutes.toString().padLeft(2, '0')}m';
 
     return '$hoursPart$minutesPart';
+  }
+
+  static String formatDay(String date) {
+    DateFormat inputFormat = DateFormat("dd MMM yyyy");
+    DateTime dateTime = inputFormat.parse(date);
+
+    DateTime now = DateTime.now();
+    bool isToday =
+        dateTime.year == now.year &&
+            dateTime.month == now.month &&
+            dateTime.day == now.day;
+
+    if (isToday) {
+      return "Today";
+    }
+
+    return DateFormat('d MMMM, EEEE').format(dateTime);
   }
 
   static String setSortTime(String datetime) {

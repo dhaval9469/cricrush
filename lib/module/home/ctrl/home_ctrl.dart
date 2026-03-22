@@ -9,6 +9,10 @@ class HomeCtrl extends GetxController {
 
   RxInt hmcIndex = 0.obs;
 
+  RxList<LiveSeriesData> allLSData = <LiveSeriesData>[].obs;
+  RxList<UCSeriesData> allUSData = <UCSeriesData>[].obs;
+  RxList<RSeriesData> allRSData = <RSeriesData>[].obs;
+
   RxList<LiveSeriesData> liveSeriesData = <LiveSeriesData>[].obs;
   RxList<UCSeriesData> upSeriesData = <UCSeriesData>[].obs;
   RxList<RSeriesData> rSeriesData = <RSeriesData>[].obs;
@@ -26,14 +30,22 @@ class HomeCtrl extends GetxController {
         upSeriesData.clear();
         rSeriesData.clear();
         recentMatches.clear();
+        allLSData.clear();
+        allUSData.clear();
+        allRSData.clear();
       }
       final allMatchModel = await HomeSer().allMatch();
-      liveSeriesData.assignAll(allMatchModel.mtlive!.seriesData!);
+      if (allMatchModel.mtlive?.seriesData?.isNotEmpty ?? false) {
+        liveSeriesData.assignAll(allMatchModel.mtlive!.seriesData!);
+        allLSData.assignAll(allMatchModel.mtlive!.seriesData!);
+      }
       if (allMatchModel.mtupcoming?.seriesData?.isNotEmpty ?? false) {
         upSeriesData.assignAll(allMatchModel.mtupcoming!.seriesData!);
+        allUSData.assignAll(allMatchModel.mtupcoming!.seriesData!);
       }
       if (allMatchModel.mtresult?.seriesData?.isNotEmpty ?? false) {
         rSeriesData.assignAll(allMatchModel.mtresult!.seriesData!);
+        allRSData.assignAll(allMatchModel.mtresult!.seriesData!);
       }
       if (allMatchModel.home?.matches?.isNotEmpty ?? false) {
         recentMatches.assignAll(allMatchModel.home!.matches!);
@@ -62,6 +74,20 @@ class HomeCtrl extends GetxController {
       rethrow;
     }
   }
+
+  List<String> matchTypes = [
+    'ALL',
+    'T20',
+    'T20I',
+    'ODI',
+    'TEST',
+    'LIST_A',
+    'FIRST_CLASS',
+    'WOMEN_T20',
+    'WOMEN_ODI',
+    'U19_T20',
+    'U19_ODI'
+  ];
 
   @override
   void onInit() {

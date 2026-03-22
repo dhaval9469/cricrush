@@ -2,8 +2,10 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:encrypt/encrypt.dart' as encrypt;
+import 'package:flutter/material.dart';
 
 abstract class AppConfig {
+  static ValueNotifier<int> bottomIndex = ValueNotifier<int>(0);
 
   static String wsUrl = 'ws://139.59.78.33:8001/ws/';
   static String baseUrl = 'http://139.59.78.33:8002/';
@@ -25,7 +27,6 @@ abstract class AppConfig {
   static final String pyPlayers = 'players';
   static final String pyIplSetting = 'ipl_setting';
   static final String pyAllRanking = 'all_ranking';
-
 
   static String decryptAESCryptoJS(Map body) {
     try {
