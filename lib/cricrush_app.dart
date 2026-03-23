@@ -1,4 +1,5 @@
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
+import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/utils/routing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -26,5 +27,6 @@ class AppBinding extends Bindings {
   @override
   void dependencies() {
     Get.put<HomeCtrl>(HomeCtrl());
+    Get.put<ToursCtrl>(ToursCtrl());
   }
 }

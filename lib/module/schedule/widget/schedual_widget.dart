@@ -141,7 +141,7 @@ Widget sUpComing({required BuildContext context, MTUpComingMatch? data}) {
   return Row(
     children: [
       SizedBox(
-        width: context.wp(68),
+        width: context.wp(70),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -214,7 +214,7 @@ Widget sFinish({required BuildContext context, MTResultsMatch? data}) {
       Row(
         children: [
           SizedBox(
-            width: context.wp(60),
+            width: context.wp(65),
             child: Row(
               children: [
                 showFlag(context: context, url: data?.teamlist?[0].teamImage ?? ""),
@@ -281,7 +281,7 @@ Widget sFinish({required BuildContext context, MTResultsMatch? data}) {
       Row(
         children: [
           SizedBox(
-            width: context.wp(60),
+            width: context.wp(65),
             child: Row(
               children: [
                 showFlag(context: context, url: data?.teamlist?[1].teamImage ?? ""),

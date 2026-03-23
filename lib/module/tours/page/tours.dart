@@ -1,0 +1,167 @@
+import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
+import 'package:cricrush/module/tours/page/t_keystate.dart';
+import 'package:cricrush/module/tours/page/t_matches.dart';
+import 'package:cricrush/module/tours/page/t_news.dart';
+import 'package:cricrush/module/tours/page/t_overview.dart';
+import 'package:cricrush/module/tours/page/t_point_table.dart';
+import 'package:cricrush/module/tours/page/t_squad.dart';
+import 'package:cricrush/res/app_color.dart';
+import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/responsive.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+
+class ToursPage extends StatefulWidget {
+  const ToursPage({super.key});
+
+  @override
+  State<ToursPage> createState() => _ToursPageState();
+}
+
+class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMixin {
+  final tourCtrl = Get.find<ToursCtrl>();
+
+  @override
+  void initState() {
+    tourCtrl.tabController = TabController(vsync: this, length: 6);
+    tourCtrl.tabController?.addListener(() {
+      if (!tourCtrl.tabController!.indexIsChanging) {
+        // Interstitial.showInterstitialByCount();
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: AppColor.background,
+      appBar: AppBar(
+        leadingWidth: 0,
+        titleSpacing: 0,
+        toolbarHeight: context.hp(14),
+        title: Obx(
+          () => Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: context.hp(0.7)),
+              SizedBox(
+                height: context.hp(8),
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: tourCtrl.seriesList.length,
+                  padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    final data = tourCtrl.seriesList[index];
+                    return GestureDetector(
+                      onTap: () {
+                        tourCtrl.getAllTD(tourId: data.tourId, seriesId: data.seriesId);
+                        tourCtrl.tHeader.value = data.title ?? "";
+                        tourCtrl.tDes.value = data.description ?? "";
+                        tourCtrl.tFooter.value = data.sortTitle ?? "";
+                        tourCtrl.tIndex.value = index;
+                      },
+                      child: Container(
+                        width: context.wp(20),
+                        height: context.hp(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: tourCtrl.tIndex.value == index ? AppColor.sTabColor : AppColor.cDivider,
+                            width: tourCtrl.tIndex.value == index ? 2 : 1,
+                          ),
+                          image: DecorationImage(
+                            image: NetworkImage(
+                              "https://media.crictracker.com/media/attachments/1773729386350_CT---IPL-1-(1).jpeg",
+                            ),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(width: context.wp(2));
+                  },
+                ),
+              ),
+              SizedBox(height: context.hp(1)),
+              Padding(
+                padding: EdgeInsets.only(left: context.wp(4)),
+                child: Text(tourCtrl.tHeader.value, style: tBarlow(context, fontWeight: FontWeight.w600)),
+              ),
+              SizedBox(height: context.hp(0.3)),
+              Padding(
+                padding: EdgeInsets.only(left: context.wp(4)),
+                child: Text(tourCtrl.tDes.value, style: stBarlow(context, fontSize: context.sp(12))),
+              ),
+            ],
+          ),
+        ),
+        backgroundColor: AppColor.appbarBg,
+        bottom: TabBar(
+          isScrollable: true,
+          tabAlignment: TabAlignment.start,
+          controller: tourCtrl.tabController,
+          labelStyle: tabLabelTextStyle(context),
+          unselectedLabelStyle: tabUnLabelTextStyle(context),
+          indicatorSize: TabBarIndicatorSize.label,
+          padding: EdgeInsets.zero,
+          labelPadding: EdgeInsets.symmetric(horizontal: context.wp(1)),
+          indicatorColor: AppColor.sTabColor,
+          dividerColor: AppColor.tDivider,
+          tabs: [
+            Tab(
+              height: context.hp(4),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+                child: Text("Overview"),
+              ),
+            ),
+            Tab(
+              height: context.hp(4),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+                child: Text("Matches"),
+              ),
+            ),
+            Tab(
+              height: context.hp(4),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+                child: Text("Key State"),
+              ),
+            ),
+            Tab(
+              height: context.hp(4),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+                child: Text("Squad"),
+              ),
+            ),
+            Tab(
+              height: context.hp(4),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+                child: Text("Point Table"),
+              ),
+            ),
+            Tab(
+              height: context.hp(4),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+                child: Text("News"),
+              ),
+            ),
+          ],
+        ),
+      ),
+      body: TabBarView(
+        controller: tourCtrl.tabController,
+        children: [TOverview(), TMatches(), TKeyState(), TSquad(), TPointTable(), TNews()],
+      ),
+    );
+  }
+}

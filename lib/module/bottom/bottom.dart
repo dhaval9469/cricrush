@@ -1,12 +1,14 @@
 import 'package:cricrush/module/home/page/home.dart';
 import 'package:cricrush/module/schedule/page/schedule.dart';
+import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
+import 'package:cricrush/module/tours/page/tours.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/app_config.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
-import 'package:cricrush/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class BottomPage extends StatefulWidget {
   const BottomPage({super.key});
@@ -15,7 +17,9 @@ class BottomPage extends StatefulWidget {
   State<BottomPage> createState() => _BottomPageState();
 }
 
-final pages = [HomePage(), SchedulePage(), HomePage(), HomePage(), HomePage()];
+final pages = [HomePage(), SchedulePage(), ToursPage(), HomePage(), HomePage()];
+
+final tourCtrl = Get.find<ToursCtrl>();
 
 class _BottomPageState extends State<BottomPage> {
   @override
@@ -31,29 +35,31 @@ class _BottomPageState extends State<BottomPage> {
       bottomNavigationBar: ValueListenableBuilder(
         valueListenable: AppConfig.bottomIndex,
         builder: (context, value, child) {
-          return BottomNavigationBar(
-            backgroundColor: AppColor.card,
-            type: BottomNavigationBarType.fixed,
-            selectedItemColor: AppColor.text,
-            unselectedItemColor: AppColor.subText,
-            selectedLabelStyle: tBarlow(
-              context,
-              fontWeight: FontWeight.w600,
-              fontSize: AppConfig.bottomIndex.value == 2 ? context.sp(10) : context.sp(15),
-              color: AppColor.text,
+          return Obx(
+            () => BottomNavigationBar(
+              backgroundColor: AppColor.card,
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: AppColor.text,
+              unselectedItemColor: AppColor.subText,
+              selectedLabelStyle: tBarlow(
+                context,
+                fontWeight: FontWeight.w600,
+                fontSize: AppConfig.bottomIndex.value == 2 ? context.sp(10) : context.sp(15),
+                color: AppColor.text,
+              ),
+              unselectedLabelStyle: stBarlow(context, fontSize: context.sp(13)),
+              currentIndex: value,
+              onTap: (value) async {
+                AppConfig.bottomIndex.value = value;
+              },
+              items: [
+                _navItem(AppAssets.home, AppAssets.homeS, "Home", 0),
+                _navItem(AppAssets.home, AppAssets.homeS, "Schedule", 1),
+                _navItem(AppAssets.home, AppAssets.homeS, tourCtrl.tFooter.value, 2),
+                _navItem(AppAssets.home, AppAssets.homeS, "Fixtures", 3),
+                _navItem(AppAssets.home, AppAssets.homeS, "More", 4),
+              ],
             ),
-            unselectedLabelStyle: stBarlow(context, fontSize: context.sp(13)),
-            currentIndex: value,
-            onTap: (value) async {
-              AppConfig.bottomIndex.value = value;
-            },
-            items: [
-              _navItem(AppAssets.home, AppAssets.homeS, "Home", 0),
-              _navItem(AppAssets.home, AppAssets.homeS, "Schedule", 1),
-              _navItem(AppAssets.home, AppAssets.homeS, "Series", 2),
-              _navItem(AppAssets.home, AppAssets.homeS, "Fixtures", 3),
-              _navItem(AppAssets.home, AppAssets.homeS, "More", 4),
-            ],
           );
         },
       ),

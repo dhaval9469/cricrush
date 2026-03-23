@@ -1,4 +1,4 @@
-import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
+import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
@@ -10,22 +10,18 @@ import 'package:get/get.dart';
 class TopStore extends StatelessWidget {
   TopStore({super.key});
 
-  final homeCtrl = Get.find<HomeCtrl>();
+  final tourCtrl = Get.find<ToursCtrl>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => homeCtrl.allNSSL.value
+      () => tourCtrl.allNSSL.value
           ? CircularProgressIndicator()
           : Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: context.wp(4),
-                    bottom: context.hp(1),
-                    top: context.hp(2.5),
-                  ),
+                  padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(1), top: context.hp(2.5)),
                   child: Text(
                     "Top Store",
                     style: stDmSans(context, color: AppColor.text, fontWeight: FontWeight.w600),
@@ -36,18 +32,12 @@ class TopStore extends StatelessWidget {
                   shrinkWrap: true,
                   physics: NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
-                  itemCount: homeCtrl.newsList.length,
+                  itemCount: tourCtrl.newsList.length,
                   itemBuilder: (context, index) {
-                    final data = homeCtrl.newsList[index];
+                    final data = tourCtrl.newsList[index];
                     return Row(
                       children: [
-                        showPlayer(
-                          context: context,
-                          url: data.image ?? "",
-                          h: context.wp(4),
-                          w: context.wp(6),
-                          r: 4,
-                        ),
+                        showPlayer(context: context, url: data.image ?? "", h: context.wp(4), w: context.wp(6), r: 4),
                         SizedBox(width: context.wp(4)),
                         Flexible(
                           child: Column(
@@ -72,10 +62,7 @@ class TopStore extends StatelessWidget {
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {
-                    return Divider(
-                      height: context.hp(2),
-                      color: AppColor.cDivider.withValues(alpha: 0.5),
-                    );
+                    return Divider(height: context.hp(2), color: AppColor.cDivider.withValues(alpha: 0.5));
                   },
                 ),
               ],

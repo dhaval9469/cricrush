@@ -1,13 +1,17 @@
 import 'package:cricrush/module/home/model/all_match_model.dart';
 import 'package:cricrush/module/home/model/all_nss_model.dart';
 import 'package:cricrush/module/home/service/home_ser.dart';
+import 'package:cricrush/module/schedule/model/match_type.dart';
 import 'package:get/get.dart';
 
 class HomeCtrl extends GetxController {
   RxBool allML = true.obs;
-  RxBool allNSSL = true.obs;
 
   RxInt hmcIndex = 0.obs;
+
+  RxString lsMatchTypes = "All".obs;
+  RxString usMatchTypes = "All".obs;
+  RxString rsMatchTypes = "All".obs;
 
   RxList<LiveSeriesData> allLSData = <LiveSeriesData>[].obs;
   RxList<UCSeriesData> allUSData = <UCSeriesData>[].obs;
@@ -17,10 +21,6 @@ class HomeCtrl extends GetxController {
   RxList<UCSeriesData> upSeriesData = <UCSeriesData>[].obs;
   RxList<RSeriesData> rSeriesData = <RSeriesData>[].obs;
   RxList<HAllMatches> recentMatches = <HAllMatches>[].obs;
-
-  RxList<NSSNews> newsList = <NSSNews>[].obs;
-  RxList<NSSSeries> seriesList = <NSSSeries>[].obs;
-  RxList<NSSSort> shortsList = <NSSSort>[].obs;
 
   Future<void> getAllMatch({bool silentRefresh = false}) async {
     try {
@@ -58,41 +58,16 @@ class HomeCtrl extends GetxController {
     }
   }
 
-  Future<void> getAllNSS() async {
-    try {
-      allNSSL.value = true;
-      seriesList.clear();
-      newsList.clear();
-      shortsList.clear();
-      final allNSSModel = await HomeSer().allNSS();
-      shortsList.addAll(allNSSModel.newsSortSeri?.sort ?? []);
-      newsList.addAll(allNSSModel.newsSortSeri?.news ?? []);
-      seriesList.addAll(allNSSModel.newsSortSeri?.series ?? []);
-      allNSSL.value = false;
-    } catch (e) {
-      allNSSL.value = false;
-      rethrow;
-    }
-  }
-
-  List<String> matchTypes = [
-    'ALL',
-    'T20',
-    'T20I',
-    'ODI',
-    'TEST',
-    'LIST_A',
-    'FIRST_CLASS',
-    'WOMEN_T20',
-    'WOMEN_ODI',
-    'U19_T20',
-    'U19_ODI'
+  List<MatchType> matchTypes = [
+    MatchType(mt: "All", mtList: ['all']),
+    MatchType(mt: "T20", mtList: ['t20', 't20i']),
+    MatchType(mt: "ODI", mtList: ['odi']),
+    MatchType(mt: "Test", mtList: ['test']),
   ];
 
   @override
   void onInit() {
     super.onInit();
     getAllMatch();
-    getAllNSS();
   }
 }

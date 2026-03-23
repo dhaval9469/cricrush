@@ -1,3 +1,4 @@
+import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/schedule/page/s_live.dart';
 import 'package:cricrush/module/schedule/page/s_result.dart';
 import 'package:cricrush/module/schedule/page/s_upcoming.dart';
@@ -5,6 +6,7 @@ import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SchedulePage extends StatefulWidget {
   const SchedulePage({super.key});
@@ -15,11 +17,13 @@ class SchedulePage extends StatefulWidget {
 
 class _SchedulePageState extends State<SchedulePage> with SingleTickerProviderStateMixin {
   late TabController tabController;
+  final homeCtrl = Get.find<HomeCtrl>();
 
   @override
   void initState() {
     tabController = TabController(vsync: this, length: 3);
     tabController.addListener(() {
+
       if (!tabController.indexIsChanging) {
         // Interstitial.showInterstitialByCount();
       }

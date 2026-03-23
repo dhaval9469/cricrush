@@ -1,5 +1,7 @@
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
+import 'package:cricrush/module/home/model/all_match_model.dart';
 import 'package:cricrush/module/schedule/widget/schedual_widget.dart';
+import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
@@ -16,63 +18,121 @@ class SUpcomingTab extends StatefulWidget {
 
 class _SUpcomingTabState extends State<SUpcomingTab> {
   final homeCtrl = Get.find<HomeCtrl>();
+  final tourCtrl = Get.find<ToursCtrl>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
-      body: Obx(
-        () => homeCtrl.allNSSL.value
-            ? Center(child: const DL())
-            : homeCtrl.upSeriesData.isEmpty
-            ? Center(child: ED(text: "Match Not Found"))
-            : ListView.separated(
-                shrinkWrap: true,
-                padding: EdgeInsets.symmetric(vertical: context.hp(1.5)),
-                itemCount: homeCtrl.upSeriesData.length,
-                itemBuilder: (context, seriesIndex) {
-                  final data = homeCtrl.upSeriesData[seriesIndex];
-                  return Container(
-                    decoration: BoxDecoration(color: AppColor.card),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Divider(color: AppColor.cDivider, height: 0),
-                        mcHeader(context: context, tourName: "${data.tourName?.replaceAll(",", " ")}"),
-                        ListView.separated(
-                          shrinkWrap: true,
-                          padding: EdgeInsets.symmetric(vertical: context.hp(2)),
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: (data.upcoming?.length ?? 0) > 3 ? 3 : (data.upcoming?.length ?? 0),
-                          itemBuilder: (context, index) {
-                            final matchData = data.upcoming?[index];
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1.3)),
+            child: Row(
+              children: homeCtrl.matchTypes.map((e) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: context.wp(1.5)),
+                  child: GestureDetector(
+                    onTap: () {
+                      homeCtrl.usMatchTypes.value = e.mt ?? "";
+                      homeCtrl.upSeriesData.clear();
 
-                            return padding(
-                              context,
-                              isHorizontal: true,
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [sUpComing(context: context, data: matchData)],
-                              ),
-                            );
-                          },
-                          separatorBuilder: (BuildContext context, int index) {
-                            return padding(
-                              context,
-                              isHorizontal: true,
-                              Divider(color: AppColor.cDivider, height: context.hp(2.3)),
-                            );
-                          },
+                      for (var element in homeCtrl.allUSData) {
+                        List<UCSeriesData> upcomingMatches = [];
+
+                        element.upcoming?.forEach((mEle) {
+                          final matchType = mEle.matchtype?.toLowerCase() ?? "";
+
+                          if (e.mtList!.contains('all') || e.mtList!.contains(matchType)) {
+                            upcomingMatches.add(element);
+                          }
+                        });
+
+                        if (upcomingMatches.isNotEmpty) {
+                          homeCtrl.upSeriesData.addAll(upcomingMatches);
+                        }
+                      }
+                    },
+                    child: Obx(
+                      () => Container(
+                        padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(0.6)),
+                        decoration: BoxDecoration(
+                          color: homeCtrl.usMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: homeCtrl.usMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
                         ),
-                        Divider(color: AppColor.cDivider, height: 0),
-                      ],
+                        child: Text(
+                          "${e.mt}",
+                          style: stDmSans(
+                            context,
+                            height: 0.9,
+                            color: homeCtrl.usMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
+                          ),
+                          strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
+                        ),
+                      ),
                     ),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(height: context.hp(1.2));
-                },
-              ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          Expanded(
+            child: Obx(
+              () => homeCtrl.allML.value
+                  ? Center(child: const DL())
+                  : homeCtrl.upSeriesData.isEmpty
+                  ? Center(child: ED(text: "Match Not Found"))
+                  : ListView.separated(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.only(bottom: context.hp(1.5)),
+                      itemCount: homeCtrl.upSeriesData.length,
+                      itemBuilder: (context, seriesIndex) {
+                        final data = homeCtrl.upSeriesData[seriesIndex];
+                        return Container(
+                          decoration: BoxDecoration(color: AppColor.card),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Divider(color: AppColor.cDivider, height: 0),
+                              mcHeader(context: context, tourName: "${data.tourName?.replaceAll(",", " ")}"),
+                              ListView.separated(
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(vertical: context.hp(2)),
+                                physics: NeverScrollableScrollPhysics(),
+                                itemCount: (data.upcoming?.length ?? 0) > 3 ? 3 : (data.upcoming?.length ?? 0),
+                                itemBuilder: (context, index) {
+                                  final matchData = data.upcoming?[index];
+
+                                  return padding(
+                                    context,
+                                    isHorizontal: true,
+                                    Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [sUpComing(context: context, data: matchData)],
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (BuildContext context, int index) {
+                                  return padding(
+                                    context,
+                                    isHorizontal: true,
+                                    Divider(color: AppColor.cDivider, height: context.hp(2.3)),
+                                  );
+                                },
+                              ),
+                              Divider(color: AppColor.cDivider, height: 0),
+                            ],
+                          ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(height: context.hp(1.2));
+                      },
+                    ),
+            ),
+          ),
+        ],
       ),
     );
   }

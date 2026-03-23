@@ -70,5 +70,5 @@ TextStyle tabLabelTextStyle(BuildContext context) {
 }
 
 TextStyle tabUnLabelTextStyle(BuildContext context) {
-  return stBarlow(context, fontSize: context.sp(14), fontWeight: FontWeight.w600);
+  return stBarlow(context, fontSize: context.sp(14));
 }

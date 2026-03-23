@@ -60,10 +60,7 @@ class TimeManager {
     DateTime dateTime = inputFormat.parse(date);
 
     DateTime now = DateTime.now();
-    bool isToday =
-        dateTime.year == now.year &&
-            dateTime.month == now.month &&
-            dateTime.day == now.day;
+    bool isToday = dateTime.year == now.year && dateTime.month == now.month && dateTime.day == now.day;
 
     if (isToday) {
       return "Today";
@@ -82,6 +79,37 @@ class TimeManager {
     DateTime dateTime = DateTime.parse(datetime);
     String formattedDate = DateFormat("dd MMMM yyyy").format(dateTime);
     return formattedDate;
+  }
+
+  static String newsTimeTO(String datetime) {
+    DateTime dateTime = DateTime.parse(datetime);
+    DateTime now = DateTime.now();
+
+    Duration diff = now.difference(dateTime);
+
+    if (diff.inSeconds < 60) {
+      return "Just now";
+    }
+
+    if (diff.inMinutes < 60) {
+      int m = diff.inMinutes;
+      return "$m ${m == 1 ? 'min' : 'mins'} ago";
+    }
+
+    if (diff.inHours < 12) {
+      int h = diff.inHours;
+      return "$h ${h == 1 ? 'hour' : 'hours'} ago";
+    }
+
+    if (diff.inDays == 1) {
+      return "Yesterday";
+    }
+
+    // if (diff.inDays < 7) {
+    //   return "${diff.inDays} days ago";
+    // }
+
+    return DateFormat("dd MMM yyyy").format(dateTime);
   }
 
   static String convertUtcToLocal(String inputDate) {

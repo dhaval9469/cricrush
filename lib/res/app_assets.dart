@@ -3,4 +3,5 @@ abstract class AppAssets {
 
   static final String home = '${image}home.png';
   static final String homeS = '${image}home_s.png';
+  static final String back = '${image}back.png';
 }

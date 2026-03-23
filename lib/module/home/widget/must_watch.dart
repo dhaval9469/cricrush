@@ -1,4 +1,4 @@
-import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
+import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
@@ -8,12 +8,12 @@ import 'package:get/get.dart';
 class MustWatch extends StatelessWidget {
   MustWatch({super.key});
 
-  final homeCtrl = Get.find<HomeCtrl>();
+  final tourCtrl = Get.find<ToursCtrl>();
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => homeCtrl.allNSSL.value
+          () => tourCtrl.allNSSL.value
           ? CircularProgressIndicator()
           : Column(
               mainAxisSize: MainAxisSize.min,
@@ -37,9 +37,9 @@ class MustWatch extends StatelessWidget {
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
                     padding: EdgeInsets.symmetric(horizontal: context.wp(4)),
-                    itemCount: homeCtrl.shortsList.length,
+                    itemCount: tourCtrl.shortsList.length,
                     itemBuilder: (context, index) {
-                      final data = homeCtrl.shortsList[index];
+                      final data = tourCtrl.shortsList[index];
                       return data.adsShow == 1
                           ? SizedBox.shrink()
                           : ClipRRect(

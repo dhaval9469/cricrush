@@ -1,6 +1,5 @@
 import 'package:cricrush/helper/network_helper.dart';
 import 'package:cricrush/module/home/model/all_match_model.dart';
-import 'package:cricrush/module/home/model/all_nss_model.dart';
 import 'package:cricrush/res/app_config.dart';
 
 class HomeSer {
@@ -10,15 +9,6 @@ class HomeSer {
     try {
       final response = await networkAPICall.get(AppConfig.wsAllNew);
       return AllMatchModel.fromJson(response);
-    } catch (e) {
-      rethrow;
-    }
-  }
-
-  Future<AllNSSModel> allNSS() async {
-    try {
-      final response = await networkAPICall.get(AppConfig.pyNewsSortSeri);
-      return AllNSSModel.fromJson(response);
     } catch (e) {
       rethrow;
     }

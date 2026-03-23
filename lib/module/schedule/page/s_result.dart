@@ -1,4 +1,5 @@
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
+import 'package:cricrush/module/home/model/all_match_model.dart';
 import 'package:cricrush/module/schedule/widget/schedual_widget.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -17,23 +18,73 @@ class SResultTab extends StatefulWidget {
 class _SResultTabState extends State<SResultTab> {
   final homeCtrl = Get.find<HomeCtrl>();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            padding(context, Row(children: [])),
-            Obx(
-              () => homeCtrl.allNSSL.value
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1.3)),
+            child: Row(
+              children: homeCtrl.matchTypes.map((e) {
+                return Padding(
+                  padding: EdgeInsets.symmetric(horizontal: context.wp(1.5)),
+                  child: GestureDetector(
+                    onTap: () {
+                      homeCtrl.rsMatchTypes.value = e.mt ?? "";
+                      homeCtrl.rSeriesData.clear();
+
+                      for (var element in homeCtrl.allRSData) {
+                        List<RSeriesData> upcomingMatches = [];
+
+                        element.results?.forEach((mEle) {
+                          final matchType = mEle.matchdetail?.match?.type?.toLowerCase() ?? "";
+
+                          if (e.mtList!.contains('all') || e.mtList!.contains(matchType)) {
+                            upcomingMatches.add(element);
+                          }
+                        });
+
+                        if (upcomingMatches.isNotEmpty) {
+                          homeCtrl.rSeriesData.addAll(upcomingMatches);
+                        }
+                      }
+                    },
+                    child: Obx(
+                      () => Container(
+                        padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(0.6)),
+                        decoration: BoxDecoration(
+                          color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
+                        ),
+                        child: Text(
+                          "${e.mt}",
+                          style: stDmSans(
+                            context,
+                            height: 0.9,
+                            color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
+                          ),
+                          strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+          ),
+          Expanded(
+            child: Obx(
+                  () => homeCtrl.allML.value
                   ? Center(child: const DL())
                   : homeCtrl.rSeriesData.isEmpty
                   ? Center(child: ED(text: "Match Not Found"))
                   : ListView.separated(
                       shrinkWrap: true,
-                      padding: EdgeInsets.symmetric(vertical: context.hp(1.5)),
-                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.only(bottom: context.hp(1.5)),
                       itemCount: homeCtrl.rSeriesData.length,
                       itemBuilder: (context, seriesIndex) {
                         final data = homeCtrl.rSeriesData[seriesIndex];
@@ -47,7 +98,6 @@ class _SResultTabState extends State<SResultTab> {
                               ListView.separated(
                                 shrinkWrap: true,
                                 padding: EdgeInsets.symmetric(vertical: context.hp(2)),
-                                physics: NeverScrollableScrollPhysics(),
                                 itemCount: (data.results?.length ?? 0) > 3 ? 3 : (data.results?.length ?? 0),
                                 itemBuilder: (context, index) {
                                   final matchData = data.results?[index];
@@ -79,8 +129,8 @@ class _SResultTabState extends State<SResultTab> {
                       },
                     ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
