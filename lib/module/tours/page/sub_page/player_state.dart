@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:cricrush/module/tours/model/tours_details_model.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -8,8 +11,10 @@ import 'package:cricrush/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../widget/tours_widget.dart';
+
 class PlayerState extends StatelessWidget {
-  PlayerState({super.key});
+  const PlayerState({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -33,11 +38,18 @@ class PlayerState extends StatelessWidget {
               itemBuilder: (context, index) {
                 final data = keyStats.leaderboard?[index];
                 return Container(
-                  decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(
+                    color: AppColor.card,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsetsGeometry.only(left: context.wp(1.5), right: context.wp(2), top: context.hp(0.5)),
+                        padding: EdgeInsetsGeometry.only(
+                          left: context.wp(1.5),
+                          right: context.wp(2),
+                          top: context.hp(0.5),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -52,11 +64,19 @@ class PlayerState extends StatelessWidget {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
-                                  Text("${data?.playerName}", overflow: TextOverflow.ellipsis, style: tBarlow(context)),
+                                  Text(
+                                    "${data?.playerName} - ${data?.teamShortName}",
+                                    overflow: TextOverflow.ellipsis,
+                                    style: tBarlow(context),
+                                  ),
 
                                   Text(
                                     data?.trilling ?? "",
-                                    style: tDmSans(context, fontSize: context.sp(20), fontWeight: FontWeight.bold),
+                                    style: tDmSans(
+                                      context,
+                                      fontSize: context.sp(20),
+                                      fontWeight: FontWeight.bold,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -72,17 +92,216 @@ class PlayerState extends StatelessWidget {
                           top: context.hp(0.5),
                           bottom: context.hp(0.7),
                         ),
-                        child: Row(
+                        child: keyStats.statName?.toLowerCase() == "most runs"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ksItem(
+                                    context,
+                                    header: 'HS',
+                                    text: '${data?.highestScore.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'SR',
+                                    text: '${data?.battingStrikeRate.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'MP',
+                                    text: '${data?.matchesPlayed.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'IP',
+                                    text: '${data?.inningsPlayed.orDash}',
+                                  ),
+                                  ksItem(context, header: '50s', text: '${data?.fifties.orDash}'),
+                                  ksItem(context, header: '100s', text: '${data?.hundred.orDash}'),
+                                ],
+                              )
+                            : keyStats.statName?.toLowerCase() == "most wickets"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ksItem(context, header: 'O', text: '${data?.overs.orDash}'),
+                                  ksItem(context, header: 'M', text: '${data?.mostMaidens.orDash}'),
+                                  ksItem(context, header: 'R', text: '${data?.runsGiven.orDash}'),
+                                  ksItem(context, header: 'EC', text: '${data?.economy.orDash}'),
+                                  ksItem(
+                                    context,
+                                    header: 'MP',
+                                    text: '${data?.matchesPlayed.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'IP',
+                                    text: '${data?.inningsPlayed.orDash}',
+                                  ),
+                                ],
+                              )
+                            : keyStats.statName?.toLowerCase() == "most 6s" ||
+                                  keyStats.statName?.toLowerCase() == "most 4s"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ksItem(
+                                    context,
+                                    header: 'HS',
+                                    text: '${data?.highestScore.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'SR',
+                                    text: '${data?.battingStrikeRate.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'MP',
+                                    text: '${data?.matchesPlayed.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'IP',
+                                    text: '${data?.inningsPlayed.orDash}',
+                                  ),
+                                  ksItem(context, header: '50s', text: '${data?.fifties.orDash}'),
+                                  ksItem(context, header: '100s', text: '${data?.hundred.orDash}'),
+                                ],
+                              )
+                            : keyStats.statName?.toLowerCase() == "highest score"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ksItem(
+                                    context,
+                                    header: 'SR',
+                                    text: '${data?.battingStrikeRate.orDash}',
+                                  ),
+                                  ksItem(context, header: '4s', text: '${data?.fours.orDash}'),
+                                  ksItem(context, header: '6s', text: '${data?.sixes.orDash}'),
+                                  ksItem(
+                                    context,
+                                    header: 'MP',
+                                    text: '${data?.matchesPlayed.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'IP',
+                                    text: '${data?.inningsPlayed.orDash}',
+                                  ),
+                                ],
+                              )
+                            : keyStats.statName?.toLowerCase() == "best strike rate"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ksItem(
+                                    context,
+                                    header: 'HS',
+                                    text: '${data?.highestScore.orDash}',
+                                  ),
+                                  ksItem(context, header: '4s', text: '${data?.fours.orDash}'),
+                                  ksItem(context, header: '6s', text: '${data?.sixes.orDash}'),
+                                  ksItem(context, header: '50s', text: '${data?.fifties.orDash}'),
+                                  ksItem(
+                                    context,
+                                    header: 'MP',
+                                    text: '${data?.matchesPlayed.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'IP',
+                                    text: '${data?.inningsPlayed.orDash}',
+                                  ),
+                                ],
+                              )
+                            : keyStats.statName?.toLowerCase() == "most fifties"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ksItem(
+                                    context,
+                                    header: 'HS',
+                                    text: '${data?.highestScore.orDash}',
+                                  ),
+                                  ksItem(context, header: 'RS', text: '${data?.runsScored.orDash}'),
+                                  ksItem(context, header: 'AV', text: '${data?.average.orDash}'),
+                                  ksItem(
+                                    context,
+                                    header: 'MP',
+                                    text: '${data?.matchesPlayed.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'IP',
+                                    text: '${data?.inningsPlayed.orDash}',
+                                  ),
+                                ],
+                              )
+                            : keyStats.statName?.toLowerCase() == "best figures"
+                            ? Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ksItem(context, header: 'O', text: '${data?.overs.orDash}'),
+                                  ksItem(context, header: 'M', text: '${data?.mostMaidens.orDash}'),
+                                  ksItem(context, header: 'R', text: '${data?.runsGiven.orDash}'),
+                                  ksItem(context, header: 'W', text: '${data?.wickets.orDash}'),
+                                  ksItem(context, header: 'EC', text: '${data?.economy.orDash}'),
+                                ],
+                              )
+                            :
+                        keyStats.statName?.toLowerCase() == "best bowling strike rate"
+                            ? Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ksItem(context, header: 'HS', text: '${data?.highestScore}'),
-                            ksItem(context, header: 'SR', text: '${data?.battingStrikeRate}'),
-                            ksItem(context, header: '4s', text: '${data?.fours}'),
-                            ksItem(context, header: '6s', text: '${data?.sixes}'),
-                            ksItem(context, header: '50s', text: '${data?.fifties}'),
-                            ksItem(context, header: '100s', text: '${data?.hundred}'),
+                            ksItem(context, header: 'O', text: '${data?.overs.orDash}'),
+                            ksItem(context, header: 'M', text: '${data?.mostMaidens.orDash}'),
+                            ksItem(context, header: 'R', text: '${data?.runsGiven.orDash}'),
+                            ksItem(context, header: 'W', text: '${data?.wickets.orDash}'),
+                            ksItem(context, header: 'EC', text: '${data?.economy.orDash}'),
                           ],
-                        ),
+                        )
+                            :
+                        keyStats.statName?.toLowerCase() == "most expensive bowler"
+                            ? Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            ksItem(context, header: 'O', text: '${data?.overs.orDash}'),
+                            ksItem(context, header: 'M', text: '${data?.mostMaidens.orDash}'),
+                            ksItem(context, header: 'W', text: '${data?.wickets.orDash}'),
+                            ksItem(context, header: 'EC', text: '${data?.economy.orDash}'),
+                            ksItem(context, header: 'BS', text: '${data?.bowlingStrikeRate.orDash}'),
+                          ],
+                        )
+                            :
+                        Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  ksItem(
+                                    context,
+                                    header: 'HS',
+                                    text: '${data?.highestScore.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'SR',
+                                    text: '${data?.battingStrikeRate.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'MP',
+                                    text: '${data?.matchesPlayed.orDash}',
+                                  ),
+                                  ksItem(
+                                    context,
+                                    header: 'IP',
+                                    text: '${data?.inningsPlayed.orDash}',
+                                  ),
+                                  ksItem(context, header: '50s', text: '${data?.fifties.orDash}'),
+                                  ksItem(context, header: '100s', text: '${data?.hundred.orDash}'),
+                                ],
+                              ),
                       ),
                     ],
                   ),
@@ -103,5 +322,12 @@ class PlayerState extends StatelessWidget {
         Text("$text", overflow: TextOverflow.ellipsis, style: stDmSans(context)),
       ],
     );
+  }
+
+  String orDash(dynamic value) {
+    if (value == null) return "-";
+
+    final str = value.toString();
+    return str.isEmpty ? "-" : str;
   }
 }

@@ -25,6 +25,11 @@ class ToursCtrl extends GetxController {
   RxList<KeyStats> tKeyStatsList = <KeyStats>[].obs;
   RxList<TourPointsTable> tPTList = <TourPointsTable>[].obs;
 
+  RxList<TourSquadPlayers> tBatterList = <TourSquadPlayers>[].obs;
+  RxList<TourSquadPlayers> tBowlerList = <TourSquadPlayers>[].obs;
+  RxList<TourSquadPlayers> tARList = <TourSquadPlayers>[].obs;
+  RxList<TourSquadPlayers> tWkList = <TourSquadPlayers>[].obs;
+
   Future<void> getAllTD({String? tourId, String? seriesId, bool silentRefresh = false}) async {
     try {
       if (!silentRefresh) {
@@ -81,7 +86,6 @@ class ToursCtrl extends GetxController {
       rethrow;
     }
   }
-
 
   @override
   void onInit() {

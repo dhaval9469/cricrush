@@ -46,7 +46,9 @@ Widget tLive({required BuildContext context, TourLiveM? data}) {
                       style: tBarlow(
                         context,
                         fontSize: context.sp(15),
-                        fontWeight: firstInnings.last.batting == true ? FontWeight.w600 : FontWeight.w500,
+                        fontWeight: firstInnings.last.batting == true
+                            ? FontWeight.w600
+                            : FontWeight.w500,
                         color: firstInnings.last.batting == true ? AppColor.text : AppColor.subText,
                       ),
                     ),
@@ -54,7 +56,10 @@ Widget tLive({required BuildContext context, TourLiveM? data}) {
                     Text("  (", style: stBarlow(context)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
-                      child: Text("${firstInnings.last.overs}", style: stBarlow(context, fontSize: context.sp(13))),
+                      child: Text(
+                        "${firstInnings.last.overs}",
+                        style: stBarlow(context, fontSize: context.sp(13)),
+                      ),
                     ),
                     Text(")", style: stBarlow(context)),
                   ],
@@ -89,15 +94,22 @@ Widget tLive({required BuildContext context, TourLiveM? data}) {
                       style: tBarlow(
                         context,
                         fontSize: context.sp(15),
-                        fontWeight: secondInnings.last.batting == true ? FontWeight.w600 : FontWeight.w500,
-                        color: secondInnings.last.batting == true ? AppColor.text : AppColor.subText,
+                        fontWeight: secondInnings.last.batting == true
+                            ? FontWeight.w600
+                            : FontWeight.w500,
+                        color: secondInnings.last.batting == true
+                            ? AppColor.text
+                            : AppColor.subText,
                       ),
                     ),
 
                     Text("  (", style: stBarlow(context)),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
-                      child: Text("${secondInnings.last.overs}", style: stBarlow(context, fontSize: context.sp(13))),
+                      child: Text(
+                        "${secondInnings.last.overs}",
+                        style: stBarlow(context, fontSize: context.sp(13)),
+                      ),
                     ),
                     Text(")", style: stBarlow(context)),
                   ],
@@ -114,21 +126,35 @@ Widget tUpComing({required BuildContext context, TourUpcomingM? data}) {
     child: Column(
       children: [
         Padding(
-          padding: EdgeInsets.only(left: context.wp(3), right: context.wp(3), bottom: context.hp(0.8), top: context.hp(0.7)),
+          padding: EdgeInsets.only(
+            left: context.wp(3),
+            right: context.wp(3),
+            bottom: context.hp(0.8),
+            top: context.hp(0.7),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("${data?.matchnumber} - ${data?.city}", style: stBarlow(context)),
               Text(
                 "UPCOMING",
-                style: stBarlow(context, fontSize: context.sp(13), color: AppColor.upcoming, fontWeight: FontWeight.bold),
+                style: stBarlow(
+                  context,
+                  fontSize: context.sp(13),
+                  color: AppColor.upcoming,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
         ),
         Divider(color: AppColor.cDivider, height: 0),
         Padding(
-          padding: EdgeInsets.only(left: context.wp(3), bottom: context.hp(1.2), top: context.hp(1.2)),
+          padding: EdgeInsets.only(
+            left: context.wp(3),
+            bottom: context.hp(1.2),
+            top: context.hp(1.2),
+          ),
           child: Row(
             children: [
               SizedBox(
@@ -175,7 +201,8 @@ Widget tUpComing({required BuildContext context, TourUpcomingM? data}) {
                 ),
               ),
               Expanded(
-                child: TimeManager.upMDT('${data?.matchdateIst} ${data?.matchtimeIst}').contains("h")
+                child:
+                    TimeManager.upMDT('${data?.matchdateIst} ${data?.matchtimeIst}').contains("h")
                     ? Text(
                         TimeManager.upMDT('${data?.matchdateIst} ${data?.matchtimeIst}'),
                         textAlign: TextAlign.center,
@@ -212,14 +239,24 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.only(left: context.wp(3), right: context.wp(3), bottom: context.hp(0.8), top: context.hp(0.7)),
+          padding: EdgeInsets.only(
+            left: context.wp(3),
+            right: context.wp(3),
+            bottom: context.hp(0.8),
+            top: context.hp(0.7),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("${data?.matchdetail?.match?.number}", style: stBarlow(context)),
               Text(
                 "COMPLETED",
-                style: stBarlow(context, fontSize: context.sp(13), color: AppColor.finished, fontWeight: FontWeight.bold),
+                style: stBarlow(
+                  context,
+                  fontSize: context.sp(13),
+                  color: AppColor.finished,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ],
           ),
@@ -243,7 +280,9 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                         style: tDmSans(
                           context,
                           fontWeight: FontWeight.w600,
-                          color: data?.matchdetail?.win == data?.teamlist?[0].nameShort ? AppColor.text : AppColor.subText,
+                          color: data?.matchdetail?.win == data?.teamlist?[0].nameShort
+                              ? AppColor.text
+                              : AppColor.subText,
                         ),
                       ),
                     ),
@@ -259,8 +298,12 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                           style: tBarlow(
                             context,
                             fontSize: context.sp(15),
-                            fontWeight: data?.matchdetail?.win == data?.teamlist?[0].nameShort ? FontWeight.w600 : FontWeight.w500,
-                            color: data?.matchdetail?.win == data?.teamlist?[0].nameShort ? AppColor.winText : AppColor.subText,
+                            fontWeight: data?.matchdetail?.win == data?.teamlist?[0].nameShort
+                                ? FontWeight.w600
+                                : FontWeight.w500,
+                            color: data?.matchdetail?.win == data?.teamlist?[0].nameShort
+                                ? AppColor.winText
+                                : AppColor.subText,
                           ),
                         ),
 
@@ -268,7 +311,9 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                           "  (",
                           style: stBarlow(
                             context,
-                            color: data?.matchdetail?.win == data?.teamlist?[0].nameShort ? AppColor.winText : AppColor.subText,
+                            color: data?.matchdetail?.win == data?.teamlist?[0].nameShort
+                                ? AppColor.winText
+                                : AppColor.subText,
                           ),
                         ),
                         Padding(
@@ -278,7 +323,9 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                             style: stBarlow(
                               context,
                               fontSize: context.sp(13),
-                              color: data?.matchdetail?.win == data?.teamlist?[0].nameShort ? AppColor.winText : AppColor.subText,
+                              color: data?.matchdetail?.win == data?.teamlist?[0].nameShort
+                                  ? AppColor.winText
+                                  : AppColor.subText,
                             ),
                           ),
                         ),
@@ -286,7 +333,9 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                           ")",
                           style: stBarlow(
                             context,
-                            color: data?.matchdetail?.win == data?.teamlist?[0].nameShort ? AppColor.winText : AppColor.subText,
+                            color: data?.matchdetail?.win == data?.teamlist?[0].nameShort
+                                ? AppColor.winText
+                                : AppColor.subText,
                           ),
                         ),
                       ],
@@ -311,7 +360,9 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                         style: tDmSans(
                           context,
                           fontWeight: FontWeight.w600,
-                          color: data?.matchdetail?.win == data?.teamlist?[1].nameShort ? AppColor.text : AppColor.subText,
+                          color: data?.matchdetail?.win == data?.teamlist?[1].nameShort
+                              ? AppColor.text
+                              : AppColor.subText,
                         ),
                       ),
                     ),
@@ -327,8 +378,12 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                           style: tBarlow(
                             context,
                             fontSize: context.sp(15),
-                            fontWeight: data?.matchdetail?.win == data?.teamlist?[1].nameShort ? FontWeight.w600 : FontWeight.w500,
-                            color: data?.matchdetail?.win == data?.teamlist?[1].nameShort ? AppColor.winText : AppColor.subText,
+                            fontWeight: data?.matchdetail?.win == data?.teamlist?[1].nameShort
+                                ? FontWeight.w600
+                                : FontWeight.w500,
+                            color: data?.matchdetail?.win == data?.teamlist?[1].nameShort
+                                ? AppColor.winText
+                                : AppColor.subText,
                           ),
                         ),
 
@@ -336,7 +391,9 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                           "  (",
                           style: stBarlow(
                             context,
-                            color: data?.matchdetail?.win == data?.teamlist?[1].nameShort ? AppColor.winText : AppColor.subText,
+                            color: data?.matchdetail?.win == data?.teamlist?[1].nameShort
+                                ? AppColor.winText
+                                : AppColor.subText,
                           ),
                         ),
                         Padding(
@@ -346,7 +403,9 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                             style: stBarlow(
                               context,
                               fontSize: context.sp(13),
-                              color: data?.matchdetail?.win == data?.teamlist?[1].nameShort ? AppColor.winText : AppColor.subText,
+                              color: data?.matchdetail?.win == data?.teamlist?[1].nameShort
+                                  ? AppColor.winText
+                                  : AppColor.subText,
                             ),
                           ),
                         ),
@@ -354,7 +413,9 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
                           ")",
                           style: stBarlow(
                             context,
-                            color: data?.matchdetail?.win == data?.teamlist?[1].nameShort ? AppColor.winText : AppColor.subText,
+                            color: data?.matchdetail?.win == data?.teamlist?[1].nameShort
+                                ? AppColor.winText
+                                : AppColor.subText,
                           ),
                         ),
                       ],
@@ -363,7 +424,11 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
           ),
         ),
         Padding(
-          padding: EdgeInsets.only(left: context.wp(3), right: context.wp(3), bottom: context.hp(1)),
+          padding: EdgeInsets.only(
+            left: context.wp(3),
+            right: context.wp(3),
+            bottom: context.hp(1),
+          ),
           child: Text(
             "${data?.matchdetail?.equation}",
             overflow: TextOverflow.ellipsis,
@@ -373,4 +438,12 @@ Widget tFinish({required BuildContext context, TourResultsM? data}) {
       ],
     ),
   );
+}
+
+extension DashFormatter on Object? {
+  String get orDash {
+    if (this == null) return "-";
+    final str = toString();
+    return str.isEmpty ? "-" : str;
+  }
 }
