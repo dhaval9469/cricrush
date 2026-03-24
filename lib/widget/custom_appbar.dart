@@ -1,6 +1,7 @@
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/utils/navigation.dart';
+import 'package:cricrush/utils/responsive.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -10,6 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double? toolbarHeight;
   final PreferredSizeWidget? bottom;
   final bool isBackAppbar;
+  final double? titleSpacing;
 
   const CustomAppBar({
     super.key,
@@ -18,6 +20,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.bottom,
     this.title,
     this.toolbarHeight,
+    this.titleSpacing,
     this.isBackAppbar = false,
   });
 
@@ -26,7 +29,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       backgroundColor: backgroundColor ?? AppColor.background,
       automaticallyImplyLeading: false,
-
+      titleSpacing: titleSpacing ?? 15,
       leading: isBackAppbar
           ? GestureDetector(
               onTap: () {
@@ -35,12 +38,15 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               child: Image.asset(AppAssets.back, color: AppColor.text, scale: 20),
             )
           : null,
-
       title: title ?? (text != null ? Text(text!, style: const TextStyle(fontWeight: FontWeight.w600)) : null),
-
       centerTitle: true,
 
-      bottom: bottom,
+      bottom:
+          bottom ??
+          PreferredSize(
+            preferredSize: Size.fromHeight(context.sp(1)),
+            child: Divider(color: AppColor.tDivider, height: 0),
+          ),
 
       toolbarHeight: toolbarHeight ?? kToolbarHeight,
       elevation: 0,

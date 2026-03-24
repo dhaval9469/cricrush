@@ -7,6 +7,8 @@ import 'package:flutter/material.dart';
 abstract class AppConfig {
   static ValueNotifier<int> bottomIndex = ValueNotifier<int>(0);
 
+  static String appShareText = '';
+
   static String wsUrl = 'ws://139.59.78.33:8001/ws/';
   static String baseUrl = 'http://139.59.78.33:8002/';
   static String token = 'cricktimekworld586985';

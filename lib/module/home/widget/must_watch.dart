@@ -1,7 +1,10 @@
+import 'package:cricrush/module/home/ctrl/sorts_ctrl.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
+import 'package:cricrush/utils/routing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,22 +12,20 @@ class MustWatch extends StatelessWidget {
   MustWatch({super.key});
 
   final tourCtrl = Get.find<ToursCtrl>();
+  final sortsCtrl = Get.find<SortsCtrl>();
+
 
   @override
   Widget build(BuildContext context) {
     return Obx(
-          () => tourCtrl.allNSSL.value
+      () => tourCtrl.allNSSL.value
           ? CircularProgressIndicator()
           : Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: context.wp(4),
-                    bottom: context.hp(1),
-                    top: context.hp(2.5),
-                  ),
+                  padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(1), top: context.hp(2.5)),
                   child: Text(
                     "Must Watch",
                     style: stDmSans(context, color: AppColor.text, fontWeight: FontWeight.w600),
@@ -42,28 +43,30 @@ class MustWatch extends StatelessWidget {
                       final data = tourCtrl.shortsList[index];
                       return data.adsShow == 1
                           ? SizedBox.shrink()
-                          : ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: Image.network(
-                                data.image2 ?? "",
-                                height: context.hp(25),
-                                width: context.wp(40),
-                                fit: BoxFit.fill,
-                                loadingBuilder: (context, child, loadingProgress) {
-                                  if (loadingProgress == null) {
-                                    return child;
-                                  } else {
-                                    return SizedBox(height: context.hp(25), width: context.wp(40));
-                                  }
-                                },
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                    "",
-                                    fit: BoxFit.cover,
-                                    height: context.hp(25),
-                                    width: context.wp(40),
-                                  );
-                                },
+                          : GestureDetector(
+                              onTap: () {
+                                sortsCtrl.sortIndex.value = index;
+                                sortsCtrl.shortsList = tourCtrl.shortsList;
+                                Navigation.pushNamed(Routes.sortsPage);
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: Image.network(
+                                  data.image2 ?? "",
+                                  height: context.hp(25),
+                                  width: context.wp(40),
+                                  fit: BoxFit.fill,
+                                  loadingBuilder: (context, child, loadingProgress) {
+                                    if (loadingProgress == null) {
+                                      return child;
+                                    } else {
+                                      return SizedBox(height: context.hp(25), width: context.wp(40));
+                                    }
+                                  },
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Image.asset("", fit: BoxFit.cover, height: context.hp(25), width: context.wp(40));
+                                  },
+                                ),
                               ),
                             );
                     },

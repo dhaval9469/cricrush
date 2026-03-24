@@ -72,7 +72,7 @@ class SLiveTab extends StatelessWidget {
           ),
           Expanded(
             child: Obx(
-                  () => homeCtrl.allML.value
+              () => homeCtrl.allML.value
                   ? Center(child: const DL())
                   : homeCtrl.liveSeriesData.isEmpty
                   ? Center(child: ED(text: "Match Not Found"))

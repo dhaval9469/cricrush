@@ -1,4 +1,6 @@
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
+import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
+import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/utils/routing.dart';
 import 'package:flutter/material.dart';
@@ -28,5 +30,8 @@ class AppBinding extends Bindings {
   void dependencies() {
     Get.put<HomeCtrl>(HomeCtrl());
     Get.put<ToursCtrl>(ToursCtrl());
+    Get.put<LMWService>(LMWService());
+    Get.put<MatchDetailsCtrl>(MatchDetailsCtrl());
+
   }
 }

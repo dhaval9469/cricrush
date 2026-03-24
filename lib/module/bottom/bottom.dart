@@ -1,4 +1,5 @@
 import 'package:cricrush/module/home/page/home.dart';
+import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/schedule/page/schedule.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/module/tours/page/tours.dart';
@@ -17,9 +18,9 @@ class BottomPage extends StatefulWidget {
   State<BottomPage> createState() => _BottomPageState();
 }
 
-final pages = [HomePage(), SchedulePage(), ToursPage(), HomePage(), HomePage()];
-
 final tourCtrl = Get.find<ToursCtrl>();
+
+final pages = [HomePage(), SchedulePage(), ToursPage(), HomePage()];
 
 class _BottomPageState extends State<BottomPage> {
   @override
@@ -56,8 +57,7 @@ class _BottomPageState extends State<BottomPage> {
                 _navItem(AppAssets.home, AppAssets.homeS, "Home", 0),
                 _navItem(AppAssets.home, AppAssets.homeS, "Schedule", 1),
                 _navItem(AppAssets.home, AppAssets.homeS, tourCtrl.tFooter.value, 2),
-                _navItem(AppAssets.home, AppAssets.homeS, "Fixtures", 3),
-                _navItem(AppAssets.home, AppAssets.homeS, "More", 4),
+                _navItem(AppAssets.home, AppAssets.homeS, "More", 3),
               ],
             ),
           );

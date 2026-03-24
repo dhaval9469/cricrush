@@ -27,6 +27,11 @@ dependencies:
   font_awesome_flutter: ^10.12.0
   web_socket_channel: ^3.0.3
   skeletonizer: ^2.1.3
+  share_plus: ^12.0.1
+  flutter_html: ^3.0.0-beta.2
+  pull_to_refresh_flutter3: ^2.0.2
+
+
 
 dev_dependencies:
   flutter_test:
@@ -43,4 +48,14 @@ flutter:
 
   assets:
     - assets/images/
+
+
+  fonts:
+    - family: Barlow
+      fonts:
+        - asset: assets/font/Barlow-Bold.ttf
+        - asset: assets/font/Barlow-Regular.ttf
+    - family: DMSans
+      fonts:
+        - asset: assets/font/DMSans-Regular.ttf
 

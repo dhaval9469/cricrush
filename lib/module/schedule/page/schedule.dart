@@ -38,7 +38,6 @@ class _SchedulePageState extends State<SchedulePage> with SingleTickerProviderSt
       backgroundColor: AppColor.background,
       appBar: AppBar(
         toolbarHeight: 0,
-
         backgroundColor: AppColor.appbarBg,
         bottom: TabBar(
           isScrollable: true,

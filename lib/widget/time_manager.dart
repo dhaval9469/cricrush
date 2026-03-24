@@ -71,8 +71,24 @@ class TimeManager {
 
   static String setSortTime(String datetime) {
     DateTime dateTime = DateTime.parse(datetime);
-    String formattedDate = DateFormat("dd MMM").format(dateTime);
-    return formattedDate;
+    DateTime now = DateTime.now();
+
+    Duration diff = now.difference(dateTime);
+
+    if (diff.inSeconds < 60) {
+      return "Just now";
+    }
+
+    if (diff.inMinutes < 60) {
+      int m = diff.inMinutes;
+      return "$m ${m == 1 ? 'min' : 'mins'} ago";
+    }
+
+    if (diff.inHours < 12) {
+      int h = diff.inHours;
+      return "$h ${h == 1 ? 'hour' : 'hours'} ago";
+    }
+    return DateFormat("dd MMM").format(dateTime);
   }
 
   static String setNewsTime(String datetime) {

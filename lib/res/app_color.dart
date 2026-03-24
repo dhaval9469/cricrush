@@ -9,6 +9,7 @@ abstract class AppColor {
 
   //  static const Color background = Color(0xFF202430);
   static const Color card = Color(0xFF2A2E3A);
+  static const Color subCard = Color(0xFF363B49);
   static const Color cDivider = Color(0xFF505460);
   static const Color tDivider = Color(0xFF3E4455);
   static const Color liveDot = Color(0xFFE8253A);
@@ -19,6 +20,10 @@ abstract class AppColor {
   static const Color textHint = Color(0xFF5A6272);
   static const Color textAccent = Color(0xFF7B9CDA);
   static const Color winText = Color(0xFFFFD000);
+  static const Color liveText = Color(0xFFE56510);
+  static const Color four   = Color(0xFF2196F3);
+  static const Color six    = Color(0xFF4CAF50);
+  static const Color wicket = Color(0xFFE53935);
   static const Color status = Color(0xFFD97B10);
 
   static const Color upcoming = Color(0xFF5BA8F5);

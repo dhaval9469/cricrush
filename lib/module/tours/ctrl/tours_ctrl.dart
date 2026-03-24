@@ -13,8 +13,17 @@ class ToursCtrl extends GetxController {
   RxString tHeader = "".obs;
   RxString tDes = "".obs;
   RxString tFooter = "".obs;
+  RxString newsTitle = "".obs;
+  RxString newsAuthor = "".obs;
+  RxString newsDescription = "".obs;
+  RxString newsURL = "".obs;
+  RxString newsURLToImage = "".obs;
+  RxString publishedAT = "".obs;
 
   RxInt tIndex = 0.obs;
+  RxInt newsIndex = 0.obs;
+
+
 
   RxList<NSSNews> newsList = <NSSNews>[].obs;
   RxList<NSSSeries> seriesList = <NSSSeries>[].obs;

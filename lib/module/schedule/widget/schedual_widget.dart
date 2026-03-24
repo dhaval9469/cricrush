@@ -51,7 +51,7 @@ Widget sLive({required BuildContext context, MTLiveMatch? data}) {
       Row(
         children: [
           SizedBox(
-            width: context.wp(60),
+            width: context.wp(68),
             child: Row(
               children: [
                 showFlag(context: context, url: data?.teamlist?[0].teamImage ?? ""),
@@ -60,32 +60,58 @@ Widget sLive({required BuildContext context, MTLiveMatch? data}) {
                   child: Text(
                     "${data?.teamlist?[0].nameFull}",
                     overflow: TextOverflow.ellipsis,
-                    style: tDmSans(context, fontWeight: FontWeight.w600),
+                    style: tDmSans(
+                      context,
+                      color: firstInnings.isEmpty ? AppColor.subText : AppColor.text,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
+                SizedBox(width: context.wp(10)),
               ],
             ),
           ),
           firstInnings.isEmpty
-              ? Text("Yet to Bet", style: stDmSans(context, fontSize: context.sp(13)))
+              ? Text("Yet to Bet", style: stDmSans(context))
               : Row(
                   children: [
                     Text(
                       "${firstInnings.last.total}/${firstInnings.last.wickets}",
                       style: tBarlow(
                         context,
-                        fontSize: context.sp(15),
+                        fontSize: context.sp(17),
                         fontWeight: firstInnings.last.batting == true ? FontWeight.w600 : FontWeight.w500,
-                        color: firstInnings.last.batting == true ? AppColor.text : AppColor.subText,
+                        color: firstInnings.last.batting == true ? AppColor.liveText : AppColor.subText,
                       ),
                     ),
 
-                    Text("  (", style: stBarlow(context)),
+                    Text(
+                      "  (",
+                      style: stBarlow(
+                        context,
+                        fontSize: context.sp(16),
+                        color: firstInnings.last.batting == true ? AppColor.liveText : AppColor.subText,
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
-                      child: Text("${firstInnings.last.overs}", style: stBarlow(context, fontSize: context.sp(13))),
+                      child: Text(
+                        "${firstInnings.last.overs}",
+                        style: stBarlow(
+                          context,
+                          fontSize: context.sp(15),
+                          color: firstInnings.last.batting == true ? AppColor.liveText : AppColor.subText,
+                        ),
+                      ),
                     ),
-                    Text(")", style: stBarlow(context)),
+                    Text(
+                      ")",
+                      style: stBarlow(
+                        context,
+                        fontSize: context.sp(16),
+                        color: firstInnings.last.batting == true ? AppColor.liveText : AppColor.subText,
+                      ),
+                    ),
                   ],
                 ),
         ],
@@ -94,7 +120,7 @@ Widget sLive({required BuildContext context, MTLiveMatch? data}) {
       Row(
         children: [
           SizedBox(
-            width: context.wp(60),
+            width: context.wp(68),
             child: Row(
               children: [
                 showFlag(context: context, url: data?.teamlist?[1].teamImage ?? ""),
@@ -103,32 +129,56 @@ Widget sLive({required BuildContext context, MTLiveMatch? data}) {
                   child: Text(
                     "${data?.teamlist?[1].nameFull}",
                     overflow: TextOverflow.ellipsis,
-                    style: tDmSans(context, fontWeight: FontWeight.w600),
+                    style: tDmSans(context,
+                        color: secondInnings.isEmpty ? AppColor.subText : AppColor.text,
+                        fontWeight: FontWeight.w600),
                   ),
                 ),
+                SizedBox(width: context.wp(10)),
               ],
             ),
           ),
           secondInnings.isEmpty
-              ? Text("Yet to Bet", style: stDmSans(context, fontSize: context.sp(13)))
+              ? Text("Yet to Bet", style: stDmSans(context))
               : Row(
                   children: [
                     Text(
                       "${secondInnings.last.total}/${secondInnings.last.wickets}",
                       style: tBarlow(
                         context,
-                        fontSize: context.sp(15),
+                        fontSize: context.sp(17),
                         fontWeight: secondInnings.last.batting == true ? FontWeight.w600 : FontWeight.w500,
-                        color: secondInnings.last.batting == true ? AppColor.text : AppColor.subText,
+                        color: secondInnings.last.batting == true ? AppColor.liveText : AppColor.subText,
                       ),
                     ),
 
-                    Text("  (", style: stBarlow(context)),
+                    Text(
+                      "  (",
+                      style: stBarlow(
+                        context,
+                        fontSize: context.sp(16),
+                        color: secondInnings.last.batting == true ? AppColor.liveText : AppColor.subText,
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
-                      child: Text("${secondInnings.last.overs}", style: stBarlow(context, fontSize: context.sp(13))),
+                      child: Text(
+                        "${secondInnings.last.overs}",
+                        style: stBarlow(
+                          context,
+                          fontSize: context.sp(15),
+                          color: secondInnings.last.batting == true ? AppColor.liveText : AppColor.subText,
+                        ),
+                      ),
                     ),
-                    Text(")", style: stBarlow(context)),
+                    Text(
+                      ")",
+                      style: stBarlow(
+                        context,
+                        fontSize: context.sp(16),
+                        color: secondInnings.last.batting == true ? AppColor.liveText : AppColor.subText,
+                      ),
+                    ),
                   ],
                 ),
         ],
