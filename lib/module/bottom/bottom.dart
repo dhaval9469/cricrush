@@ -1,6 +1,7 @@
 import 'package:cricrush/module/home/page/home.dart';
 import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/schedule/page/schedule.dart';
+import 'package:cricrush/module/setting/page/setting.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/module/tours/page/tours.dart';
 import 'package:cricrush/res/app_assets.dart';
@@ -20,7 +21,7 @@ class BottomPage extends StatefulWidget {
 
 final tourCtrl = Get.find<ToursCtrl>();
 
-final pages = [HomePage(), SchedulePage(), ToursPage(), HomePage()];
+final pages = [HomePage(), SchedulePage(), ToursPage(), Setting()];
 
 class _BottomPageState extends State<BottomPage> {
   @override
@@ -58,7 +59,7 @@ class _BottomPageState extends State<BottomPage> {
                 _navItem(AppAssets.setting, AppAssets.settings, "Home", 0),
                 _navItem(AppAssets.setting, AppAssets.settings, "Schedule", 1),
                 _navItem(AppAssets.setting, AppAssets.settings, tourCtrl.tFooter.value, 2),
-                _navItem(AppAssets.setting, AppAssets.settings, "More", 3),
+                _navItem(AppAssets.setting, AppAssets.settings, "Setting", 3),
               ],
             ),
           );

@@ -6,4 +6,5 @@ abstract class AppAssets {
   static final String setting = '${image}setting.png';
   static final String settings = '${image}settings.png';
   static final String back = '${image}back.png';
+  static final String ranking = '${image}ranking.png';
 }
