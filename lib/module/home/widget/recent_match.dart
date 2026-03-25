@@ -65,6 +65,7 @@ class RecentMatch extends StatelessWidget {
                       opacity: opacity,
                       child: GestureDetector(
                         onTap: () {
+                          mdCtrl.seriesId.value = data.seriesId ?? "";
                           if (data.type?.toLowerCase() == "upcoming") {
                             passUpCData(data);
                             lmwService.getLSDFUR(data.matchfile ?? "");

@@ -2,6 +2,9 @@ import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/page/commentary.dart';
 import 'package:cricrush/module/match_details/page/lm_details.dart';
 import 'package:cricrush/module/match_details/page/overs.dart';
+import 'package:cricrush/module/match_details/page/playing_xi.dart';
+import 'package:cricrush/module/match_details/page/point_table.dart';
+import 'package:cricrush/module/match_details/page/scoreboard.dart';
 import 'package:cricrush/module/match_details/widget/md_widget.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -9,6 +12,8 @@ import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'match_info.dart';
 
 class MatchDetails extends StatefulWidget {
   const MatchDetails({super.key});
@@ -37,11 +42,11 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     // tourWsService.disconnectSocket(clearData: false);
     final matchId = mdCtrl.matchId.value;
     await Future.wait([
-      // mdCtrl.getScoreBoard(matchId),
+      mdCtrl.getScoreBoard(matchId),
       mdCtrl.getCommentary(matchId),
-      // mdCtrl.getSquad(matchId),
+      mdCtrl.getSquad(matchId),
       mdCtrl.getOver(matchId),
-      // mdCtrl.getPointTable(mdCtrl.seriesId.value),
+      mdCtrl.getPointTable(mdCtrl.seriesId.value),
     ]);
   }
 
@@ -105,7 +110,15 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       ),
       body: TabBarView(
         controller: tabController,
-        children: [LmDetails(), LmDetails(), LmDetails(), Commentary(), LmDetails(), Overs(), LmDetails()],
+        children: [
+          MatchInfo(),
+          Scoreboard(),
+          LmDetails(),
+          Commentary(),
+          PlayingXi(),
+          Overs(),
+          PointTable(),
+        ],
       ),
     );
   }

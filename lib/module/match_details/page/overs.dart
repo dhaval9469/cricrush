@@ -48,26 +48,37 @@ class _OversState extends State<Overs> {
                           final reversedTeams = teams.reversed.toList();
                           return Column(
                             children: [
-                              Container(
-                                decoration: BoxDecoration(color: AppColor.card),
-                                child: Padding(
-                                  padding: EdgeInsets.symmetric(vertical: context.hp(0.5), horizontal: context.wp(3)),
-                                  child: Row(
-                                    children: [
-                                      Text(oboData?.battingteam ?? "", style: tDmSans(context)),
-                                      Spacer(),
-                                      Text(
-                                        "${reversedTeams[index].total}/${reversedTeams[index].wickets}",
-                                        style: tDmSans(context, fontWeight: FontWeight.w600),
-                                      ),
-                                      SizedBox(width: context.sp(7)),
-                                      Text("(", style: stDmSans(context)),
-                                      Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: context.sp(1.5)),
-                                        child: Text("${reversedTeams[index].overs}", style: stDmSans(context)),
-                                      ),
-                                      Text(")", style: stDmSans(context)),
-                                    ],
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: context.hp(1)),
+                                child: Container(
+                                  decoration: BoxDecoration(color: AppColor.card),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: context.hp(0.7),
+                                      horizontal: context.wp(3),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Text(oboData?.battingteam ?? "", style: tDmSans(context)),
+                                        Spacer(),
+                                        Text(
+                                          "${reversedTeams[index].total}/${reversedTeams[index].wickets}",
+                                          style: tDmSans(context, fontWeight: FontWeight.w600),
+                                        ),
+                                        SizedBox(width: context.sp(7)),
+                                        Text("(", style: stDmSans(context)),
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: context.sp(1.5),
+                                          ),
+                                          child: Text(
+                                            "${reversedTeams[index].overs}",
+                                            style: stDmSans(context),
+                                          ),
+                                        ),
+                                        Text(")", style: stDmSans(context)),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -104,7 +115,7 @@ class _OversState extends State<Overs> {
                                               ),
 
                                               SizedBox(
-                                                height: context.hp(3),
+                                                height: context.hp(2.3),
                                                 width: context.wp(60),
                                                 child: ListView.separated(
                                                   shrinkWrap: true,
@@ -121,8 +132,8 @@ class _OversState extends State<Overs> {
                                                             data.toLowerCase().contains("wd") ||
                                                                 data.toLowerCase().contains("nb") ||
                                                                 data.toLowerCase().contains("lb")
-                                                            ? context.sp(14)
-                                                            : context.sp(16),
+                                                            ? context.sp(13)
+                                                            : context.sp(15),
                                                         color: data == "4"
                                                             ? AppColor.four
                                                             : data == "6"
@@ -134,9 +145,10 @@ class _OversState extends State<Overs> {
                                                       ),
                                                     );
                                                   },
-                                                  separatorBuilder: (BuildContext context, int index) {
-                                                    return SizedBox(width: context.wp(3));
-                                                  },
+                                                  separatorBuilder:
+                                                      (BuildContext context, int index) {
+                                                        return SizedBox(width: context.wp(3));
+                                                      },
                                                 ),
                                               ),
                                               const Spacer(),
