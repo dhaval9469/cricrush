@@ -58,6 +58,8 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                     return GestureDetector(
                       onTap: () {
                         tourCtrl.getAllTD(tourId: data.tourId, seriesId: data.seriesId);
+                        tourCtrl.tourId.value = data.tourId ?? "";
+                        tourCtrl.seriesId.value = data.seriesId ?? "";
                         tourCtrl.tHeader.value = data.title ?? "";
                         tourCtrl.tDes.value = data.description ?? "";
                         tourCtrl.tFooter.value = data.sortTitle ?? "";

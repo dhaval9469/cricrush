@@ -1,3 +1,4 @@
+import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/page/commentary.dart';
 import 'package:cricrush/module/match_details/page/lm_details.dart';
@@ -5,11 +6,14 @@ import 'package:cricrush/module/match_details/page/overs.dart';
 import 'package:cricrush/module/match_details/page/playing_xi.dart';
 import 'package:cricrush/module/match_details/page/point_table.dart';
 import 'package:cricrush/module/match_details/page/scoreboard.dart';
+import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/match_details/widget/md_widget.dart';
+import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
+import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
-import 'package:cricrush/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,6 +29,9 @@ class MatchDetails extends StatefulWidget {
 class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderStateMixin {
   late TabController tabController;
   final mdCtrl = Get.find<MatchDetailsCtrl>();
+  final lmwService = Get.find<LMWService>();
+  final tourCtrl = Get.find<ToursCtrl>();
+  final homeCtrl = Get.find<HomeCtrl>();
 
   @override
   void initState() {
@@ -54,11 +61,16 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
-      appBar: CustomAppBar(
+      appBar: AppBar(
         backgroundColor: AppColor.appbarBg,
-        isBackAppbar: true,
         titleSpacing: 0,
         toolbarHeight: context.hp(5),
+        leading: GestureDetector(
+          onTap: () {
+            handleExit();
+          },
+          child: Image.asset(AppAssets.back, color: AppColor.text, scale: 20),
+        ),
         title: Row(
           children: [
             Expanded(
@@ -110,16 +122,15 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       ),
       body: TabBarView(
         controller: tabController,
-        children: [
-          MatchInfo(),
-          Scoreboard(),
-          LmDetails(),
-          Commentary(),
-          PlayingXi(),
-          Overs(),
-          PointTable(),
-        ],
+        children: [MatchInfo(), Scoreboard(), LmDetails(), Commentary(), PlayingXi(), Overs(), PointTable()],
       ),
     );
+  }
+
+  void handleExit() {
+    lmwService.disconnectSocket();
+    homeCtrl.getAllMatch(silentRefresh: true);
+    tourCtrl.getAllTD(tourId: tourCtrl.tourId.value, seriesId: tourCtrl.seriesId.value);
+    Navigation.pop();
   }
 }

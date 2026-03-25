@@ -97,6 +97,7 @@ class _SResultTabState extends State<SResultTab> {
                               mcHeader(context: context, tourName: "${data.tourName?.replaceAll(",", " ")}"),
                               ListView.separated(
                                 shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.symmetric(vertical: context.hp(2)),
                                 itemCount: (data.results?.length ?? 0) > 3 ? 3 : (data.results?.length ?? 0),
                                 itemBuilder: (context, index) {

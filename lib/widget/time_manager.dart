@@ -55,6 +55,24 @@ class TimeManager {
     return '$hoursPart$minutesPart';
   }
 
+  static String nextUpMT(String dateTimeStr) {
+    final inputFormat = DateFormat("dd MMM yyyy hh:mm a");
+    DateTime dateTime = inputFormat.parse(dateTimeStr).toLocal();
+
+    DateTime now = DateTime.now();
+
+    if (dateTime.isBefore(now)) {
+      return '';
+    }
+
+    Duration difference = dateTime.difference(now);
+
+    String formattedDate = DateFormat("d MMM").format(dateTime); // 22 Nov
+    String formattedTime = DateFormat("h:mm a").format(dateTime); // 9:00 PM
+
+    return "$formattedDate $formattedTime";
+  }
+
   static String formatDay(String date) {
     DateFormat inputFormat = DateFormat("dd MMM yyyy");
     DateTime dateTime = inputFormat.parse(date);
@@ -135,7 +153,7 @@ class TimeManager {
 
       DateTime localDateTime = utcDateTime.toLocal();
 
-      return DateFormat("d MMM hh:mm a").format(localDateTime);
+      return DateFormat("d MMM, hh:mm a").format(localDateTime);
     } catch (e) {
       return "";
     }

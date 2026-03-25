@@ -23,6 +23,8 @@ class MatchDetailsCtrl extends GetxController {
 
   RxInt innIgs = 0.obs;
   RxInt isSquad = 0.obs;
+  RxInt over = 0.obs;
+  RxInt speakText = 0.obs;
 
   RxBool commentaryLoading = false.obs;
   RxBool overLoading = false.obs;

@@ -78,7 +78,8 @@ class RecentMatch extends StatelessWidget {
                           }
                           Navigation.pushNamed(Routes.matchDetails);
                         },
-                        child: card(
+                        child: Container(
+                          decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(14)),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

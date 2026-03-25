@@ -36,7 +36,7 @@ class Scoreboard extends StatelessWidget {
                       ListView.separated(
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.only(top: context.sp(15)),
+                        padding: EdgeInsets.symmetric(vertical: context.hp(1.5)),
                         itemCount: mdCtrl.scoreboardData.value?.innings?.length ?? 0,
                         itemBuilder: (context, inningIndex) {
                           final scoreboardData = mdCtrl.scoreboardData.value?.innings?[inningIndex];
@@ -51,10 +51,7 @@ class Scoreboard extends StatelessWidget {
                               duration: Duration(milliseconds: 1000),
                               curve: Curves.easeInOutCubic,
                             ),
-                            tilePadding: EdgeInsets.symmetric(
-                              horizontal: context.sp(10),
-                              vertical: context.sp(3),
-                            ),
+                            tilePadding: EdgeInsets.symmetric(horizontal: context.wp(3)),
                             title: Row(
                               children: [
                                 Expanded(
@@ -65,21 +62,13 @@ class Scoreboard extends StatelessWidget {
                                     style: tDmSans(context, fontWeight: FontWeight.w600),
                                   ),
                                 ),
-                                Text(
-                                  scoreboardData?.total ?? "",
-                                  style: tDmSans(context, fontWeight: FontWeight.w600),
-                                ),
-                                Text(
-                                  "/${scoreboardData?.wickets} ",
-                                  style: tDmSans(context, fontSize: context.sp(16)),
-                                ),
-                                Text(
-                                  " (${scoreboardData?.overs})",
-                                  style: tDmSans(context, fontSize: context.sp(15)),
-                                ),
+                                Text(scoreboardData?.total ?? "", style: tDmSans(context, fontWeight: FontWeight.w600)),
+                                Text("/${scoreboardData?.wickets} ", style: tDmSans(context, fontSize: context.sp(16))),
+                                Text(" (${scoreboardData?.overs})", style: tDmSans(context, fontSize: context.sp(15))),
                               ],
                             ),
                             children: [
+                              // Batters
                               Container(
                                 decoration: BoxDecoration(color: AppColor.card),
                                 child: sbBatsmanHeader(context),
@@ -87,7 +76,7 @@ class Scoreboard extends StatelessWidget {
                               ListView.separated(
                                 physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
-                                padding: EdgeInsets.symmetric(vertical: context.sp(15)),
+                                padding: EdgeInsets.symmetric(vertical: context.hp(1)),
                                 itemCount: scoreboardData?.batsmen?.length ?? 0,
                                 itemBuilder: (context, batIndex) {
                                   final data = scoreboardData?.batsmen?[batIndex];
@@ -97,16 +86,83 @@ class Scoreboard extends StatelessWidget {
                                   return Divider(color: AppColor.tDivider, height: context.hp(2));
                                 },
                               ),
-                              Container(
-                                decoration: BoxDecoration(color: AppColor.subCard),
-                                child: sbBatsmanHeader(context),
+
+                              // Extra Run
+                              Padding(
+                                padding: EdgeInsets.only(top: context.hp(0.5), bottom: context.hp(1.5)),
+                                child: Container(
+                                  color: AppColor.subCard.withValues(alpha: 0.2),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1)),
+                                    child: Row(
+                                      children: [
+                                        Text("Extra Runs: ", style: stBarlow(context)),
+                                        const Spacer(),
+                                        Text("${scoreboardData?.extra} ", style: stBarlow(context)),
+                                        Row(
+                                          children: [
+                                            Text(
+                                              "( ${scoreboardData?.byes} b, ${scoreboardData?.legbyes} lb, ${scoreboardData?.wides} wd, ${scoreboardData?.noballs} nb, ${scoreboardData?.penalty} p )",
+                                              style: stBarlow(context),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
                               ),
 
+                              // Bowlers
+                              Container(
+                                decoration: BoxDecoration(color: AppColor.card),
+                                child: sbBowlerHeader(context),
+                              ),
+                              ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(vertical: context.hp(1)),
+                                itemCount: scoreboardData?.bowlers?.length ?? 0,
+                                itemBuilder: (context, bolIndex) {
+                                  final data = scoreboardData?.bowlers?[bolIndex];
+                                  return sbBowlerInfo(context, data);
+                                },
+                                separatorBuilder: (BuildContext context, int index) {
+                                  return Divider(color: AppColor.tDivider, height: context.hp(2));
+                                },
+                              ),
+
+                              // Fall of Wicket
+                              scoreboardData?.fallofWickets?.isEmpty ?? true
+                                  ? const SizedBox.shrink()
+                                  : Padding(
+                                      padding: EdgeInsets.only(top: context.hp(1)),
+                                      child: Container(
+                                        decoration: BoxDecoration(color: AppColor.card),
+                                        child: sbFWHeader(context),
+                                      ),
+                                    ),
+
+                              scoreboardData?.fallofWickets?.isEmpty ?? true
+                                  ? const SizedBox.shrink()
+                                  : ListView.separated(
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                padding: EdgeInsets.symmetric(vertical: context.hp(1)),
+                                itemCount: scoreboardData?.fallofWickets?.length ?? 0,
+                                itemBuilder: (context, ptsIndex) {
+                                  final data = scoreboardData?.fallofWickets?[ptsIndex];
+                                  return sbFWInfo(context, data);
+                                },
+                                separatorBuilder: (BuildContext context, int index) {
+                                  return Divider(color: AppColor.tDivider, height: context.hp(2));
+                                },
+                              ),
                             ],
                           );
                         },
                         separatorBuilder: (context, index) {
-                          return SizedBox(height: context.hp(1.5));
+                          return SizedBox(height: context.hp(1));
                         },
                       ),
                       SizedBox(height: context.hp(1.5)),

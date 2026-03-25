@@ -19,6 +19,9 @@ class ToursCtrl extends GetxController {
   RxString newsURL = "".obs;
   RxString newsURLToImage = "".obs;
   RxString publishedAT = "".obs;
+  RxString tourId = "".obs;
+  RxString seriesId = "".obs;
+
 
   RxInt tIndex = 0.obs;
   RxInt newsIndex = 0.obs;

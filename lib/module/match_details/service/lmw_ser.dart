@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-
 import 'package:cricrush/module/match_details/model/lmw_model.dart';
 import 'package:cricrush/module/match_details/service/match_details_ser.dart';
 import 'package:cricrush/res/app_config.dart';

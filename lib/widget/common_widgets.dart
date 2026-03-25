@@ -5,7 +5,7 @@ import 'package:flutter/cupertino.dart';
 
 Widget card({final Widget? child}) {
   return Container(
-    decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(16)),
+    decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(12)),
     child: child,
   );
 }

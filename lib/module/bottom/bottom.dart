@@ -54,10 +54,11 @@ class _BottomPageState extends State<BottomPage> {
                 AppConfig.bottomIndex.value = value;
               },
               items: [
-                _navItem(AppAssets.home, AppAssets.homeS, "Home", 0),
-                _navItem(AppAssets.home, AppAssets.homeS, "Schedule", 1),
-                _navItem(AppAssets.home, AppAssets.homeS, tourCtrl.tFooter.value, 2),
-                _navItem(AppAssets.home, AppAssets.homeS, "More", 3),
+                // _navItem(AppAssets.home, AppAssets.homeS, "Home", 0),
+                _navItem(AppAssets.setting, AppAssets.settings, "Home", 0),
+                _navItem(AppAssets.setting, AppAssets.settings, "Schedule", 1),
+                _navItem(AppAssets.setting, AppAssets.settings, tourCtrl.tFooter.value, 2),
+                _navItem(AppAssets.setting, AppAssets.settings, "More", 3),
               ],
             ),
           );
@@ -70,18 +71,16 @@ class _BottomPageState extends State<BottomPage> {
     final isSelected = AppConfig.bottomIndex.value == index;
 
     return BottomNavigationBarItem(
-      icon: Padding(
-        padding: EdgeInsets.only(top: 5, bottom: 7),
-        child: AnimatedScale(
-          scale: isSelected ? 1.25 : 1,
-          duration: const Duration(milliseconds: 200),
-          curve: Curves.easeInOutCubic,
-          child: Image.asset(
-            isSelected ? selectedIcon : icon,
-            width: 22,
-            height: 22,
-            color: isSelected ? Color(0xFFFFFFFF) : Color(0xFFFFFFFF).withAlpha(180),
-          ),
+      icon: AnimatedScale(
+        scale: isSelected ? 1.25 : 1,
+        duration: const Duration(milliseconds: 200),
+        curve: Curves.easeInOutCubic,
+        child: Image.asset(
+          isSelected ? selectedIcon : icon,
+          scale: 20,
+          // width: 30,
+          // height: 25,
+          color: isSelected ? AppColor.text : AppColor.subText,
         ),
       ),
       label: label,
