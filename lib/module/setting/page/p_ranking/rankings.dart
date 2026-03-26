@@ -1,4 +1,5 @@
 import 'package:cricrush/module/setting/ctrl/setting_ctrl.dart';
+import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/navigation.dart';
@@ -6,10 +7,12 @@ import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/utils/routing.dart';
 import 'package:cricrush/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:iconsax_flutter/iconsax_flutter.dart';
 
-class Rankings extends StatelessWidget {
-  Rankings({super.key});
+class PlayerRanking extends StatelessWidget {
+  PlayerRanking({super.key});
 
   final setting = Get.find<SettingCtrl>()..getAllRanking();
 
@@ -21,7 +24,7 @@ class Rankings extends StatelessWidget {
         backgroundColor: AppColor.card,
         toolbarHeight: context.hp(5),
         title: Text(
-          "Rankings",
+          "Player Ranking",
           style: tDmSans(context, fontSize: context.sp(17), fontWeight: FontWeight.bold),
         ),
       ),
@@ -43,28 +46,18 @@ class Rankings extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: AppColor.card,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
-                      ),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: context.hp(1)),
-                      child: ranking(context, text: "ICC Man's Ranking", isBold: true),
+                      child: ranking(context, icon: Iconsax.man_copy, text: "ICC Man's Ranking", isBold: true),
                     ),
                   ),
                   Divider(color: AppColor.tDivider, height: 0),
                   SizedBox(height: context.hp(1)),
                   ranking(
                     context,
-                    onTap: () {
-                      Navigation.pushNamed(Routes.teamMR);
-                    },
-                    text: "Team Ranking",
-                  ),
-                  SizedBox(height: context.hp(1)),
-                  ranking(
-                    context,
+                    assetName: AppAssets.rBat,
                     onTap: () {
                       Navigation.pushNamed(Routes.battingMR);
                     },
@@ -73,19 +66,23 @@ class Rankings extends StatelessWidget {
                   SizedBox(height: context.hp(1)),
                   ranking(
                     context,
-                    onTap: () {
-                      Navigation.pushNamed(Routes.bowlingMR);
-                    },
-                    text: "Bowling Ranking",
-                  ),
-                  SizedBox(height: context.hp(1)),
-                  ranking(
-                    context,
+                    assetName: AppAssets.rAllR,
                     onTap: () {
                       Navigation.pushNamed(Routes.allRounderMr);
                     },
                     text: "All-Rounder Ranking",
                   ),
+                  SizedBox(height: context.hp(1)),
+                  ranking(
+                    context,
+                    assetName: AppAssets.rBall,
+                    icon: Iconsax.flash_1,
+                    onTap: () {
+                      Navigation.pushNamed(Routes.bowlingMR);
+                    },
+                    text: "Bowling Ranking",
+                  ),
+
                   SizedBox(height: context.hp(1.2)),
                 ],
               ),
@@ -106,25 +103,42 @@ class Rankings extends StatelessWidget {
                   Container(
                     decoration: BoxDecoration(
                       color: AppColor.card,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(12),
-                        topRight: Radius.circular(12),
-                      ),
+                      borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
                     ),
                     child: Padding(
                       padding: EdgeInsets.symmetric(vertical: context.hp(1)),
-                      child: ranking(context, text: "ICC Women’s Rankings", isBold: true),
+                      child: ranking(context, icon: Iconsax.woman_copy, text: "ICC Women’s PlayerRanking", isBold: true),
                     ),
                   ),
                   Divider(color: AppColor.tDivider, height: 0),
                   SizedBox(height: context.hp(1)),
-                  ranking(context, onTap: () {}, text: "Team Ranking"),
+                  ranking(
+                    context,
+                    assetName: AppAssets.rBat,
+                    onTap: () {
+                      Navigation.pushNamed(Routes.battingWr);
+                    },
+                    text: "Batting Ranking",
+                  ),
                   SizedBox(height: context.hp(1)),
-                  ranking(context, onTap: () {}, text: "Batting Ranking"),
+                  ranking(
+                    context,
+                    assetName: AppAssets.rAllR,
+                    onTap: () {
+                      Navigation.pushNamed(Routes.allRounderWr);
+                    },
+                    text: "All-Rounder Ranking",
+                  ),
                   SizedBox(height: context.hp(1)),
-                  ranking(context, onTap: () {}, text: "Bowling Ranking"),
-                  SizedBox(height: context.hp(1)),
-                  ranking(context, onTap: () {}, text: "All-Rounder Ranking"),
+                  ranking(
+                    context,
+                    assetName: AppAssets.rBall,
+                    onTap: () {
+                      Navigation.pushNamed(Routes.bowlingWr);
+                    },
+                    text: "Bowling Ranking",
+                  ),
+
                   SizedBox(height: context.hp(1.2)),
                 ],
               ),
@@ -138,6 +152,8 @@ class Rankings extends StatelessWidget {
   Widget ranking(
     BuildContext context, {
     String? text,
+    IconData? icon,
+    String? assetName,
     bool isBold = false,
     GestureTapCallback? onTap,
   }) {
@@ -147,11 +163,17 @@ class Rankings extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: context.wp(4)),
         child: Row(
           children: [
+            isBold == true
+                ? Icon(icon, color: AppColor.white, size: context.sp(20))
+                : SvgPicture.asset(
+                    assetName ?? "",
+                    colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
+                    height: context.sp(16),
+                  ),
+            SizedBox(width: context.wp(4)),
             Text(
               "$text",
-              style: isBold == true
-                  ? tDmSans(context, fontWeight: FontWeight.bold)
-                  : stBarlow(context, fontSize: context.sp(15)),
+              style: isBold == true ? tDmSans(context, fontWeight: FontWeight.bold) : stBarlow(context, fontSize: context.sp(15)),
             ),
             Spacer(),
             Icon(

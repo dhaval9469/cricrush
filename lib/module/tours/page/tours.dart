@@ -65,7 +65,36 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                         tourCtrl.tFooter.value = data.sortTitle ?? "";
                         tourCtrl.tIndex.value = index;
                       },
-                      child: Container(
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 250),
+                        margin: const EdgeInsets.symmetric(vertical: 5),
+                        width: context.wp(20),
+                        height: context.hp(8),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(
+                            color: tourCtrl.tIndex.value == index ? AppColor.sTabColor : AppColor.cDivider,
+                            width: tourCtrl.tIndex.value == index ? 2 : 1,
+                          ),
+                          boxShadow: tourCtrl.tIndex.value == index
+                              ? [
+                                  BoxShadow(
+                                    color: AppColor.sTabColor.withValues(alpha: 0.9),
+                                    blurRadius: 2,
+                                    spreadRadius: 2,
+                                    offset: const Offset(0, 0),
+                                  ),
+                                ]
+                              : [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 4, offset: const Offset(0, 2))],
+                          image: const DecorationImage(
+                            image: NetworkImage(
+                              "https://media.crictracker.com/media/attachments/1773729386350_CT---IPL-1-(1).jpeg",
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ),
+                      /*                     child: Container(
                         width: context.wp(20),
                         height: context.hp(8),
                         decoration: BoxDecoration(
@@ -81,7 +110,7 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                             fit: BoxFit.fill,
                           ),
                         ),
-                      ),
+                      ),*/
                     );
                   },
                   separatorBuilder: (BuildContext context, int index) {

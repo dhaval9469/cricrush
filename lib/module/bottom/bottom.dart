@@ -1,5 +1,4 @@
 import 'package:cricrush/module/home/page/home.dart';
-import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/schedule/page/schedule.dart';
 import 'package:cricrush/module/setting/page/setting.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
@@ -55,10 +54,9 @@ class _BottomPageState extends State<BottomPage> {
                 AppConfig.bottomIndex.value = value;
               },
               items: [
-                // _navItem(AppAssets.home, AppAssets.homeS, "Home", 0),
-                _navItem(AppAssets.setting, AppAssets.settings, "Home", 0),
-                _navItem(AppAssets.setting, AppAssets.settings, "Schedule", 1),
-                _navItem(AppAssets.setting, AppAssets.settings, tourCtrl.tFooter.value, 2),
+                _navItem(AppAssets.home, AppAssets.homes, "Home", 0),
+                _navItem(AppAssets.schedule, AppAssets.schedules, "Schedule", 1),
+                _navItem(AppAssets.series, AppAssets.seriess  , tourCtrl.tFooter.value, 2),
                 _navItem(AppAssets.setting, AppAssets.settings, "Setting", 3),
               ],
             ),
@@ -76,13 +74,7 @@ class _BottomPageState extends State<BottomPage> {
         scale: isSelected ? 1.25 : 1,
         duration: const Duration(milliseconds: 200),
         curve: Curves.easeInOutCubic,
-        child: Image.asset(
-          isSelected ? selectedIcon : icon,
-          scale: 20,
-          // width: 30,
-          // height: 25,
-          color: isSelected ? AppColor.text : AppColor.subText,
-        ),
+        child: Image.asset(isSelected ? selectedIcon : icon, scale: 20, color: isSelected ? AppColor.text : AppColor.subText),
       ),
       label: label,
     );

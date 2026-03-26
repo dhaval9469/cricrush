@@ -3,7 +3,9 @@ import 'dart:math';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
+import 'package:cricrush/utils/routing.dart';
 import 'package:cricrush/widget/image_loader.dart';
 import 'package:cricrush/widget/time_manager.dart';
 import 'package:flutter/material.dart';
@@ -40,29 +42,51 @@ class TONews extends StatelessWidget {
                   itemCount: min(3, tourCtrl.newsList.length),
                   itemBuilder: (context, index) {
                     final data = tourCtrl.newsList[index];
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(14),
-                        border: Border.all(color: AppColor.cDivider.withValues(alpha: 0.5)),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: context.hp(1), horizontal: context.wp(2)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            showPlayer(context: context, url: data.image ?? "", h: context.wp(12), w: context.wp(25), r: 10),
-
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: context.hp(0.7)),
-                              child: Text(
-                                "${data.title}",
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: tDmSans(context, fontSize: context.sp(14)),
+                    return GestureDetector(
+                      onTap: () {
+                        tourCtrl.newsTitle.value = data.title.toString();
+                        tourCtrl.newsDescription.value = data.description ?? "";
+                        tourCtrl.newsURLToImage.value = data.image.toString();
+                        tourCtrl.publishedAT.value = data.dateTime.toString();
+                        tourCtrl.newsIndex.value = index;
+                        Navigation.pushNamed(Routes.newsDetails);
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(14),
+                          border: Border.all(color: AppColor.cDivider.withValues(alpha: 0.5)),
+                        ),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(vertical: context.hp(1), horizontal: context.wp(2)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Hero(
+                                tag: data.image ?? "defaultHeroTag",
+                                child: showPlayer(
+                                  context: context,
+                                  url: data.image ?? "",
+                                  h: context.wp(12),
+                                  w: context.wp(25),
+                                  r: 10,
+                                ),
                               ),
-                            ),
-                            Text(TimeManager.newsTimeTO(data.dateTime ?? ""), style: stBarlow(context, fontSize: context.sp(12))),
-                          ],
+
+                              Padding(
+                                padding: EdgeInsets.symmetric(vertical: context.hp(0.7)),
+                                child: Text(
+                                  "${data.title}",
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: tDmSans(context, fontSize: context.sp(14)),
+                                ),
+                              ),
+                              Text(
+                                TimeManager.newsTimeTO(data.dateTime ?? ""),
+                                style: stBarlow(context, fontSize: context.sp(12)),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     );

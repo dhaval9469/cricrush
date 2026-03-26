@@ -1,10 +1,14 @@
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/model/all_match_model.dart';
+import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
+import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/schedule/widget/schedual_widget.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
+import 'package:cricrush/utils/routing.dart';
 import 'package:cricrush/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -19,6 +23,8 @@ class SUpcomingTab extends StatefulWidget {
 class _SUpcomingTabState extends State<SUpcomingTab> {
   final homeCtrl = Get.find<HomeCtrl>();
   final tourCtrl = Get.find<ToursCtrl>();
+  final lmwService = Get.find<LMWService>();
+  final mdCtrl = Get.find<MatchDetailsCtrl>();
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +115,19 @@ class _SUpcomingTabState extends State<SUpcomingTab> {
                                     isHorizontal: true,
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [sUpComing(context: context, data: matchData)],
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            mdCtrl.seriesId.value = data.seriesId ?? "";
+                                            mdCtrl.tourId.value = data.tourId ?? "";
+                                            passUpCData(matchData);
+                                            lmwService.getLSDFUR(matchData?.matchfile ?? "");
+                                            Navigation.pushNamed(Routes.matchDetails);
+
+                                          },
+                                          child: sUpComing(context: context, data: matchData),
+                                        ),
+                                      ],
                                     ),
                                   );
                                 },
@@ -135,5 +153,15 @@ class _SUpcomingTabState extends State<SUpcomingTab> {
         ],
       ),
     );
+  }
+  void passUpCData(MTUpComingMatch? data) {
+    mdCtrl.matchId.value = data?.matchfile ?? "";
+    mdCtrl.matchType.value = data?.matchnumber ?? "";
+    mdCtrl.teamAFlag.value = data?.teamaImage ?? "";
+    mdCtrl.teamBFlag.value = data?.teambImage ?? "";
+    mdCtrl.teamAName.value = data?.teama ?? "";
+    mdCtrl.teamBName.value = data?.teamb ?? "";
+    mdCtrl.teamASName.value = data?.teamaShort ?? "";
+    mdCtrl.teamBSName.value = data?.teambShort ?? "";
   }
 }

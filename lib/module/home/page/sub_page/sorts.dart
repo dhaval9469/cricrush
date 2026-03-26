@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:share_plus/share_plus.dart';
+import 'package:shimmer/shimmer.dart';
 
 class SortsPage extends StatefulWidget {
   const SortsPage({super.key});
@@ -18,9 +19,20 @@ class SortsPage extends StatefulWidget {
 }
 
 class _SortsPageState extends State<SortsPage> {
-  PageController pageController = PageController();
-
   final sortsCtrl = Get.find<SortsCtrl>();
+  late PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController(initialPage: sortsCtrl.sortIndex.value);
+  }
+
+  @override
+  void dispose() {
+    pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +53,6 @@ class _SortsPageState extends State<SortsPage> {
               : data.sortType == "video"
               ? SizedBox.shrink()
               : Column(
-                  // alignment: Alignment.center,
                   children: [
                     Align(
                       alignment: Alignment.topRight,
@@ -92,11 +103,7 @@ class _SortsPageState extends State<SortsPage> {
                                 onTap: () {
                                   SharePlus.instance.share(ShareParams(text: AppConfig.appShareText));
                                 },
-                                child: FaIcon(
-                                  FontAwesomeIcons.solidShareFromSquare,
-                                  color: AppColor.text,
-                                  size: context.sp(25),
-                                ),
+                                child: FaIcon(FontAwesomeIcons.solidShareFromSquare, color: AppColor.text, size: context.sp(25)),
                               ),
                               SizedBox(height: context.hp(15)),
                             ],
@@ -104,28 +111,6 @@ class _SortsPageState extends State<SortsPage> {
                         ),
                       ),
                     ),
-                    // child: Image.network(
-                    //   data.image2 ?? "",
-                    //   loadingBuilder: (context, child, loadingProgress) {
-                    //     if (loadingProgress == null) {
-                    //       return child;
-                    //     } else {
-                    //       return SizedBox(
-                    //         height: MediaQuery.of(context).size.height / 1,
-                    //         width: MediaQuery.of(context).size.width / 1,
-                    //         child: SizedBox(),
-                    //       );
-                    //     }
-                    //   },
-                    //   errorBuilder: (context, error, stackTrace) {
-                    //     return Image.asset(
-                    //       "",
-                    //       fit: BoxFit.cover,
-                    //       height: MediaQuery.of(context).size.height / 1,
-                    //       width: MediaQuery.of(context).size.width / 1,
-                    //     );
-                    //   },
-                    // ),
                     Container(
                       decoration: BoxDecoration(color: AppColor.card),
                       child: Align(
@@ -206,6 +191,25 @@ class _SortsPageState extends State<SortsPage> {
                   ],
                 );
         },
+      ),
+    );
+  }
+
+  Widget shortsShimmer(BuildContext context) {
+    final baseColor = const Color(0xFF2A2F3A);
+    final highlightColor = const Color(0xFF3A4250);
+
+    return Container(
+      height: context.hp(25),
+      width: context.wp(40),
+      decoration: BoxDecoration(color: AppColor.background, borderRadius: BorderRadius.circular(10)),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Shimmer.fromColors(
+          baseColor: baseColor,
+          highlightColor: highlightColor,
+          child: Container(color: const Color(0xFF2A2F3A)),
+        ),
       ),
     );
   }

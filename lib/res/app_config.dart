@@ -7,6 +7,11 @@ import 'package:flutter/material.dart';
 abstract class AppConfig {
   static ValueNotifier<int> bottomIndex = ValueNotifier<int>(0);
 
+  static String allN = 'ALL_N';
+  static String lmaN = 'LMA_N';
+  static String lmN = 'LM_N';
+  static String bnN = 'BN_N';
+  static String oN = 'O_N';
   static String appShareText = '';
 
   static String wsUrl = 'ws://139.59.78.33:8001/ws/';

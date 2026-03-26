@@ -129,9 +129,11 @@ Widget sLive({required BuildContext context, MTLiveMatch? data}) {
                   child: Text(
                     "${data?.teamlist?[1].nameFull}",
                     overflow: TextOverflow.ellipsis,
-                    style: tDmSans(context,
-                        color: secondInnings.isEmpty ? AppColor.subText : AppColor.text,
-                        fontWeight: FontWeight.w600),
+                    style: tDmSans(
+                      context,
+                      color: secondInnings.isEmpty ? AppColor.subText : AppColor.text,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
                 SizedBox(width: context.wp(10)),
@@ -235,12 +237,12 @@ Widget sUpComing({required BuildContext context, MTUpComingMatch? data}) {
             ? Text(
                 TimeManager.upMDT('${data?.matchdateIst} ${data?.matchtimeIst}'),
                 textAlign: TextAlign.center,
-                style: stDmSans(context, fontSize: context.sp(15)),
+                style: stDmSans(context, fontSize: context.sp(15), color: AppColor.timeText),
               )
             : Text(
                 TimeManager.upMDT('${data?.matchdateIst} ${data?.matchtimeIst}'),
                 textAlign: TextAlign.center,
-                style: stDmSans(context, fontSize: context.sp(13)),
+                style: stDmSans(context, fontSize: context.sp(13), color: AppColor.timeText),
               ),
       ),
     ],

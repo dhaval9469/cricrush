@@ -56,7 +56,7 @@ class _NewsDetailsState extends State<NewsDetails> {
 
               SizedBox(height: context.hp(1.3)),
               Hero(
-                tag: "image${tourCtrl.newsIndex.value}",
+                tag: tourCtrl.newsURLToImage.value,
                 child: tourCtrl.newsURLToImage.value.isEmpty
                     ? Image.asset("", fit: BoxFit.cover)
                     : showPlayer(

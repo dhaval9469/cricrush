@@ -10,6 +10,7 @@ import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 class MatchDetailsCtrl extends GetxController {
   RxString matchId = "".obs;
   RxString seriesId = "".obs;
+  RxString tourId = "".obs;
   RxString matchType = "".obs;
   RxString teamAFlag = "".obs;
   RxString teamBFlag = "".obs;

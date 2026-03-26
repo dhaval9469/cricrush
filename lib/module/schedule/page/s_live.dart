@@ -1,9 +1,13 @@
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/model/all_match_model.dart';
+import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
+import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/schedule/widget/schedual_widget.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
+import 'package:cricrush/utils/routing.dart';
 import 'package:cricrush/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,6 +16,8 @@ class SLiveTab extends StatelessWidget {
   SLiveTab({super.key});
 
   final homeCtrl = Get.find<HomeCtrl>();
+  final lmwService = Get.find<LMWService>();
+  final mdCtrl = Get.find<MatchDetailsCtrl>();
 
   @override
   Widget build(BuildContext context) {
@@ -100,7 +106,19 @@ class SLiveTab extends StatelessWidget {
                                     isHorizontal: true,
                                     Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [sLive(context: context, data: matchData)],
+                                      children: [
+                                        GestureDetector(
+                                          onTap: () {
+                                            mdCtrl.seriesId.value = data.seriesId ?? "";
+                                            mdCtrl.tourId.value = data.tourId ?? "";
+                                            passLiveData(matchData);
+                                            lmwService.openMatch(matchData?.matchdetail?.match?.code ?? "");
+                                            Navigation.pushNamed(Routes.matchDetails);
+
+                                          },
+                                          child: sLive(context: context, data: matchData),
+                                        ),
+                                      ],
                                     ),
                                   );
                                 },
@@ -116,5 +134,15 @@ class SLiveTab extends StatelessWidget {
         ],
       ),
     );
+  }
+  void passLiveData(MTLiveMatch? data) {
+    mdCtrl.matchId.value = data?.matchdetail?.match?.code ?? "";
+    mdCtrl.matchType.value = data?.matchdetail?.match?.number ?? "";
+    mdCtrl.teamAFlag.value = data?.teamlist?[0].teamImage ?? "";
+    mdCtrl.teamBFlag.value = data?.teamlist?[1].teamImage ?? "";
+    mdCtrl.teamAName.value = data?.teamlist?[0].nameFull ?? "";
+    mdCtrl.teamBName.value = data?.teamlist?[1].nameFull ?? "";
+    mdCtrl.teamASName.value = data?.teamlist?[0].nameShort ?? "";
+    mdCtrl.teamBSName.value = data?.teamlist?[1].nameShort ?? "";
   }
 }

@@ -16,69 +16,65 @@ class TopStore extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => tourCtrl.allNSSL.value
-          ? CircularProgressIndicator()
-          : Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(1), top: context.hp(2.5)),
-                  child: Text(
-                    "Top Store",
-                    style: stDmSans(context, color: AppColor.text, fontWeight: FontWeight.w600),
-                  ),
-                ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(1), top: context.hp(2.5)),
+          child: Text(
+            "Top Store",
+            style: stDmSans(context, color: AppColor.text, fontWeight: FontWeight.w600),
+          ),
+        ),
 
-                ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
-                  itemCount: tourCtrl.newsList.length,
-                  itemBuilder: (context, index) {
-                    final data = tourCtrl.newsList[index];
-                    return GestureDetector(
-                      onTap: (){
-                        tourCtrl.newsTitle.value = data.title.toString();
-                        tourCtrl.newsDescription.value = data.description ?? "";
-                        tourCtrl.newsURLToImage.value = data.image.toString();
-                        tourCtrl.publishedAT.value = data.dateTime.toString();
-                        tourCtrl.newsIndex.value = index;
-                        Navigation.pushNamed(Routes.newsDetails);
-                      },
-                      child: Row(
-                        children: [
-                          showPlayer(context: context, url: data.image ?? "", h: context.wp(4), w: context.wp(6), r: 4),
-                          SizedBox(width: context.wp(4)),
-                          Flexible(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${data.title}",
-                                  maxLines: 2,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: tBarlow(context, fontSize: context.sp(13)),
-                                ),
-                                SizedBox(height: context.hp(0.5)),
-                                Text(
-                                  TimeManager.setNewsTime(data.dateTime ?? ""),
-                                  style: stDmSans(context, fontSize: context.sp(12)),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  },
-                  separatorBuilder: (BuildContext context, int index) {
-                    return Divider(height: context.hp(2), color: AppColor.cDivider.withValues(alpha: 0.5));
-                  },
-                ),
-              ],
-            ),
+        ListView.separated(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+          itemCount: tourCtrl.newsList.length,
+          itemBuilder: (context, index) {
+            final data = tourCtrl.newsList[index];
+            return GestureDetector(
+              onTap: () {
+                tourCtrl.newsTitle.value = data.title.toString();
+                tourCtrl.newsDescription.value = data.description ?? "";
+                tourCtrl.newsURLToImage.value = data.image.toString();
+                tourCtrl.publishedAT.value = data.dateTime.toString();
+                tourCtrl.newsIndex.value = index;
+                Navigation.pushNamed(Routes.newsDetails);
+              },
+              child: Row(
+                children: [
+                  Hero(
+                    tag: data.image ?? "defaultHeroTag",
+                    child: showPlayer(context: context, url: data.image ?? "", h: context.wp(4), w: context.wp(6), r: 4),
+                  ),
+                  SizedBox(width: context.wp(4)),
+                  Flexible(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "${data.title}",
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: tBarlow(context, fontSize: context.sp(13)),
+                        ),
+                        SizedBox(height: context.hp(0.5)),
+                        Text(TimeManager.setNewsTime(data.dateTime ?? ""), style: stDmSans(context, fontSize: context.sp(12))),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            );
+          },
+          separatorBuilder: (BuildContext context, int index) {
+            return Divider(height: context.hp(2), color: AppColor.cDivider.withValues(alpha: 0.5));
+          },
+        ),
+      ],
     );
   }
 }

@@ -18,9 +18,9 @@ class TPointTable extends StatelessWidget {
       backgroundColor: AppColor.background,
       body: Obx(
         () => tourCtrl.tDL.value
-            ? const DL()
+            ? Center(child: const DL())
             : tourCtrl.tPTList.isEmpty
-            ? const ED(text: "Matches Not Found")
+            ? Center(child: const ED(text: "Matches Not Found"))
             : ListView.separated(
                 shrinkWrap: true,
                 itemCount: tourCtrl.tPTList.length,

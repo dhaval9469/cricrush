@@ -1,7 +1,9 @@
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
+import 'package:cricrush/utils/routing.dart';
 import 'package:cricrush/widget/image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -42,21 +44,26 @@ class TOSquad extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final data = tourCtrl.tTeamsList[index];
 
-                      return Container(
-                        height: context.hp(10),
-                        width: context.wp(22),
-                        decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(12)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            showFlag(context: context, url: data.image ?? '', w: context.wp(2), h: context.wp(2)),
-                            SizedBox(height: context.hp(0.5)),
-                            Text(
-                              data.nameShort ?? "",
-                              overflow: TextOverflow.ellipsis,
-                              style: tDmSans(context, fontSize: context.sp(16), fontWeight: FontWeight.w600),
-                            ),
-                          ],
+                      return GestureDetector(
+                        onTap: () {
+                          Navigation.pushNamed(Routes.teamSquad, arg: data);
+                        },
+                        child: Container(
+                          height: context.hp(10),
+                          width: context.wp(22),
+                          decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(12)),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              showFlag(context: context, url: data.image ?? '', w: context.wp(2), h: context.wp(2)),
+                              SizedBox(height: context.hp(0.5)),
+                              Text(
+                                data.nameShort ?? "",
+                                overflow: TextOverflow.ellipsis,
+                                style: tDmSans(context, fontSize: context.sp(16), fontWeight: FontWeight.w600),
+                              ),
+                            ],
+                          ),
                         ),
                       );
                     },

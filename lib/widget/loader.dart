@@ -1,3 +1,4 @@
+import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,11 @@ class DL extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CircularProgressIndicator();
+    return CircularProgressIndicator.adaptive(
+      strokeWidth: 3,
+      backgroundColor: AppColor.tDivider,
+      valueColor: AlwaysStoppedAnimation<Color>(AppColor.text),
+    );
   }
 }
 

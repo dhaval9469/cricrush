@@ -23,9 +23,9 @@ class TSquad extends StatelessWidget {
       backgroundColor: AppColor.background,
       body: Obx(
         () => tourCtrl.tDL.value
-            ? const DL()
+            ? Center(child: const DL())
             : tourCtrl.tTeamsList.isEmpty
-            ? const ED(text: "Matches Not Found")
+            ? Center(child: const ED(text: "Matches Not Found"))
             : ListView.separated(
                 shrinkWrap: true,
                 itemCount: tourCtrl.tTeamsList.length,
