@@ -81,10 +81,9 @@ class _SplashPageState extends State<SplashPage> {
             padding: EdgeInsets.symmetric(horizontal: context.wp(10), vertical: context.hp(1.5)),
             child: Text(
               "${(progress * 100).toInt()} %",
-              style: tDmSans(context, fontWeight: FontWeight.bold, fontSize: context.sp(25))
-                  .copyWith(
-                    shadows: [Shadow(color: Colors.black87, blurRadius: 10, offset: Offset(0, 3))],
-                  ),
+              style: tDmSans(context, fontWeight: FontWeight.bold, fontSize: context.sp(25)).copyWith(
+                shadows: [Shadow(color: Colors.black87, blurRadius: 10, offset: Offset(0, 3))],
+              ),
             ),
           ),
 
@@ -120,7 +119,7 @@ class _SplashPageState extends State<SplashPage> {
     if (intro) {
       Navigation.pushNamed(Routes.bottomPage);
     } else {
-      Navigation.pushNamed(Routes.introPage);
+      Navigation.pushNamed(Routes.getStarted);
     }
     // InterstitialAdAppOpen.loadInterstitialAds();
   }

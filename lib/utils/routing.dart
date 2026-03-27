@@ -2,6 +2,7 @@ import 'package:cricrush/module/bottom/bottom.dart';
 import 'package:cricrush/module/home/page/home.dart';
 import 'package:cricrush/module/home/page/sub_page/sorts.dart';
 import 'package:cricrush/module/intro/intro_page.dart';
+import 'package:cricrush/module/intro/widget/get_start.dart';
 import 'package:cricrush/module/setting/page/notification.dart';
 import 'package:cricrush/module/setting/page/p_ranking/all_rounder_mr.dart';
 import 'package:cricrush/module/setting/page/p_ranking/all_rounder_wr.dart';
@@ -18,6 +19,7 @@ import 'package:cricrush/module/tours/page/sub_page/news_details.dart';
 import 'package:cricrush/module/tours/page/sub_page/player_state.dart';
 import 'package:cricrush/module/tours/page/sub_page/team_squad.dart';
 import 'package:get/get.dart';
+
 import '../module/match_details/page/match_details.dart';
 import '../module/setting/page/t_ranking/ranking.dart';
 
@@ -45,6 +47,7 @@ mixin Routes {
   static const String privacyPolicy = "/privacyPolicy";
   static const String introPage = "/introPage";
   static const String splashPage = "/splashPage";
+  static const String getStarted = "/getStarted";
 
   static List<GetPage<dynamic>> routes = [
     GetPage(name: bottomPage, page: () => const BottomPage(), transition: defaultTransition),
@@ -68,5 +71,6 @@ mixin Routes {
     GetPage(name: privacyPolicy, page: () => PrivacyPolicy(), transition: defaultTransition),
     GetPage(name: introPage, page: () => IntroPage(), transition: defaultTransition),
     GetPage(name: splashPage, page: () => SplashPage(), transition: defaultTransition),
+    GetPage(name: getStarted, page: () => GetStarted(), transition: defaultTransition),
   ];
 }

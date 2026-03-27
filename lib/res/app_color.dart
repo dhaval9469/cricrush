@@ -29,5 +29,5 @@ abstract class AppColor {
   static const Color upcoming = Color(0xFF4DA3FF);
   static const Color finished = Color(0xFF34C759);
 
-  static const Color button = Color(0xFF4F8EF7);
+  static const Color button = Color(0xFF016BFD);
 }

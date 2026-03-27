@@ -11,27 +11,46 @@ class FIntro extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
+      appBar: AppBar(backgroundColor: AppColor.background, toolbarHeight: 0),
       body: Column(
         children: [
-          Expanded(child: Center(child: Image.asset(AppAssets.fIntro))),
-          Container(
-            decoration: BoxDecoration(
-              color: AppColor.button,
-              borderRadius: BorderRadius.circular(12),
-            ),
+          SizedBox(height: context.hp(7)),
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: context.hp(1)),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Get Started",
-                    style: tDmSans(context, fontSize: context.sp(18), fontWeight: FontWeight.w600),
+              padding: EdgeInsets.symmetric(horizontal: context.wp(10)),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColor.background,
+                  borderRadius: BorderRadius.circular(40),
+                  border: Border.all(color: AppColor.tDivider),
+                ),
+                child: Center(
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: context.wp(7), vertical: context.hp(5)),
+                        child: Text(
+                          "Never Miss a Moment",
+                          textAlign: TextAlign.center,
+                          style: tDmSans(context, fontSize: context.sp(18), fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Expanded(child: Center(child: Image.asset(AppAssets.fIntro))),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: context.wp(7), vertical: context.hp(5)),
+                        child: Text(
+                          "Get instant alerts for wickets, milestones, and match results.",
+                          textAlign: TextAlign.center,
+                          style: stDmSans(context),
+                        ),
+                      ),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
+          SizedBox(height: context.hp(13)),
         ],
       ),
     );
