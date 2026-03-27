@@ -6,7 +6,6 @@ import 'package:cricrush/module/tours/page/tours.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/app_config.dart';
-import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -37,28 +36,64 @@ class _BottomPageState extends State<BottomPage> {
         valueListenable: AppConfig.bottomIndex,
         builder: (context, value, child) {
           return Obx(
-            () => BottomNavigationBar(
-              backgroundColor: AppColor.card,
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: AppColor.text,
-              unselectedItemColor: AppColor.subText,
-              selectedLabelStyle: tBarlow(
-                context,
-                fontWeight: FontWeight.w600,
-                fontSize: AppConfig.bottomIndex.value == 2 ? context.sp(10) : context.sp(15),
-                color: AppColor.text,
+            () => Theme(
+              data: Theme.of(context).copyWith(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                splashFactory: NoSplash.splashFactory,
               ),
-              unselectedLabelStyle: stBarlow(context, fontSize: context.sp(13)),
-              currentIndex: value,
-              onTap: (value) async {
-                AppConfig.bottomIndex.value = value;
-              },
-              items: [
-                _navItem(AppAssets.home, AppAssets.homes, "Home", 0),
-                _navItem(AppAssets.schedule, AppAssets.schedules, "Schedule", 1),
-                _navItem(AppAssets.series, AppAssets.seriess  , tourCtrl.tFooter.value, 2),
-                _navItem(AppAssets.setting, AppAssets.settings, "Setting", 3),
-              ],
+              child: Container(
+                height: context.hp(10),
+                decoration: BoxDecoration(color: AppColor.card),
+                child: BottomNavigationBar(
+                  backgroundColor: AppColor.card,
+                  type: BottomNavigationBarType.fixed,
+                  selectedItemColor: AppColor.text,
+                  unselectedItemColor: AppColor.subText,
+                  showSelectedLabels: false,
+                  showUnselectedLabels: false,
+                  selectedLabelStyle: TextStyle(fontSize: 0),
+                  unselectedLabelStyle: TextStyle(fontSize: 0),
+                  currentIndex: value,
+                  onTap: (value) async {
+                    AppConfig.bottomIndex.value = value;
+                  },
+                  items: [
+                    _navItem(
+                      context: context,
+                      icon: AppAssets.home,
+                      selectedIcon: AppAssets.homes,
+                      label: "Home",
+                      index: 0,
+                      currentIndex: value,
+                    ),
+                    _navItem(
+                      context: context,
+                      icon: AppAssets.schedule,
+                      selectedIcon: AppAssets.schedules,
+                      label: "Schedule",
+                      index: 1,
+                      currentIndex: value,
+                    ),
+                    _navItem(
+                      context: context,
+                      icon: AppAssets.series,
+                      selectedIcon: AppAssets.seriess,
+                      label: tourCtrl.tFooter.value,
+                      index: 2,
+                      currentIndex: value,
+                    ),
+                    _navItem(
+                      context: context,
+                      icon: AppAssets.setting,
+                      selectedIcon: AppAssets.settings,
+                      label: "Setting",
+                      index: 3,
+                      currentIndex: value,
+                    ),
+                  ],
+                ),
+              ),
             ),
           );
         },
@@ -66,17 +101,51 @@ class _BottomPageState extends State<BottomPage> {
     );
   }
 
-  BottomNavigationBarItem _navItem(String icon, String selectedIcon, String label, int index) {
-    final isSelected = AppConfig.bottomIndex.value == index;
+  BottomNavigationBarItem _navItem({
+    required BuildContext context,
+    required String icon,
+    required String selectedIcon,
+    required String label,
+    required int index,
+    required int currentIndex,
+  }) {
+    final isSelected = currentIndex == index;
 
     return BottomNavigationBarItem(
-      icon: AnimatedScale(
-        scale: isSelected ? 1.25 : 1,
-        duration: const Duration(milliseconds: 200),
-        curve: Curves.easeInOutCubic,
-        child: Image.asset(isSelected ? selectedIcon : icon, scale: 20, color: isSelected ? AppColor.text : AppColor.subText),
+      label: "",
+      icon: Padding(
+        padding: EdgeInsets.only(top: context.sp(7)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AnimatedPadding(
+              duration: const Duration(milliseconds: 200),
+              padding: EdgeInsets.only(bottom: isSelected ? 4 : 0),
+              child: AnimatedScale(
+                scale: isSelected ? 1.2 : 1,
+                duration: const Duration(milliseconds: 200),
+                curve: Curves.easeInOutCubic,
+                child: Image.asset(
+                  isSelected ? selectedIcon : icon,
+                  scale: 20,
+                  color: isSelected ? AppColor.text : AppColor.subText,
+                ),
+              ),
+            ),
+            SizedBox(height: context.sp(isSelected ? 0 : 2)),
+            Text(
+              label,
+              style: TextStyle(
+                fontSize: index == 2
+                    ? (isSelected ? context.sp(10) : context.sp(9))
+                    : (isSelected ? context.sp(15) : context.sp(13)),
+                fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                color: isSelected ? AppColor.text : AppColor.subText,
+              ),
+            ),
+          ],
+        ),
       ),
-      label: label,
     );
   }
 }

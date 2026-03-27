@@ -2,6 +2,7 @@ import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
+import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/utils/routing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,21 @@ class _CricRushAppState extends State<CricRushApp> {
       initialBinding: AppBinding(),
       getPages: Routes.routes,
       initialRoute: Routes.bottomPage,
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColor.background,
+        canvasColor: AppColor.background,
+        splashColor: Colors.transparent,
+        highlightColor: Colors.transparent,
+        hoverColor: Colors.transparent,
+        focusColor: Colors.transparent,
+        splashFactory: NoSplash.splashFactory,
+        pageTransitionsTheme: const PageTransitionsTheme(
+          builders: {
+            TargetPlatform.android: FadeUpwardsPageTransitionsBuilder(),
+            TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
+          },
+        ),
+      ),
     );
   }
 }
@@ -32,6 +48,5 @@ class AppBinding extends Bindings {
     Get.put<ToursCtrl>(ToursCtrl());
     Get.put<LMWService>(LMWService());
     Get.put<MatchDetailsCtrl>(MatchDetailsCtrl());
-
   }
 }
