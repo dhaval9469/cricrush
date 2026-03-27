@@ -8,6 +8,7 @@ import 'package:cricrush/module/tours/page/t_squad.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
+import 'package:cricrush/widget/image_loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -73,7 +74,9 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: tourCtrl.tIndex.value == index ? AppColor.sTabColor : AppColor.cDivider,
+                            color: tourCtrl.tIndex.value == index
+                                ? AppColor.sTabColor
+                                : AppColor.cDivider,
                             width: tourCtrl.tIndex.value == index ? 2 : 1,
                           ),
                           boxShadow: tourCtrl.tIndex.value == index
@@ -85,13 +88,21 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                                     offset: const Offset(0, 0),
                                   ),
                                 ]
-                              : [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 4, offset: const Offset(0, 2))],
-                          image: const DecorationImage(
-                            image: NetworkImage(
-                              "https://media.crictracker.com/media/attachments/1773729386350_CT---IPL-1-(1).jpeg",
-                            ),
-                            fit: BoxFit.cover,
-                          ),
+                              : [
+                                  BoxShadow(
+                                    color: Colors.black.withValues(alpha: 0.08),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  ),
+                                ],
+                        ),
+                        child: showFlag(
+                          context: context,
+                          url:
+                              'https://media.crictracker.com/media/attachments/1773729386350_CT---IPL-1-(1).jpeg',
+                          w: context.wp(20),
+                          h: context.hp(8),
+                          borderRadius: 10,
                         ),
                       ),
                       /*                     child: Container(
@@ -121,12 +132,18 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
               SizedBox(height: context.hp(1)),
               Padding(
                 padding: EdgeInsets.only(left: context.wp(4)),
-                child: Text(tourCtrl.tHeader.value, style: tBarlow(context, fontWeight: FontWeight.w600)),
+                child: Text(
+                  tourCtrl.tHeader.value,
+                  style: tBarlow(context, fontWeight: FontWeight.w600),
+                ),
               ),
               SizedBox(height: context.hp(0.3)),
               Padding(
                 padding: EdgeInsets.only(left: context.wp(4)),
-                child: Text(tourCtrl.tDes.value, style: stBarlow(context, fontSize: context.sp(12))),
+                child: Text(
+                  tourCtrl.tDes.value,
+                  style: stBarlow(context, fontSize: context.sp(12)),
+                ),
               ),
             ],
           ),

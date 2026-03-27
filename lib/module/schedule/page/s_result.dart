@@ -59,18 +59,28 @@ class _SResultTabState extends State<SResultTab> {
                     },
                     child: Obx(
                       () => Container(
-                        padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(0.6)),
+                        padding: EdgeInsets.symmetric(vertical: context.hp(0.7)),
+                        width: context.wp(18),
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
+                          color: homeCtrl.rsMatchTypes.value == e.mt
+                              ? AppColor.sTabColor
+                              : AppColor.card,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
+                          border: Border.all(
+                            color: homeCtrl.rsMatchTypes.value == e.mt
+                                ? AppColor.sTabColor
+                                : AppColor.tDivider,
+                          ),
                         ),
                         child: Text(
                           "${e.mt}",
                           style: stDmSans(
                             context,
                             height: 0.9,
-                            color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
+                            color: homeCtrl.rsMatchTypes.value == e.mt
+                                ? AppColor.text
+                                : AppColor.subText,
                           ),
                           strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
                         ),
@@ -89,7 +99,7 @@ class _SResultTabState extends State<SResultTab> {
                   ? Center(child: ED(text: "Match Not Found"))
                   : ListView.separated(
                       shrinkWrap: true,
-                      padding: EdgeInsets.only(bottom: context.hp(1.5)),
+                      padding: EdgeInsets.only(bottom: context.hp(1.5), top: context.hp(0.5)),
                       itemCount: homeCtrl.rSeriesData.length,
                       itemBuilder: (context, seriesIndex) {
                         final data = homeCtrl.rSeriesData[seriesIndex];
@@ -99,12 +109,17 @@ class _SResultTabState extends State<SResultTab> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Divider(color: AppColor.cDivider, height: 0),
-                              mcHeader(context: context, tourName: "${data.tourName?.replaceAll(",", " ")}"),
+                              mcHeader(
+                                context: context,
+                                tourName: "${data.tourName?.replaceAll(",", " ")}",
+                              ),
                               ListView.separated(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.symmetric(vertical: context.hp(2)),
-                                itemCount: (data.results?.length ?? 0) > 3 ? 3 : (data.results?.length ?? 0),
+                                itemCount: (data.results?.length ?? 0) > 3
+                                    ? 3
+                                    : (data.results?.length ?? 0),
                                 itemBuilder: (context, index) {
                                   final matchData = data.results?[index];
 
@@ -115,12 +130,15 @@ class _SResultTabState extends State<SResultTab> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         GestureDetector(
+                                          behavior: HitTestBehavior.translucent,
                                           onTap: () {
                                             mdCtrl.seriesId.value = data.seriesId ?? "";
                                             mdCtrl.tourId.value = data.tourId ?? "";
                                             passLiveData(matchData);
-                                            lmwService.openMatch(matchData?.matchdetail?.match?.code ?? "");
                                             Navigation.pushNamed(Routes.matchDetails);
+                                            lmwService.openMatch(
+                                              matchData?.matchdetail?.match?.code ?? "",
+                                            );
                                           },
                                           child: sFinish(context: context, data: matchData),
                                         ),
@@ -151,6 +169,7 @@ class _SResultTabState extends State<SResultTab> {
       ),
     );
   }
+
   void passLiveData(MTResultsMatch? data) {
     mdCtrl.matchId.value = data?.matchdetail?.match?.code ?? "";
     mdCtrl.matchType.value = data?.matchdetail?.match?.number ?? "";

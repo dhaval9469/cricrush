@@ -214,7 +214,7 @@ class _LmdLiveState extends State<LmdLive> {
                                     "${widget.data?.status}",
                                     style: stBarlow(
                                       context,
-                                      fontSize: context.sp(13),
+                                      fontSize: context.sp(17),
                                       color: AppColor.status,
                                       fontWeight: FontWeight.bold,
                                     ),

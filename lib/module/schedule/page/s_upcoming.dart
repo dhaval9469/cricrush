@@ -61,18 +61,28 @@ class _SUpcomingTabState extends State<SUpcomingTab> {
                     },
                     child: Obx(
                       () => Container(
-                        padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(0.6)),
+                        padding: EdgeInsets.symmetric(vertical: context.hp(0.7)),
+                        width: context.wp(18),
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: homeCtrl.usMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
+                          color: homeCtrl.usMatchTypes.value == e.mt
+                              ? AppColor.sTabColor
+                              : AppColor.card,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: homeCtrl.usMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
+                          border: Border.all(
+                            color: homeCtrl.usMatchTypes.value == e.mt
+                                ? AppColor.sTabColor
+                                : AppColor.tDivider,
+                          ),
                         ),
                         child: Text(
                           "${e.mt}",
                           style: stDmSans(
                             context,
                             height: 0.9,
-                            color: homeCtrl.usMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
+                            color: homeCtrl.usMatchTypes.value == e.mt
+                                ? AppColor.text
+                                : AppColor.subText,
                           ),
                           strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
                         ),
@@ -91,7 +101,7 @@ class _SUpcomingTabState extends State<SUpcomingTab> {
                   ? Center(child: ED(text: "Match Not Found"))
                   : ListView.separated(
                       shrinkWrap: true,
-                      padding: EdgeInsets.only(bottom: context.hp(1.5)),
+                      padding: EdgeInsets.only(bottom: context.hp(1.5), top: context.hp(0.5)),
                       itemCount: homeCtrl.upSeriesData.length,
                       itemBuilder: (context, seriesIndex) {
                         final data = homeCtrl.upSeriesData[seriesIndex];
@@ -101,12 +111,17 @@ class _SUpcomingTabState extends State<SUpcomingTab> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Divider(color: AppColor.cDivider, height: 0),
-                              mcHeader(context: context, tourName: "${data.tourName?.replaceAll(",", " ")}"),
+                              mcHeader(
+                                context: context,
+                                tourName: "${data.tourName?.replaceAll(",", " ")}",
+                              ),
                               ListView.separated(
                                 shrinkWrap: true,
                                 padding: EdgeInsets.symmetric(vertical: context.hp(2)),
                                 physics: NeverScrollableScrollPhysics(),
-                                itemCount: (data.upcoming?.length ?? 0) > 3 ? 3 : (data.upcoming?.length ?? 0),
+                                itemCount: (data.upcoming?.length ?? 0) > 3
+                                    ? 3
+                                    : (data.upcoming?.length ?? 0),
                                 itemBuilder: (context, index) {
                                   final matchData = data.upcoming?[index];
 
@@ -121,9 +136,8 @@ class _SUpcomingTabState extends State<SUpcomingTab> {
                                             mdCtrl.seriesId.value = data.seriesId ?? "";
                                             mdCtrl.tourId.value = data.tourId ?? "";
                                             passUpCData(matchData);
-                                            lmwService.getLSDFUR(matchData?.matchfile ?? "");
                                             Navigation.pushNamed(Routes.matchDetails);
-
+                                            lmwService.getLSDFUR(matchData?.matchfile ?? "");
                                           },
                                           child: sUpComing(context: context, data: matchData),
                                         ),
@@ -154,6 +168,7 @@ class _SUpcomingTabState extends State<SUpcomingTab> {
       ),
     );
   }
+
   void passUpCData(MTUpComingMatch? data) {
     mdCtrl.matchId.value = data?.matchfile ?? "";
     mdCtrl.matchType.value = data?.matchnumber ?? "";

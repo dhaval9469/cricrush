@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:cricrush/module/tours/model/tours_details_model.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';

@@ -40,20 +40,26 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
     tabController.addListener(() {
       if (!tabController.indexIsChanging) {
         // Interstitial.showInterstitialByCount();
+        if (tabController.index == 1) {
+          mdCtrl.getScoreBoard(mdCtrl.matchId.value, silentRefresh: true);
+        } else if (tabController.index == 3) {
+          mdCtrl.getCommentary(mdCtrl.matchId.value, silentRefresh: true);
+        } else if (tabController.index == 5) {
+          mdCtrl.getOver(mdCtrl.matchId.value, silentRefresh: true);
+        }
       }
     });
     super.initState();
   }
 
   Future<void> callData() async {
-    // tourWsService.disconnectSocket(clearData: false);
     final matchId = mdCtrl.matchId.value;
     await Future.wait([
       mdCtrl.getScoreBoard(matchId),
       mdCtrl.getCommentary(matchId),
       mdCtrl.getSquad(matchId),
       mdCtrl.getOver(matchId),
-      mdCtrl.getPointTable(mdCtrl.seriesId.value),
+      // mdCtrl.getPointTable(mdCtrl.seriesId.value),
     ]);
   }
 
@@ -122,7 +128,15 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
       ),
       body: TabBarView(
         controller: tabController,
-        children: [MatchInfo(), Scoreboard(), LmDetails(), Commentary(), PlayingXi(), Overs(), PointTable()],
+        children: [
+          MatchInfo(),
+          Scoreboard(),
+          LmDetails(),
+          Commentary(),
+          PlayingXi(),
+          Overs(),
+          PointTable(),
+        ],
       ),
     );
   }

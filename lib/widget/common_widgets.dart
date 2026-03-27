@@ -2,6 +2,7 @@ import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 Widget card({final Widget? child}) {
   return Container(
@@ -32,12 +33,49 @@ Widget liveDot(BuildContext context) {
           SizedBox(width: context.wp(1.5)),
           Text(
             "LIVE",
-            style: tDmSans(context, color: AppColor.white, fontWeight: FontWeight.w900, fontSize: context.sp(13)),
+            style: tDmSans(
+              context,
+              color: AppColor.white,
+              fontWeight: FontWeight.w900,
+              fontSize: context.sp(13),
+            ),
             strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
-            textHeightBehavior: const TextHeightBehavior(applyHeightToFirstAscent: false, applyHeightToLastDescent: false),
+            textHeightBehavior: const TextHeightBehavior(
+              applyHeightToFirstAscent: false,
+              applyHeightToLastDescent: false,
+            ),
           ),
         ],
       ),
     ),
   );
+}
+
+class GlowProgressBar extends StatelessWidget {
+  final double progress;
+
+  const GlowProgressBar({super.key, required this.progress});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 8,
+      width: double.infinity,
+      decoration: BoxDecoration(color: Colors.black26, borderRadius: BorderRadius.circular(50)),
+      child: Stack(
+        children: [
+          FractionallySizedBox(
+            widthFactor: progress,
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(50),
+                color: Colors.white,
+                boxShadow: [BoxShadow(color: Colors.black38, blurRadius: 6, spreadRadius: 2)],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
 }

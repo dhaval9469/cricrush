@@ -36,7 +36,11 @@ class TMatches extends StatelessWidget {
                         : ListView.separated(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            padding: EdgeInsets.only(bottom: context.hp(1.5), right: context.wp(3), left: context.wp(3)),
+                            padding: EdgeInsets.only(
+                              bottom: context.hp(1.5),
+                              right: context.wp(3),
+                              left: context.wp(3),
+                            ),
                             itemCount: tourCtrl.tMatchData.value?.live?.length ?? 0,
                             itemBuilder: (context, index) {
                               final lmData = tourCtrl.tMatchData.value?.live?[index];
@@ -45,8 +49,8 @@ class TMatches extends StatelessWidget {
                                   mdCtrl.seriesId.value = lmData?.matchdetail?.series?.id ?? "";
                                   mdCtrl.tourId.value = lmData?.tourId ?? "";
                                   passLiveData(lmData);
-                                  lmwService.openMatch(lmData?.matchdetail?.match?.code ?? "");
                                   Navigation.pushNamed(Routes.matchDetails);
+                                  lmwService.openMatch(lmData?.matchdetail?.match?.code ?? "");
                                 },
                                 child: tLive(context: context, data: lmData),
                               );
@@ -61,7 +65,11 @@ class TMatches extends StatelessWidget {
                         : ListView.separated(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            padding: EdgeInsets.only(bottom: context.hp(1.5), right: context.wp(3), left: context.wp(3)),
+                            padding: EdgeInsets.only(
+                              bottom: context.hp(1.5),
+                              right: context.wp(3),
+                              left: context.wp(3),
+                            ),
                             itemCount: tourCtrl.tMatchData.value?.upcoming?.length ?? 0,
                             itemBuilder: (context, index) {
                               final umData = tourCtrl.tMatchData.value?.upcoming?[index];
@@ -70,8 +78,8 @@ class TMatches extends StatelessWidget {
                                   mdCtrl.seriesId.value = umData?.seriesId ?? "";
                                   mdCtrl.tourId.value = umData?.tourId ?? "";
                                   passUpCData(umData);
-                                  lmwService.getLSDFUR(umData?.matchfile ?? "");
                                   Navigation.pushNamed(Routes.matchDetails);
+                                  lmwService.getLSDFUR(umData?.matchfile ?? "");
                                 },
                                 child: tUpComing(context: context, data: umData),
                               );
@@ -86,7 +94,11 @@ class TMatches extends StatelessWidget {
                         : ListView.separated(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            padding: EdgeInsets.only(bottom: context.hp(1.5), right: context.wp(3), left: context.wp(3)),
+                            padding: EdgeInsets.only(
+                              bottom: context.hp(1.5),
+                              right: context.wp(3),
+                              left: context.wp(3),
+                            ),
                             itemCount: tourCtrl.tMatchData.value?.keyMatches?.length ?? 0,
                             itemBuilder: (context, index) {
                               final kmData = tourCtrl.tMatchData.value?.keyMatches?[index];
@@ -95,8 +107,8 @@ class TMatches extends StatelessWidget {
                                   mdCtrl.seriesId.value = kmData?.matchdetail?.series?.id ?? "";
                                   mdCtrl.tourId.value = kmData?.tourId ?? "";
                                   passComData(kmData);
-                                  lmwService.openMatch(kmData?.matchdetail?.match?.code ?? "");
                                   Navigation.pushNamed(Routes.matchDetails);
+                                  lmwService.openMatch(kmData?.matchdetail?.match?.code ?? "");
                                 },
                                 child: tFinish(context: context, data: kmData),
                               );
@@ -111,7 +123,11 @@ class TMatches extends StatelessWidget {
                         : ListView.separated(
                             physics: const NeverScrollableScrollPhysics(),
                             shrinkWrap: true,
-                            padding: EdgeInsets.only(bottom: context.hp(1.5), right: context.wp(3), left: context.wp(3)),
+                            padding: EdgeInsets.only(
+                              bottom: context.hp(1.5),
+                              right: context.wp(3),
+                              left: context.wp(3),
+                            ),
                             itemCount: tourCtrl.tMatchData.value?.results?.length ?? 0,
                             itemBuilder: (context, index) {
                               final fmData = tourCtrl.tMatchData.value?.results?[index];
@@ -120,8 +136,8 @@ class TMatches extends StatelessWidget {
                                   mdCtrl.seriesId.value = fmData?.matchdetail?.series?.id ?? "";
                                   mdCtrl.tourId.value = fmData?.tourId ?? "";
                                   passComData(fmData);
-                                  lmwService.openMatch(fmData?.matchdetail?.match?.code ?? "");
                                   Navigation.pushNamed(Routes.matchDetails);
+                                  lmwService.openMatch(fmData?.matchdetail?.match?.code ?? "");
                                 },
                                 child: tFinish(context: context, data: fmData),
                               );

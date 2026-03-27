@@ -20,7 +20,7 @@ class _CricRushAppState extends State<CricRushApp> {
       debugShowCheckedModeBanner: false,
       initialBinding: AppBinding(),
       getPages: Routes.routes,
-      initialRoute: Routes.bottomPage,
+      initialRoute: Routes.splashPage,
     );
   }
 }

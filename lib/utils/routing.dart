@@ -1,6 +1,7 @@
 import 'package:cricrush/module/bottom/bottom.dart';
 import 'package:cricrush/module/home/page/home.dart';
 import 'package:cricrush/module/home/page/sub_page/sorts.dart';
+import 'package:cricrush/module/intro/intro_page.dart';
 import 'package:cricrush/module/setting/page/notification.dart';
 import 'package:cricrush/module/setting/page/p_ranking/all_rounder_mr.dart';
 import 'package:cricrush/module/setting/page/p_ranking/all_rounder_wr.dart';
@@ -12,6 +13,7 @@ import 'package:cricrush/module/setting/page/p_ranking/rankings.dart';
 import 'package:cricrush/module/setting/page/privacy_policy.dart';
 import 'package:cricrush/module/setting/page/t_ranking/team_mr.dart';
 import 'package:cricrush/module/setting/page/t_ranking/team_wr.dart';
+import 'package:cricrush/module/splash_page.dart';
 import 'package:cricrush/module/tours/page/sub_page/news_details.dart';
 import 'package:cricrush/module/tours/page/sub_page/player_state.dart';
 import 'package:cricrush/module/tours/page/sub_page/team_squad.dart';
@@ -41,6 +43,8 @@ mixin Routes {
   static const String allRounderWr = "/allRounderWr";
   static const String notificationS = "/notificationS";
   static const String privacyPolicy = "/privacyPolicy";
+  static const String introPage = "/introPage";
+  static const String splashPage = "/splashPage";
 
   static List<GetPage<dynamic>> routes = [
     GetPage(name: bottomPage, page: () => const BottomPage(), transition: defaultTransition),
@@ -62,5 +66,7 @@ mixin Routes {
     GetPage(name: allRounderWr, page: () => AllRounderWr(), transition: defaultTransition),
     GetPage(name: notificationS, page: () => NotificationS(), transition: defaultTransition),
     GetPage(name: privacyPolicy, page: () => PrivacyPolicy(), transition: defaultTransition),
+    GetPage(name: introPage, page: () => IntroPage(), transition: defaultTransition),
+    GetPage(name: splashPage, page: () => SplashPage(), transition: defaultTransition),
   ];
 }

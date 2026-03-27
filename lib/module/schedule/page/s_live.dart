@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/model/all_match_model.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
@@ -54,18 +56,28 @@ class SLiveTab extends StatelessWidget {
                     },
                     child: Obx(
                       () => Container(
-                        padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(0.6)),
+                        padding: EdgeInsets.symmetric(vertical: context.hp(0.7)),
+                        width: context.wp(18),
+                        alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
+                          color: homeCtrl.lsMatchTypes.value == e.mt
+                              ? AppColor.sTabColor
+                              : AppColor.card,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
+                          border: Border.all(
+                            color: homeCtrl.lsMatchTypes.value == e.mt
+                                ? AppColor.sTabColor
+                                : AppColor.tDivider,
+                          ),
                         ),
                         child: Text(
                           "${e.mt}",
                           style: stDmSans(
                             context,
                             height: 0.9,
-                            color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
+                            color: homeCtrl.lsMatchTypes.value == e.mt
+                                ? AppColor.text
+                                : AppColor.subText,
                           ),
                           strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
                         ),
@@ -82,9 +94,9 @@ class SLiveTab extends StatelessWidget {
                   ? Center(child: const DL())
                   : homeCtrl.liveSeriesData.isEmpty
                   ? Center(child: ED(text: "Match Not Found"))
-                  : ListView.builder(
+                  : ListView.separated(
                       shrinkWrap: true,
-                      padding: EdgeInsets.only(bottom: context.hp(1.5)),
+                      padding: EdgeInsets.only(bottom: context.hp(1.5), top: context.hp(0.5)),
                       itemCount: homeCtrl.liveSeriesData.length,
                       itemBuilder: (context, seriesIndex) {
                         final data = homeCtrl.liveSeriesData[seriesIndex];
@@ -95,10 +107,10 @@ class SLiveTab extends StatelessWidget {
                             children: [
                               Divider(color: AppColor.cDivider, height: 0),
                               mcHeader(context: context, tourName: "${data.tourName}"),
-                              ListView.builder(
+                              ListView.separated(
                                 shrinkWrap: true,
                                 padding: EdgeInsets.symmetric(vertical: context.hp(1.3)),
-                                itemCount: data.live?.length,
+                                itemCount: data.live?.length ?? 0,
                                 itemBuilder: (context, index) {
                                   final matchData = data.live?[index];
                                   return padding(
@@ -108,18 +120,28 @@ class SLiveTab extends StatelessWidget {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         GestureDetector(
+                                          behavior: HitTestBehavior.translucent,
                                           onTap: () {
+                                            log("check -- : 1");
                                             mdCtrl.seriesId.value = data.seriesId ?? "";
                                             mdCtrl.tourId.value = data.tourId ?? "";
                                             passLiveData(matchData);
-                                            lmwService.openMatch(matchData?.matchdetail?.match?.code ?? "");
                                             Navigation.pushNamed(Routes.matchDetails);
-
+                                            lmwService.openMatch(
+                                              matchData?.matchdetail?.match?.code ?? "",
+                                            );
                                           },
                                           child: sLive(context: context, data: matchData),
                                         ),
                                       ],
                                     ),
+                                  );
+                                },
+                                separatorBuilder: (BuildContext context, int index) {
+                                  return padding(
+                                    context,
+                                    isHorizontal: true,
+                                    Divider(color: AppColor.cDivider, height: context.hp(2.3)),
                                   );
                                 },
                               ),
@@ -128,6 +150,9 @@ class SLiveTab extends StatelessWidget {
                           ),
                         );
                       },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(height: context.hp(1.2));
+                      },
                     ),
             ),
           ),
@@ -135,6 +160,7 @@ class SLiveTab extends StatelessWidget {
       ),
     );
   }
+
   void passLiveData(MTLiveMatch? data) {
     mdCtrl.matchId.value = data?.matchdetail?.match?.code ?? "";
     mdCtrl.matchType.value = data?.matchdetail?.match?.number ?? "";

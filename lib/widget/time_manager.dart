@@ -65,7 +65,7 @@ class TimeManager {
       return '';
     }
 
-    Duration difference = dateTime.difference(now);
+    // Duration difference = dateTime.difference(now);
 
     String formattedDate = DateFormat("d MMM").format(dateTime); // 22 Nov
     String formattedTime = DateFormat("h:mm a").format(dateTime); // 9:00 PM
