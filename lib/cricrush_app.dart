@@ -22,7 +22,6 @@ class _CricRushAppState extends State<CricRushApp> {
       initialBinding: AppBinding(),
       getPages: Routes.routes,
       initialRoute: Routes.splashPage,
-      initialRoute: Routes.bottomPage,
       theme: ThemeData(
         scaffoldBackgroundColor: AppColor.background,
         canvasColor: AppColor.background,

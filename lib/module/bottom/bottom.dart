@@ -1,4 +1,3 @@
-import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/page/home.dart';
 import 'package:cricrush/module/schedule/page/schedule.dart';
 import 'package:cricrush/module/setting/page/setting.dart';
