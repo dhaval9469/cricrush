@@ -23,20 +23,25 @@ class TOKeyState extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: context.wp(4), vertical: context.hp(1)),
+                  padding: EdgeInsets.only(
+                    left: context.wp(4),
+                    right: context.wp(2),
+                    bottom: context.hp(0.7),
+                    top: context.hp(1.5),
+                  ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Key Stats", style: tDmSans(context, fontWeight: FontWeight.w600)),
-                      // Spacer(),
+                      Spacer(),
                       GestureDetector(
                         onTap: () {
                           tourCtrl.tabController?.index = 2;
                         },
                         child: Text("See All", style: stDmSans(context, fontSize: context.sp(13))),
                       ),
-                      // SizedBox(width: context.wp(1),),
-                      // Icon(Icons.arrow_forward_ios,color: AppColor.subText,size: context.sp(13),),
+                      SizedBox(width: context.sp(1)),
+                      Icon(Icons.arrow_forward_ios, color: AppColor.subText, size: context.sp(11)),
                     ],
                   ),
                 ),

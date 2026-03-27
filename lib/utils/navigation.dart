@@ -2,6 +2,70 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Navigation {
+  static Future<dynamic>? push(Widget page) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    return Get.to(
+      () => page,
+      transition: Transition.noTransition,
+      duration: Duration.zero,
+      fullscreenDialog: false,
+      preventDuplicates: false,
+    );
+  }
+
+  static Future<dynamic>? pushNamed(String routeName, {dynamic arg, Map<String, String>? params}) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    return Get.toNamed(routeName, arguments: arg, parameters: params, preventDuplicates: false);
+  }
+
+  static void popAndPushNamed(String routeName, {dynamic arg, Map<String, String>? params}) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Get.offAndToNamed(routeName, arguments: arg, parameters: params);
+  }
+
+  static Future<dynamic>? leftToRight(Widget page) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    return Get.to(() => page, transition: Transition.noTransition, duration: Duration.zero);
+  }
+
+  static Future<dynamic>? rightToLeft(Widget page) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    return Get.to(() => page, transition: Transition.noTransition, duration: Duration.zero);
+  }
+
+  static void replace(String routeName, {dynamic arguments}) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Get.offNamed(routeName, arguments: arguments);
+  }
+
+  static void pop({dynamic result}) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Get.back(result: result);
+  }
+
+  static void doublePop() {
+    Get.back();
+    Get.back();
+  }
+
+  static void removeAll(Widget page) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Get.offAll(() => page);
+  }
+
+  static void popUntil(String routeName) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Get.until((route) => route.settings.name == routeName);
+  }
+
+  static void replaceAll(String routeName, {dynamic arg, Map<String, String>? params}) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    Get.offAllNamed(routeName, arguments: arg, parameters: params);
+  }
+}
+
+/*
+class Navigation {
   /// Push with default navigation
   static Future<dynamic>? push(Widget page) {
     FocusManager.instance.primaryFocus?.unfocus();
@@ -68,3 +132,4 @@ class Navigation {
     Get.offAllNamed(routeName, arguments: arg, parameters: params);
   }
 }
+*/
