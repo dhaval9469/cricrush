@@ -35,7 +35,7 @@ class FIntro extends StatelessWidget {
                           style: tDmSans(context, fontSize: context.sp(18), fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Expanded(child: Center(child: Image.asset(AppAssets.fIntro))),
+                      Expanded(child: Center(child: Image.asset(AppAssets.iF))),
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: context.wp(7), vertical: context.hp(5)),
                         child: Text(

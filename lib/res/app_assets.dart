@@ -14,7 +14,9 @@ abstract class AppAssets {
   static final String dFlag = '${image}d_flag.png';
   static final String dummyPlayer = '${image}dummy_player.png';
   static final String fIntro = '${image}f_intro.png';
-  static final String iS = '${image}is.png';
+  static final String iS = '${image}iS.png';
+  static final String iT = '${image}iT.png';
+  static final String iF = '${image}iF.png';
 
   static final String rTeam = '${icons}r_team.svg';
   static final String rBall = '${icons}r_ball.svg';

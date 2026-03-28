@@ -28,16 +28,31 @@ class TIntro extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: context.wp(7), vertical: context.hp(5)),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.wp(7),
+                          vertical: context.hp(5),
+                        ),
                         child: Text(
                           "Match Insights & Commentary",
                           textAlign: TextAlign.center,
-                          style: tDmSans(context, fontSize: context.sp(18), fontWeight: FontWeight.bold),
+                          style: tDmSans(
+                            context,
+                            fontSize: context.sp(18),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      Expanded(child: Center(child: Image.asset(AppAssets.fIntro))),
+                      Expanded(
+                        child: Container(
+                          color: Color(0xff242632),
+                          child: Center(child: Image.asset(AppAssets.iT)),
+                        ),
+                      ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: context.wp(7), vertical: context.hp(5)),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.wp(7),
+                          vertical: context.hp(5),
+                        ),
                         child: Text(
                           "Follow expert analysis, key moments, and detailed player stats.",
                           textAlign: TextAlign.center,

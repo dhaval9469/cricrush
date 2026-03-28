@@ -28,16 +28,31 @@ class SIntro extends StatelessWidget {
                   child: Column(
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: context.wp(7), vertical: context.hp(5)),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.wp(7),
+                          vertical: context.hp(5),
+                        ),
                         child: Text(
                           "Live Scores, Instantly",
                           textAlign: TextAlign.center,
-                          style: tDmSans(context, fontSize: context.sp(18), fontWeight: FontWeight.bold),
+                          style: tDmSans(
+                            context,
+                            fontSize: context.sp(18),
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
-                      Expanded(child: Center(child: Image.asset(AppAssets.iS))),
+                      Expanded(
+                        child: Container(
+                          color: Color(0xff242632),
+                          child: Center(child: Image.asset(AppAssets.iS)),
+                        ),
+                      ),
                       Padding(
-                        padding: EdgeInsets.symmetric(horizontal: context.wp(7), vertical: context.hp(5)),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.wp(7),
+                          vertical: context.hp(5),
+                        ),
                         child: Text(
                           "Get real-time cricket scores and match updates as the action unfolds.",
                           textAlign: TextAlign.center,
