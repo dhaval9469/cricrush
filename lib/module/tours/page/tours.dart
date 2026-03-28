@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/banner/banner_ad.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/module/tours/page/t_keystate.dart';
 import 'package:cricrush/module/tours/page/t_matches.dart';
@@ -57,7 +58,8 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                   itemBuilder: (context, index) {
                     final data = tourCtrl.seriesList[index];
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
+                        tourCtrl.csl.value = true;
                         tourCtrl.getAllTD(tourId: data.tourId, seriesId: data.seriesId);
                         tourCtrl.tourId.value = data.tourId ?? "";
                         tourCtrl.seriesId.value = data.seriesId ?? "";
@@ -65,6 +67,8 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                         tourCtrl.tDes.value = data.description ?? "";
                         tourCtrl.tFooter.value = data.sortTitle ?? "";
                         tourCtrl.tIndex.value = index;
+                        await Future.delayed(Duration(seconds: 1));
+                        tourCtrl.csl.value = false;
                       },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 250),
@@ -74,9 +78,7 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(10),
                           border: Border.all(
-                            color: tourCtrl.tIndex.value == index
-                                ? AppColor.sTabColor
-                                : AppColor.cDivider,
+                            color: tourCtrl.tIndex.value == index ? AppColor.sTabColor : AppColor.cDivider,
                             width: tourCtrl.tIndex.value == index ? 2 : 1,
                           ),
                           boxShadow: tourCtrl.tIndex.value == index
@@ -98,8 +100,7 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
                         ),
                         child: showFlag(
                           context: context,
-                          url:
-                              'https://media.crictracker.com/media/attachments/1773729386350_CT---IPL-1-(1).jpeg',
+                          url: 'https://media.crictracker.com/media/attachments/1773729386350_CT---IPL-1-(1).jpeg',
                           w: context.wp(20),
                           h: context.hp(8),
                           borderRadius: 10,
@@ -132,18 +133,12 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
               SizedBox(height: context.hp(1)),
               Padding(
                 padding: EdgeInsets.only(left: context.wp(4)),
-                child: Text(
-                  tourCtrl.tHeader.value,
-                  style: tBarlow(context, fontWeight: FontWeight.w600),
-                ),
+                child: Text(tourCtrl.tHeader.value, style: tBarlow(context, fontWeight: FontWeight.w600)),
               ),
               SizedBox(height: context.hp(0.3)),
               Padding(
                 padding: EdgeInsets.only(left: context.wp(4)),
-                child: Text(
-                  tourCtrl.tDes.value,
-                  style: stBarlow(context, fontSize: context.sp(12)),
-                ),
+                child: Text(tourCtrl.tDes.value, style: stBarlow(context, fontSize: context.sp(12))),
               ),
             ],
           ),
@@ -210,6 +205,7 @@ class _ToursPageState extends State<ToursPage> with SingleTickerProviderStateMix
         controller: tourCtrl.tabController,
         children: [TOverview(), TMatches(), TKeyState(), TSquad(), TPointTable(), TNews()],
       ),
+      bottomNavigationBar: BannerAds(),
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/banner/banner_ad.dart';
 import 'package:cricrush/module/setting/ctrl/setting_ctrl.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
@@ -106,6 +107,7 @@ class _SettingState extends State<Setting> {
           ),
         ],
       ),
+      bottomNavigationBar: BannerAds(),
     );
   }
 

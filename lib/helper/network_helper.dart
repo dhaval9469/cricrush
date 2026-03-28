@@ -18,7 +18,7 @@ class NetworkAPICall {
     final client = http.Client();
 
     try {
-      final String fullURL = "${AppConfig.baseUrl}$url";
+      final String fullURL = "${AppConfig.endPoint?.baseurlTwo}$url";
       final response = await client.post(Uri.parse(fullURL), body: body, headers: header);
       if (response.statusCode == 200) {
         return checkResponse(response);
@@ -33,7 +33,7 @@ class NetworkAPICall {
   Future<dynamic> get(String url, {Map<String, String>? header}) async {
     final client = http.Client();
     try {
-      final String fullURL = "${AppConfig.baseUrl}$url";
+      final String fullURL = "${AppConfig.endPoint?.baseurlTwo}$url";
       final response = await client.get(Uri.parse(fullURL), headers: {"X-Api-Key":AppConfig.token});
       if (response.statusCode == 200) {
         return checkResponse(response);

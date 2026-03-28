@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:cricrush/ad_module/unitid_model.dart';
 import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/material.dart';
 
@@ -16,26 +17,13 @@ abstract class AppConfig {
 
   static String appShareText = '';
 
-  static String wsUrl = 'ws://139.59.78.33:8001/ws/';
-  static String baseUrl = 'http://139.59.78.33:8002/';
-  static String token = 'cricktimekworld586985';
-  static String iv = "MTIzNDU2NTU1NTM1ODk5OQ==";
-  static String keyIv = "MTIzNDU2Nzg5MDEyMzQ1NjU1NTU4OTU4NzE0OTg5OTk=";
+  static UnitIdModel? unitIdModel;
+  static EndPointModel? endPoint;
 
-  static final String wsAllNew = 'all_new';
-  static final String wsIplLive = 'ipl/live/';
-  static final String wsLmd = 'live/';
-  static final String pyLive = 'live/';
-  static final String pyIpl = 'ipl/';
-  static final String pyScoreboard = 'scoreboard/';
-  static final String pyCommentary = 'commentary/';
-  static final String pySquad = 'squad/';
-  static final String pyOver = 'over/';
-  static final String pyPointTable = 'point_table/';
-  static final String pyNewsSortSeri = 'news_sort_seri_new';
-  static final String pyPlayers = 'players';
-  static final String pyIplSetting = 'ipl_setting';
-  static final String pyAllRanking = 'all_ranking';
+  static String token = '';
+  static String iv = "";
+  static String keyIv = "=";
+
 
   static String decryptAESCryptoJS(Map body) {
     try {

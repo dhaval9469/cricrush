@@ -43,10 +43,7 @@ class SIntro extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          color: Color(0xff242632),
-                          child: Center(child: Image.asset(AppAssets.iS)),
-                        ),
+                        child: Center(child: Image.asset(AppAssets.ist)),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(

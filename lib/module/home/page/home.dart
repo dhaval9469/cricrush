@@ -1,3 +1,5 @@
+import 'package:cricrush/ad_module/banner/banner_ad.dart';
+import 'package:cricrush/ad_module/banner/large_banner.dart';
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/ctrl/sorts_ctrl.dart';
 import 'package:cricrush/module/home/widget/must_watch.dart';
@@ -40,9 +42,22 @@ class _HomePageState extends State<HomePage> {
         () => homeCtrl.allML.value && tourCtrl.allNSSL.value
             ? Center(child: const DL())
             : SingleChildScrollView(
-                child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [RecentMatch(), MustWatch(), TopStore()]),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RecentMatch(),
+                    Padding(
+                      padding: EdgeInsets.only(top: context.hp(1)),
+                      child: Center(child: LargeBannerAd()),
+                    ),
+                    MustWatch(),
+                    TopStore(),
+                    SizedBox(height: context.hp(2)),
+                  ],
+                ),
               ),
       ),
+      bottomNavigationBar: BannerAds(),
     );
   }
 }

@@ -25,7 +25,7 @@ class _PointTableState extends State<PointTable> {
         () => mdCtrl.pointTableLoader.value
             ? Center(child: const DL())
             : mdCtrl.pointsTableList.isEmpty
-            ? Center(child: ED(text: "Not available"))
+            ? Center(child: ED(text: "Points table not available"))
             : SingleChildScrollView(
                 child: Column(
                   children: [

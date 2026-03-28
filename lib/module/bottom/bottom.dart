@@ -6,9 +6,11 @@ import 'package:cricrush/module/tours/page/tours.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/app_config.dart';
+import 'package:cricrush/utils/notification_services.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:in_app_update/in_app_update.dart';
 
 class BottomPage extends StatefulWidget {
   const BottomPage({super.key});
@@ -17,11 +19,25 @@ class BottomPage extends StatefulWidget {
   State<BottomPage> createState() => _BottomPageState();
 }
 
-final tourCtrl = Get.find<ToursCtrl>();
-
-final pages = [HomePage(), SchedulePage(), ToursPage(), Setting()];
-
 class _BottomPageState extends State<BottomPage> {
+  final tourCtrl = Get.find<ToursCtrl>();
+  final pages = [HomePage(), SchedulePage(), ToursPage(), Setting()];
+
+  AppUpdateInfo? _updateInfo;
+
+
+  @override
+  void initState() {
+    // _setupAppStateListener();
+    init();
+    super.initState();
+  }
+
+  Future<void> init() async {
+    await NotificationService.instance.init();
+    await checkForUpdate();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -147,5 +163,26 @@ class _BottomPageState extends State<BottomPage> {
         ),
       ),
     );
+  }
+
+  Future<void> checkForUpdate() async {
+    try {
+      AppUpdateInfo updateInfo = await InAppUpdate.checkForUpdate();
+      setState(() {
+        _updateInfo = updateInfo;
+      });
+
+      if (_updateInfo?.updateAvailability == UpdateAvailability.updateAvailable) {
+        if (_updateInfo!.immediateUpdateAllowed) {
+          InAppUpdate.performImmediateUpdate();
+        } else if (_updateInfo!.flexibleUpdateAllowed) {
+          InAppUpdate.startFlexibleUpdate().then((_) {
+            InAppUpdate.completeFlexibleUpdate();
+          });
+        }
+      }
+    } catch (e) {
+      return;
+    }
   }
 }

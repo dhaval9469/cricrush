@@ -60,24 +60,16 @@ class SLiveTab extends StatelessWidget {
                         width: context.wp(18),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: homeCtrl.lsMatchTypes.value == e.mt
-                              ? AppColor.sTabColor
-                              : AppColor.card,
+                          color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: homeCtrl.lsMatchTypes.value == e.mt
-                                ? AppColor.sTabColor
-                                : AppColor.tDivider,
-                          ),
+                          border: Border.all(color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
                         ),
                         child: Text(
                           "${e.mt}",
                           style: stDmSans(
                             context,
                             height: 0.9,
-                            color: homeCtrl.lsMatchTypes.value == e.mt
-                                ? AppColor.text
-                                : AppColor.subText,
+                            color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
                           ),
                           strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
                         ),
@@ -93,10 +85,10 @@ class SLiveTab extends StatelessWidget {
               () => homeCtrl.allML.value
                   ? Center(child: const DL())
                   : homeCtrl.liveSeriesData.isEmpty
-                  ? Center(child: ED(text: "Match Not Found"))
+                  ? Center(child: ED(text: "No live matches right now"))
                   : ListView.separated(
                       shrinkWrap: true,
-                      padding: EdgeInsets.only(bottom: context.hp(1.5), top: context.hp(0.5)),
+                      padding: EdgeInsets.only(top: context.hp(0.3), bottom: context.hp(3)),
                       itemCount: homeCtrl.liveSeriesData.length,
                       itemBuilder: (context, seriesIndex) {
                         final data = homeCtrl.liveSeriesData[seriesIndex];
@@ -127,9 +119,7 @@ class SLiveTab extends StatelessWidget {
                                             mdCtrl.tourId.value = data.tourId ?? "";
                                             passLiveData(matchData);
                                             Navigation.pushNamed(Routes.matchDetails);
-                                            lmwService.openMatch(
-                                              matchData?.matchdetail?.match?.code ?? "",
-                                            );
+                                            lmwService.openMatch(matchData?.matchdetail?.match?.code ?? "");
                                           },
                                           child: sLive(context: context, data: matchData),
                                         ),

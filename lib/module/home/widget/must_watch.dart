@@ -35,7 +35,7 @@ class MustWatch extends StatelessWidget {
                     left: context.wp(4),
                     right: context.wp(2),
                     bottom: context.hp(1),
-                    top: context.hp(2.5),
+                    top: context.hp(1.5),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

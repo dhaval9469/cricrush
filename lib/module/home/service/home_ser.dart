@@ -7,7 +7,7 @@ class HomeSer {
 
   Future<AllMatchModel> allMatch() async {
     try {
-      final response = await networkAPICall.get(AppConfig.wsAllNew);
+      final response = await networkAPICall.get("${AppConfig.endPoint?.wsAllNew}");
       return AllMatchModel.fromJson(response);
     } catch (e) {
       rethrow;

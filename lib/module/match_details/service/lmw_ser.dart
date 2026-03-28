@@ -41,7 +41,7 @@ class LMWService extends GetxController {
     if (_isConnecting) return;
     _isConnecting = true;
 
-    final url = '${AppConfig.wsUrl}${AppConfig.wsLmd}$id';
+    final url = '${AppConfig.endPoint?.wsBaseurl}${AppConfig.endPoint?.wsLmd}$id';
 
     try {
       // _lmdSocket = WebSocketChannel.connect(Uri.parse(url));

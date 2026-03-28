@@ -21,7 +21,7 @@ class Scoreboard extends StatelessWidget {
         () => mdCtrl.scoreboardLoading.value
             ? Center(child: const DL())
             : mdCtrl.scoreboardData.value?.innings?.isEmpty ?? true
-            ? Center(child: ED(text: "Not available"))
+            ? Center(child: ED(text: "Scoreboard not available"))
             : SmartRefresher(
                 controller: mdCtrl.refreshSBCtrl,
                 enablePullDown: true,

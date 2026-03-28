@@ -21,11 +21,11 @@ class TKeyState extends StatelessWidget {
         () => tourCtrl.tDL.value
             ? Center(child: const DL())
             : tourCtrl.tKeyStatsList.isEmpty
-            ? Center(child: const ED(text: "Matches Not Found"))
+            ? Center(child: const ED(text: "Key stats not available"))
             : ListView.separated(
                 shrinkWrap: true,
                 itemCount: tourCtrl.tKeyStatsList.length,
-                padding: EdgeInsets.symmetric(vertical: context.hp(1)),
+                padding: EdgeInsets.only(top: context.hp(1),bottom: context.hp(3)),
                 itemBuilder: (context, index) {
                   final data = tourCtrl.tKeyStatsList[index];
                   return GestureDetector(

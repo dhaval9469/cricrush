@@ -25,7 +25,7 @@ class _PlayingXiState extends State<PlayingXi> {
         () => mdCtrl.squadLoading.value
             ? Center(child: const DL())
             : (mdCtrl.squadData.value?.teamsNew?[0].players?.isEmpty ?? false)
-            ? Center(child: ED(text: "Not available"))
+            ? Center(child: ED(text: "Playing XI not available"))
             : SingleChildScrollView(
                 child: Column(
                   children: [

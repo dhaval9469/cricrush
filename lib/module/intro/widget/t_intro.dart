@@ -43,10 +43,7 @@ class TIntro extends StatelessWidget {
                         ),
                       ),
                       Expanded(
-                        child: Container(
-                          color: Color(0xff242632),
-                          child: Center(child: Image.asset(AppAssets.iT)),
-                        ),
+                        child: Center(child: Image.asset(AppAssets.itt)),
                       ),
                       Padding(
                         padding: EdgeInsets.symmetric(

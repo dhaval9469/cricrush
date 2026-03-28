@@ -25,7 +25,7 @@ class _OversState extends State<Overs> {
         () => mdCtrl.overLoading.value
             ? Center(child: const DL())
             : mdCtrl.overData.value?.ing?.isEmpty ?? true
-            ? Center(child: ED(text: "Not available"))
+            ? Center(child: ED(text: "Overs not available"))
             : SmartRefresher(
                 controller: mdCtrl.refreshOverCtrl,
                 enablePullDown: true,

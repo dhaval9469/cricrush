@@ -20,7 +20,7 @@ class MatchInfo extends StatelessWidget {
       body: Obx(() {
         final matchInfo = mdCtrl.scoreboardData.value?.matchdetail;
         return matchInfo?.venue == null
-            ? Center(child: ED(text: "Not available"))
+            ? Center(child: ED(text: "Data not available"))
             : SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,

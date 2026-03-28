@@ -8,7 +8,7 @@ class ToursSer {
 
   Future<ToursDetailModel> allTD({String? tId, String? sId}) async {
     try {
-      final response = await networkAPICall.get('${AppConfig.pyIpl}$tId/$sId');
+      final response = await networkAPICall.get('${AppConfig.endPoint?.pyIpl}$tId/$sId');
       return ToursDetailModel.fromJson(response);
     } catch (e) {
       rethrow;
@@ -17,7 +17,7 @@ class ToursSer {
 
   Future<AllNSSModel> allNSS() async {
     try {
-      final response = await networkAPICall.get(AppConfig.pyNewsSortSeri);
+      final response = await networkAPICall.get("${AppConfig.endPoint?.pyNewsSortSeri}");
       return AllNSSModel.fromJson(response);
     } catch (e) {
       rethrow;

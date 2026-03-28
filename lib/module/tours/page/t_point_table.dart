@@ -20,10 +20,11 @@ class TPointTable extends StatelessWidget {
         () => tourCtrl.tDL.value
             ? Center(child: const DL())
             : tourCtrl.tPTList.isEmpty
-            ? Center(child: const ED(text: "Matches Not Found"))
+            ? Center(child: const ED(text: "Points table not available"))
             : ListView.separated(
                 shrinkWrap: true,
                 itemCount: tourCtrl.tPTList.length,
+                padding: EdgeInsets.only(top: context.hp(1), bottom: context.hp(3)),
                 itemBuilder: (context, index) {
                   final data = tourCtrl.tPTList[index].pointsTableData;
                   String? groupName = tourCtrl.tPTList[index].tourName;

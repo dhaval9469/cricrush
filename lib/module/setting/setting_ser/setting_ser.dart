@@ -7,7 +7,7 @@ class SettingSer {
 
   Future<AllRankingModel> allRanking() async {
     try {
-      final response = await networkAPICall.get(AppConfig.pyAllRanking);
+      final response = await networkAPICall.get("${AppConfig.endPoint?.pyAllRanking}");
       return AllRankingModel.fromJson(response);
     } catch (e) {
       rethrow;

@@ -9,6 +9,7 @@ class ToursCtrl extends GetxController {
 
   RxBool tDL = false.obs;
   RxBool allNSSL = true.obs;
+  RxBool csl = false.obs;
 
   RxString tHeader = "".obs;
   RxString tDes = "".obs;
@@ -22,11 +23,8 @@ class ToursCtrl extends GetxController {
   RxString tourId = "".obs;
   RxString seriesId = "".obs;
 
-
   RxInt tIndex = 0.obs;
   RxInt newsIndex = 0.obs;
-
-
 
   RxList<NSSNews> newsList = <NSSNews>[].obs;
   RxList<NSSSeries> seriesList = <NSSSeries>[].obs;
@@ -42,15 +40,14 @@ class ToursCtrl extends GetxController {
   RxList<TourSquadPlayers> tARList = <TourSquadPlayers>[].obs;
   RxList<TourSquadPlayers> tWkList = <TourSquadPlayers>[].obs;
 
-  Future<void> getAllTD({String? tourId, String? seriesId, bool silentRefresh = false}) async {
+  Future<void> getAllTD({String? tourId, String? seriesId}) async {
     try {
-      if (!silentRefresh) {
-        tDL.value = true;
-        tMatchData.value = null;
-        tTeamsList.clear();
-        tKeyStatsList.clear();
-        tPTList.clear();
-      }
+      tDL.value = true;
+      tMatchData.value = null;
+      tTeamsList.clear();
+      tKeyStatsList.clear();
+      tPTList.clear();
+
       final toursDetailModel = await ToursSer().allTD(tId: tourId, sId: seriesId);
       final bundle = toursDetailModel.iplBundle;
       if (bundle == null) return;

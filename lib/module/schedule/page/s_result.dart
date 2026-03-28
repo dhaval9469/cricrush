@@ -63,24 +63,16 @@ class _SResultTabState extends State<SResultTab> {
                         width: context.wp(18),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: homeCtrl.rsMatchTypes.value == e.mt
-                              ? AppColor.sTabColor
-                              : AppColor.card,
+                          color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: homeCtrl.rsMatchTypes.value == e.mt
-                                ? AppColor.sTabColor
-                                : AppColor.tDivider,
-                          ),
+                          border: Border.all(color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
                         ),
                         child: Text(
                           "${e.mt}",
                           style: stDmSans(
                             context,
                             height: 0.9,
-                            color: homeCtrl.rsMatchTypes.value == e.mt
-                                ? AppColor.text
-                                : AppColor.subText,
+                            color: homeCtrl.rsMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
                           ),
                           strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
                         ),
@@ -96,10 +88,10 @@ class _SResultTabState extends State<SResultTab> {
               () => homeCtrl.allML.value
                   ? Center(child: const DL())
                   : homeCtrl.rSeriesData.isEmpty
-                  ? Center(child: ED(text: "Match Not Found"))
+                  ? Center(child: ED(text: "No completed matches found"))
                   : ListView.separated(
                       shrinkWrap: true,
-                      padding: EdgeInsets.only(bottom: context.hp(1.5), top: context.hp(0.5)),
+                      padding: EdgeInsets.only(top: context.hp(0.3), bottom: context.hp(3)),
                       itemCount: homeCtrl.rSeriesData.length,
                       itemBuilder: (context, seriesIndex) {
                         final data = homeCtrl.rSeriesData[seriesIndex];
@@ -109,17 +101,12 @@ class _SResultTabState extends State<SResultTab> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Divider(color: AppColor.cDivider, height: 0),
-                              mcHeader(
-                                context: context,
-                                tourName: "${data.tourName?.replaceAll(",", " ")}",
-                              ),
+                              mcHeader(context: context, tourName: "${data.tourName?.replaceAll(",", " ")}"),
                               ListView.separated(
                                 shrinkWrap: true,
                                 physics: NeverScrollableScrollPhysics(),
                                 padding: EdgeInsets.symmetric(vertical: context.hp(2)),
-                                itemCount: (data.results?.length ?? 0) > 3
-                                    ? 3
-                                    : (data.results?.length ?? 0),
+                                itemCount: (data.results?.length ?? 0) > 3 ? 3 : (data.results?.length ?? 0),
                                 itemBuilder: (context, index) {
                                   final matchData = data.results?[index];
 
@@ -136,9 +123,7 @@ class _SResultTabState extends State<SResultTab> {
                                             mdCtrl.tourId.value = data.tourId ?? "";
                                             passLiveData(matchData);
                                             Navigation.pushNamed(Routes.matchDetails);
-                                            lmwService.openMatch(
-                                              matchData?.matchdetail?.match?.code ?? "",
-                                            );
+                                            lmwService.openMatch(matchData?.matchdetail?.match?.code ?? "");
                                           },
                                           child: sFinish(context: context, data: matchData),
                                         ),

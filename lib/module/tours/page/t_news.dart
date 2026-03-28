@@ -26,8 +26,7 @@ class TNews extends StatelessWidget {
             ? Center(child: const ED(text: "Matches Not Found"))
             : ListView.separated(
                 shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1.2)),
+                padding: EdgeInsets.only(top: context.hp(1), bottom: context.hp(3), right: context.wp(3), left: context.wp(3)),
                 itemCount: tourCtrl.newsList.length,
                 itemBuilder: (context, index) {
                   final data = tourCtrl.newsList[index];

@@ -1,3 +1,4 @@
+import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
@@ -23,6 +24,17 @@ class ED extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(text, style: stDmSans(context, fontSize: context.sp(15)));
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Image.asset(AppAssets.mdf, color: AppColor.textHint),
+          Text(
+            text,
+            style: stDmSans(context, fontSize: context.sp(15), color: AppColor.textHint),
+          ),
+        ],
+      ),
+    );
   }
 }

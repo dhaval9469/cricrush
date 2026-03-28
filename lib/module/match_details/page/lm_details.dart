@@ -29,7 +29,7 @@ class _LmDetailsState extends State<LmDetails> {
         }
 
         if (lmwService.wsScoreLMDetailsModel.value == null) {
-          return Center(child: ED(text: "No live match at the moment. Catch up with our shorts and news updates."));
+          return Center(child: ED(text: "No live matches at the moment"));
         }
 
         final data = lmwService.wsScoreLMDetailsModel.value;
