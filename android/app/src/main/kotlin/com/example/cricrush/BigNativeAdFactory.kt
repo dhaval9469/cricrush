@@ -14,12 +14,12 @@ import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.RatingBar
 import android.widget.TextView
-import androidx.core.graphics.toColorInt
 import com.google.android.gms.ads.nativead.AdChoicesView
 import com.google.android.gms.ads.nativead.MediaView
 import com.google.android.gms.ads.nativead.NativeAd
 import com.google.android.gms.ads.nativead.NativeAdView
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin
+import androidx.core.graphics.toColorInt
 
 class BigNativeAdFactory(private val context: Context) : GoogleMobileAdsPlugin.NativeAdFactory {
 

@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/home/ctrl/sorts_ctrl.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
@@ -44,6 +45,7 @@ class MustWatch extends StatelessWidget {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
+                          Interstitial.showInterstitialByCount();
                           sortsCtrl.sortIndex.value = 0;
                           sortsCtrl.shortsList = tourCtrl.shortsList;
                           Navigation.pushNamed(Routes.sortsPage);
@@ -69,6 +71,7 @@ class MustWatch extends StatelessWidget {
                           ? SizedBox.shrink()
                           : GestureDetector(
                               onTap: () {
+                                Interstitial.showInterstitialByCount();
                                 sortsCtrl.sortIndex.value = index;
                                 sortsCtrl.shortsList = tourCtrl.shortsList;
                                 Navigation.pushNamed(Routes.sortsPage);

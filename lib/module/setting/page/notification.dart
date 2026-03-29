@@ -1,8 +1,11 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/helper/local_storage_service.dart';
 import 'package:cricrush/module/setting/ctrl/setting_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/app_config.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/widget/custom_appbar.dart';
 import 'package:flutter/material.dart';
@@ -15,73 +18,82 @@ class NotificationS extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.background,
-      appBar: CustomAppBar(
-        isBackAppbar: true,
-        backgroundColor: AppColor.card,
-        toolbarHeight: context.hp(5),
-        title: Text(
-          "Notifications",
-          style: tDmSans(context, fontSize: context.sp(17), fontWeight: FontWeight.bold),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (didPop) return;
+        Interstitial.showInterstitialByBackCount();
+        Navigation.pop();
+      },
+      child: Scaffold(
+        backgroundColor: AppColor.background,
+        appBar: CustomAppBar(
+          isBackAppbar: true,
+          backgroundColor: AppColor.card,
+          toolbarHeight: context.hp(5),
+          title: Text(
+            "Notifications",
+            style: tDmSans(context, fontSize: context.sp(17), fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-      body: Obx(
-        () => Column(
-          children: [
-            SizedBox(height: context.hp(1.5)),
-            ranking(
-              context,
-              text: "All Notifications",
-              subText: "Enable or disable all app notifications",
-              value: setting.allNotification.value,
-              onChanged: (val) {
-                setting.allNotification.value = val;
-                AppPref().write(AppConfig.allN, setting.allNotification.value);
-              },
-            ),
-            ranking(
-              context,
-              text: "Live Match Alerts",
-              subText: "Get notified when match goes live",
-              value: setting.lmaNotification.value,
-              onChanged: (val) {
-                setting.lmaNotification.value = val;
-                AppPref().write(AppConfig.lmaN, setting.lmaNotification.value);
-              },
-            ),
-            ranking(
-              context,
-              text: "Live Match update",
-              subText: "wickets, 50s, 100s, and Power play",
-              value: setting.lmNotification.value,
-              onChanged: (val) {
-                setting.lmNotification.value = val;
-                AppPref().write(AppConfig.lmN, setting.lmNotification.value);
-              },
-            ),
-            ranking(
-              context,
-              text: "Breaking News",
-              subText: "Instant alerts for major cricket news and events",
-              value: setting.bnNotification.value,
-              onChanged: (val) {
-                setting.bnNotification.value = val;
-                AppPref().write(AppConfig.bnN, setting.bnNotification.value);
-              },
-            ),
-            ranking(
-              context,
-              text: "Other",
-              subText: "Follow important cricket and player updates",
-              value: setting.oNotification.value,
-              onChanged: (val) {
-                setting.oNotification.value = val;
-                AppPref().write(AppConfig.oN, setting.oNotification.value);
-              },
-            ),
-          ],
+        body: Obx(
+          () => Column(
+            children: [
+              SizedBox(height: context.hp(1.5)),
+              ranking(
+                context,
+                text: "All Notifications",
+                subText: "Enable or disable all app notifications",
+                value: setting.allNotification.value,
+                onChanged: (val) {
+                  setting.allNotification.value = val;
+                  AppPref().write(AppConfig.allN, setting.allNotification.value);
+                },
+              ),
+              ranking(
+                context,
+                text: "Live Match Alerts",
+                subText: "Get notified when match goes live",
+                value: setting.lmaNotification.value,
+                onChanged: (val) {
+                  setting.lmaNotification.value = val;
+                  AppPref().write(AppConfig.lmaN, setting.lmaNotification.value);
+                },
+              ),
+              ranking(
+                context,
+                text: "Live Match update",
+                subText: "wickets, 50s, 100s, and Power play",
+                value: setting.lmNotification.value,
+                onChanged: (val) {
+                  setting.lmNotification.value = val;
+                  AppPref().write(AppConfig.lmN, setting.lmNotification.value);
+                },
+              ),
+              ranking(
+                context,
+                text: "Breaking News",
+                subText: "Instant alerts for major cricket news and events",
+                value: setting.bnNotification.value,
+                onChanged: (val) {
+                  setting.bnNotification.value = val;
+                  AppPref().write(AppConfig.bnN, setting.bnNotification.value);
+                },
+              ),
+              ranking(
+                context,
+                text: "Other",
+                subText: "Follow important cricket and player updates",
+                value: setting.oNotification.value,
+                onChanged: (val) {
+                  setting.oNotification.value = val;
+                  AppPref().write(AppConfig.oN, setting.oNotification.value);
+                },
+              ),
+            ],
+          ),
         ),
+        bottomNavigationBar: SafeArea(child: SmallNative()),
       ),
     );
   }

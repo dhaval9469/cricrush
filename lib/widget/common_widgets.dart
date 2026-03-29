@@ -10,12 +10,12 @@ Widget card({final Widget? child}) {
   );
 }
 
-Widget liveDot(BuildContext context) {
+Widget liveDot(BuildContext context, {double? vertical}) {
   return Container(
     alignment: Alignment.center,
     decoration: BoxDecoration(borderRadius: BorderRadius.circular(6), color: AppColor.liveDot),
     child: Padding(
-      padding: EdgeInsets.symmetric(horizontal: context.wp(2.5), vertical: context.hp(0.5)),
+      padding: EdgeInsets.symmetric(horizontal: context.wp(2.5), vertical: vertical ?? 0),
       child: Row(
         children: [
           Container(
@@ -36,7 +36,7 @@ Widget liveDot(BuildContext context) {
               context,
               color: AppColor.white,
               fontWeight: FontWeight.w900,
-              fontSize: context.sp(13),
+              fontSize: context.sp(12),
             ),
             strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
             textHeightBehavior: const TextHeightBehavior(

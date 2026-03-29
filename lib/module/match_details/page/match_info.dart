@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/banner/large_banner.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/widget/md_widget.dart';
 import 'package:cricrush/res/app_color.dart';
@@ -28,7 +29,7 @@ class MatchInfo extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: context.wp(3),
-                        vertical: context.hp(1.5),
+                        vertical: context.hp(1.2),
                       ),
                       child: Container(
                         decoration: BoxDecoration(
@@ -50,19 +51,13 @@ class MatchInfo extends StatelessWidget {
                                 header: "Match",
                                 text: "${matchInfo?.team1} vs ${matchInfo?.team2}",
                               ),
-                              Divider(color: AppColor.cDivider, height: context.hp(1.7)),
-                              matchVI(
-                                context,
-                                header: "Toss",
-                                text: (matchInfo?.tosswonby?.isNotEmpty ?? false)
-                                    ? "${matchInfo?.tosswonby} won the toss "
-                                          "and chose the ${matchInfo?.tossElectedTo}"
-                                    : "",
-                              ),
                             ],
                           ),
                         ),
                       ),
+                    ),
+                    Center(
+                      child: LargeBannerAd(padding: EdgeInsets.only(bottom: context.hp(1.2))),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
@@ -86,7 +81,15 @@ class MatchInfo extends StatelessWidget {
                               ),
                               Divider(color: AppColor.cDivider, height: context.hp(1.7)),
                               matchVI(context, header: "Venue", text: matchInfo?.venue?.name),
-
+                              Divider(color: AppColor.cDivider, height: context.hp(1.7)),
+                              matchVI(
+                                context,
+                                header: "Toss",
+                                text: (matchInfo?.tosswonby?.isNotEmpty ?? false)
+                                    ? "${matchInfo?.tosswonby} won the toss "
+                                          "and chose the ${matchInfo?.tossElectedTo}"
+                                    : "",
+                              ),
                               Divider(color: AppColor.cDivider, height: context.hp(1.7)),
                               matchVI(context, header: "Umpire", text: matchInfo?.umpires),
 
@@ -346,10 +349,7 @@ class MatchInfo extends StatelessWidget {
                                                   ),
                                                 ],
                                               ),
-                                              FaIcon(
-                                                FontAwesomeIcons.wind,
-                                                color: AppColor.text,
-                                              ),
+                                              FaIcon(FontAwesomeIcons.wind, color: AppColor.text),
                                             ],
                                           ),
                                         ),

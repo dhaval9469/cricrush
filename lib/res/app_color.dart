@@ -30,4 +30,8 @@ abstract class AppColor {
   static const Color finished = Color(0xFF34C759);
 
   static const Color button = Color(0xFF016BFD);
+
+  static const Color shimmerBase = Color(0xFF2A2E3A);
+  static const Color shimmerHighlight = Color(0xFF3F4554);
+  static const Color shimmerPlaceholder = Color(0xFF363B49);
 }

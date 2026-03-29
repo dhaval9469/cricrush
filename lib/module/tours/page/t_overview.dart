@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/module/tours/widget/to_keystate.dart';
 import 'package:cricrush/module/tours/widget/to_news.dart';
@@ -24,6 +25,7 @@ class TOverview extends StatelessWidget {
             : SingleChildScrollView(
                 child: Column(
                   children: [
+                    SmallNativeB(padding: EdgeInsets.only(top: context.hp(1.2))),
                     TOKeyState(),
                     TOSquad(),
                     TOPointTable(),

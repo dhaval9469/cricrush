@@ -1,20 +1,22 @@
 import 'package:cricrush/res/app_color.dart';
-import 'package:cricrush/res/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shimmer/shimmer.dart';
 
-class SmallNative extends StatefulWidget {
+import '../../res/app_config.dart';
+
+class MediumNativeBAd extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final double? radius;
+  final bool? isShadow;
 
-  const SmallNative({super.key, this.padding, this.radius});
+  const MediumNativeBAd({super.key, this.padding, this.radius, this.isShadow = false});
 
   @override
-  State<SmallNative> createState() => _SmallNativeState();
+  State<MediumNativeBAd> createState() => _MediumNativeBAdState();
 }
 
-class _SmallNativeState extends State<SmallNative> {
+class _MediumNativeBAdState extends State<MediumNativeBAd> {
   NativeAd? nativeAd;
   bool isLoading = true;
 
@@ -35,7 +37,7 @@ class _SmallNativeState extends State<SmallNative> {
               padding: widget.padding ?? EdgeInsets.zero,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(widget.radius ?? 0),
-                child: NativeAdShimmer(),
+                child: NativeBigShimmer(),
               ),
             )
           : nativeAd != null
@@ -43,11 +45,15 @@ class _SmallNativeState extends State<SmallNative> {
               padding: widget.padding ?? EdgeInsets.zero,
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(widget.radius ?? 0),
-                child: SizedBox(
-                  key: const ValueKey('ad'),
-                  height: 110,
-                  width: double.infinity,
-                  child: AdWidget(ad: nativeAd!),
+                child: ConstrainedBox(
+                  constraints: const BoxConstraints(
+                    minWidth: 450,
+                    minHeight: 180,
+                    maxHeight: 180,
+                    maxWidth: 450,
+                  ),
+                  key: const ValueKey('mediumAad'),
+                  child: Center(child: AdWidget(ad: nativeAd!)),
                 ),
               ),
             )
@@ -64,6 +70,14 @@ class _SmallNativeState extends State<SmallNative> {
   void load() {
     NativeAd(
       adUnitId: "${AppConfig.unitIdModel?.native}",
+      factoryId: 'medium_native',
+      customOptions: {
+        'backgroundColor': "#2A2E3A",
+        'textColor': '#FFFFFF',
+        'subTextColor': '#CDD3E0',
+        'buttonColor': '#016BFD',
+        'startColor': '#FF6B4A',
+      },
       request: const AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
@@ -73,65 +87,94 @@ class _SmallNativeState extends State<SmallNative> {
         },
         onAdFailedToLoad: (ad, err) {
           isLoading = false;
-          setState(() {});
           ad.dispose();
+          setState(() {});
         },
       ),
-      factoryId: 'small_native',
-      customOptions: {
-        'backgroundColor': "#2A2E3A",
-        'textColor': '#FFFFFF',
-        'subTextColor': '#CDD3E0',
-        'buttonColor': '#016BFD',
-        'startColor': '#FF6B4A',
-      },
     ).load();
   }
 }
 
-class NativeAdShimmer extends StatelessWidget {
-  const NativeAdShimmer({super.key});
+class NativeBigShimmer extends StatelessWidget {
+  const NativeBigShimmer({super.key});
 
   @override
   Widget build(BuildContext context) {
     final baseColor = AppColor.shimmerBase;
     final highlightColor = AppColor.shimmerHighlight;
     return Container(
-      height: 110,
+      height: 180,
       width: double.infinity,
-      decoration: BoxDecoration(color: AppColor.card),
+      decoration: BoxDecoration(
+        color: AppColor.card,
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Shimmer.fromColors(
                   baseColor: baseColor,
                   highlightColor: highlightColor,
                   child: Container(
-                    width: 50,
-                    height: 50,
+                    width: 135,
+                    height: 125,
                     decoration: BoxDecoration(
                       color: AppColor.shimmerPlaceholder,
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
                 ),
-                const SizedBox(width: 10),
-                Shimmer.fromColors(
-                  baseColor: baseColor,
-                  highlightColor: highlightColor,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(height: 16, width: 200, color: AppColor.shimmerPlaceholder),
-                      const SizedBox(height: 6),
-                      Container(height: 20, width: 200, color: AppColor.shimmerPlaceholder),
-                    ],
-                  ),
+                const SizedBox(width: 7),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Shimmer.fromColors(
+                          baseColor: baseColor,
+                          highlightColor: highlightColor,
+                          child: Container(
+                            width: 50,
+                            height: 50,
+                            decoration: BoxDecoration(
+                              color: AppColor.shimmerPlaceholder,
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(width: 7),
+                        Shimmer.fromColors(
+                          baseColor: baseColor,
+                          highlightColor: highlightColor,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(height: 16, width: 130, color: AppColor.shimmerPlaceholder),
+                              const SizedBox(height: 6),
+                              Container(height: 20, width: 130, color: AppColor.shimmerPlaceholder),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 7),
+                    Shimmer.fromColors(
+                      baseColor: baseColor,
+                      highlightColor: highlightColor,
+                      child: Container(
+                        width: 185,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: AppColor.shimmerPlaceholder,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -139,7 +182,7 @@ class NativeAdShimmer extends StatelessWidget {
               baseColor: baseColor,
               highlightColor: highlightColor,
               child: Container(
-                height: 35,
+                height: 33,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: AppColor.shimmerPlaceholder,
@@ -156,19 +199,20 @@ class NativeAdShimmer extends StatelessWidget {
 
 // ---------------------------------  animation ad -------------------------------------------------
 
-class SmallNativeB extends StatefulWidget {
+class MediumNativeB extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final double? radius;
 
-  const SmallNativeB({super.key, this.padding, this.radius});
+  const MediumNativeB({super.key, this.padding, this.radius});
 
   @override
-  State<SmallNativeB> createState() => _SmallNativeBState();
+  State<MediumNativeB> createState() => _MediumNativeBState();
 }
 
-class _SmallNativeBState extends State<SmallNativeB> {
+class _MediumNativeBState extends State<MediumNativeB> {
   NativeAd? nativeAd;
   bool isLoading = true;
+  bool? isDark;
 
   @override
   void initState() {
@@ -180,7 +224,7 @@ class _SmallNativeBState extends State<SmallNativeB> {
 
   @override
   Widget build(BuildContext context) {
-    final double targetHeight = (isLoading || nativeAd == null) ? 0 : 110;
+    final double targetHeight = (isLoading || nativeAd == null) ? 0 : 180;
     return AnimatedSize(
       duration: const Duration(milliseconds: 500),
       curve: Curves.easeInOut,
@@ -193,8 +237,8 @@ class _SmallNativeBState extends State<SmallNativeB> {
               ? ClipRRect(
                   borderRadius: BorderRadius.circular(widget.radius ?? 0),
                   child: OverflowBox(
-                    minHeight: 110,
-                    maxHeight: 110,
+                    minHeight: 180,
+                    maxHeight: 180,
                     alignment: Alignment.topCenter,
                     child: AdWidget(ad: nativeAd!),
                   ),
@@ -214,6 +258,15 @@ class _SmallNativeBState extends State<SmallNativeB> {
   void load() {
     NativeAd(
       adUnitId: "${AppConfig.unitIdModel?.native}",
+      factoryId: 'medium_native',
+      customOptions: {
+        'backgroundColor': "#2A2E3A",
+        'textColor': '#FFFFFF',
+        'subTextColor': '#CDD3E0',
+        'buttonColor': '#016BFD',
+        'startColor': '#FF6B4A',
+      },
+
       request: const AdRequest(),
       listener: NativeAdListener(
         onAdLoaded: (ad) {
@@ -223,18 +276,10 @@ class _SmallNativeBState extends State<SmallNativeB> {
         },
         onAdFailedToLoad: (ad, err) {
           isLoading = false;
-          setState(() {});
           ad.dispose();
+          setState(() {});
         },
       ),
-      factoryId: 'small_native',
-      customOptions: {
-        'backgroundColor': "#2A2E3A",
-        'textColor': '#FFFFFF',
-        'subTextColor': '#CDD3E0',
-        'buttonColor': '#016BFD',
-        'startColor': '#FF6B4A',
-      },
     ).load();
   }
 }

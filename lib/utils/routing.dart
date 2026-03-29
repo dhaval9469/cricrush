@@ -1,4 +1,5 @@
 import 'package:cricrush/module/bottom/bottom.dart';
+import 'package:cricrush/module/bottom/exit_page.dart';
 import 'package:cricrush/module/home/page/home.dart';
 import 'package:cricrush/module/home/page/sub_page/sorts.dart';
 import 'package:cricrush/module/intro/intro_page.dart';
@@ -48,6 +49,7 @@ mixin Routes {
   static const String introPage = "/introPage";
   static const String splashPage = "/splashPage";
   static const String getStarted = "/getStarted";
+  static const String exitPage = "/exitPage";
 
   static List<GetPage<dynamic>> routes = [
     GetPage(name: bottomPage, page: () => const BottomPage(), transition: defaultTransition),
@@ -72,5 +74,6 @@ mixin Routes {
     GetPage(name: introPage, page: () => IntroPage(), transition: defaultTransition),
     GetPage(name: splashPage, page: () => SplashPage(), transition: defaultTransition),
     GetPage(name: getStarted, page: () => GetStarted(), transition: defaultTransition),
+    GetPage(name: exitPage, page: () => ExitPage(), transition: defaultTransition),
   ];
 }

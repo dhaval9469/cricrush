@@ -1,3 +1,5 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -26,12 +28,18 @@ class TNews extends StatelessWidget {
             ? Center(child: const ED(text: "Matches Not Found"))
             : ListView.separated(
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: context.hp(1), bottom: context.hp(3), right: context.wp(3), left: context.wp(3)),
+                padding: EdgeInsets.only(
+                  top: context.hp(1),
+                  bottom: context.hp(3),
+                  right: context.wp(3),
+                  left: context.wp(3),
+                ),
                 itemCount: tourCtrl.newsList.length,
                 itemBuilder: (context, index) {
                   final data = tourCtrl.newsList[index];
                   return GestureDetector(
                     onTap: () {
+                      Interstitial.showInterstitialByCount();
                       tourCtrl.newsTitle.value = data.title.toString();
                       tourCtrl.newsDescription.value = data.description ?? "";
                       tourCtrl.newsURLToImage.value = data.image.toString();
@@ -43,7 +51,13 @@ class TNews extends StatelessWidget {
                       children: [
                         Hero(
                           tag: data.image ?? "defaultHeroTag",
-                          child: showPlayer(context: context, url: data.image ?? "", h: context.wp(4), w: context.wp(6), r: 4),
+                          child: showPlayer(
+                            context: context,
+                            url: data.image ?? "",
+                            h: context.wp(4),
+                            w: context.wp(6),
+                            r: 4,
+                          ),
                         ),
                         SizedBox(width: context.wp(4)),
                         Flexible(
@@ -70,7 +84,15 @@ class TNews extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return Divider(height: context.hp(2), color: AppColor.cDivider.withValues(alpha: 0.5));
+                  return index == 0
+                      ? Padding(
+                          padding: EdgeInsets.symmetric(vertical: context.hp(1.5)),
+                          child: SmallNativeB(radius: 14),
+                        )
+                      : Divider(
+                          height: context.hp(2),
+                          color: AppColor.cDivider.withValues(alpha: 0.5),
+                        );
                 },
               ),
       ),

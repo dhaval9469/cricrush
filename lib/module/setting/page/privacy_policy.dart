@@ -1,5 +1,7 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/widget/custom_appbar.dart';
 import 'package:flutter/cupertino.dart';
@@ -73,20 +75,28 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.background,
-      appBar: CustomAppBar(
-        isBackAppbar: true,
-        backgroundColor: AppColor.card,
-        toolbarHeight: context.hp(5),
-        title: Text(
-          "Privacy Policy",
-          style: tDmSans(context, fontSize: context.sp(17), fontWeight: FontWeight.bold),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (didPop) return;
+        Interstitial.showInterstitialByBackCount();
+        Navigation.pop();
+      },
+      child: Scaffold(
+        backgroundColor: AppColor.background,
+        appBar: CustomAppBar(
+          isBackAppbar: true,
+          backgroundColor: AppColor.card,
+          toolbarHeight: context.hp(5),
+          title: Text(
+            "Privacy Policy",
+            style: tDmSans(context, fontSize: context.sp(17), fontWeight: FontWeight.bold),
+          ),
         ),
+        body: checkWebView
+            ? Center(child: CupertinoActivityIndicator(color: AppColor.white, radius: 18))
+            : WebViewWidget(controller: _controller),
       ),
-      body: checkWebView
-          ? Center(child: CupertinoActivityIndicator(color: AppColor.white, radius: 18))
-          : WebViewWidget(controller: _controller),
     );
   }
 }

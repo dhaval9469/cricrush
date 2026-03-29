@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -135,6 +136,7 @@ class TOPointTable extends StatelessWidget {
                 Divider(color: AppColor.cDivider, height: 0),
                 GestureDetector(
                   onTap: () async {
+                    Interstitial.showInterstitialByCount();
                     tourCtrl.tabController?.index = 4;
                   },
                   child: Container(

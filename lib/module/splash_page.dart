@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/helper/local_storage_service.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/app_config.dart';
@@ -10,6 +11,7 @@ import 'package:cricrush/utils/routing.dart';
 import 'package:cricrush/widget/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -19,12 +21,18 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
+  InterstitialAd? adMobInterstitialAd;
+  int numInterstitialLoadAttempts = 0;
+
+  BannerAd? bannerAd;
   double progress = 0.0;
   Timer? _timer;
 
   @override
   void initState() {
     super.initState();
+    loadBannerAd();
+    loadInterstitialAds();
     startLoading();
   }
 
@@ -88,29 +96,43 @@ class _SplashPageState extends State<SplashPage> {
           ),
 
           Text("This action may include advertisements.", style: stDmSans(context)),
-          SizedBox(height: context.hp(7)),
+          SizedBox(height: context.hp(1.5)),
+          Center(
+            child: AnimatedSize(
+              duration: const Duration(milliseconds: 800),
+              curve: Curves.easeInOutCubic,
+              child: bannerAd != null
+                  ? SizedBox(
+                width: bannerAd?.size.width.toDouble(),
+                height: bannerAd?.size.height.toDouble(),
+                child: AdWidget(ad: bannerAd!),
+              )
+                  : const SizedBox.shrink(),
+            ),
+          ),
+          SizedBox(height: context.hp(8)),
         ],
       ),
     );
   }
 
   void navigateNext(bool intro) {
-    // if (adMobInterstitialAd != null) {
-    //   adMobInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
-    //     onAdDismissedFullScreenContent: (ad) {
-    //       ad.dispose();
-    //       goNext(intro);
-    //     },
-    //     onAdFailedToShowFullScreenContent: (ad, error) {
-    //       ad.dispose();
-    //       goNext(intro);
-    //     },
-    //   );
-    //   adMobInterstitialAd!.show();
-    //   adMobInterstitialAd = null;
-    // } else {
-    //   goNext(intro);
-    // }
+    if (adMobInterstitialAd != null) {
+      adMobInterstitialAd!.fullScreenContentCallback = FullScreenContentCallback(
+        onAdDismissedFullScreenContent: (ad) {
+          ad.dispose();
+          goNext(intro);
+        },
+        onAdFailedToShowFullScreenContent: (ad, error) {
+          ad.dispose();
+          goNext(intro);
+        },
+      );
+      adMobInterstitialAd!.show();
+      adMobInterstitialAd = null;
+    } else {
+      goNext(intro);
+    }
     goNext(intro);
   }
 
@@ -121,9 +143,48 @@ class _SplashPageState extends State<SplashPage> {
     } else {
       Navigation.pushNamed(Routes.getStarted);
     }
-    // InterstitialAdAppOpen.loadInterstitialAds();
+    Interstitial.loadInterstitialAds();
   }
 
+
+  void loadBannerAd() async {
+    final ad = BannerAd(
+      adUnitId: 'ca-app-pub-3940256099942544/6300978111',
+      request: const AdRequest(),
+      size: AdSize.largeBanner,
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          setState(() {
+            bannerAd = ad as BannerAd;
+          });
+        },
+        onAdFailedToLoad: (ad, error) {
+          ad.dispose();
+        },
+      ),
+    );
+    await ad.load();
+  }
+
+  void loadInterstitialAds() async {
+    InterstitialAd.load(
+      adUnitId: 'ca-app-pub-3940256099942544/1033173712',
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (InterstitialAd ad) {
+          adMobInterstitialAd = ad;
+          numInterstitialLoadAttempts = 0;
+        },
+        onAdFailedToLoad: (LoadAdError error) {
+          numInterstitialLoadAttempts++;
+          adMobInterstitialAd = null;
+          if (numInterstitialLoadAttempts <= maxFailedLoadAttempts) {
+            loadInterstitialAds();
+          }
+        },
+      ),
+    );
+  }
   @override
   void dispose() {
     _timer?.cancel();

@@ -1,3 +1,5 @@
+import 'package:cricrush/ad_module/native/medium_native.dart';
+import 'package:cricrush/ad_module/native/native_banner.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/widget/md_widget.dart';
 import 'package:cricrush/res/app_color.dart';
@@ -62,9 +64,18 @@ class Scoreboard extends StatelessWidget {
                                     style: tDmSans(context, fontWeight: FontWeight.w600),
                                   ),
                                 ),
-                                Text(scoreboardData?.total ?? "", style: tDmSans(context, fontWeight: FontWeight.w600)),
-                                Text("/${scoreboardData?.wickets} ", style: tDmSans(context, fontSize: context.sp(16))),
-                                Text(" (${scoreboardData?.overs})", style: tDmSans(context, fontSize: context.sp(15))),
+                                Text(
+                                  scoreboardData?.total ?? "",
+                                  style: tDmSans(context, fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  "/${scoreboardData?.wickets} ",
+                                  style: tDmSans(context, fontSize: context.sp(16)),
+                                ),
+                                Text(
+                                  " (${scoreboardData?.overs})",
+                                  style: tDmSans(context, fontSize: context.sp(15)),
+                                ),
                               ],
                             ),
                             children: [
@@ -89,11 +100,17 @@ class Scoreboard extends StatelessWidget {
 
                               // Extra Run
                               Padding(
-                                padding: EdgeInsets.only(top: context.hp(0.5), bottom: context.hp(1.5)),
+                                padding: EdgeInsets.only(
+                                  top: context.hp(0.5),
+                                  bottom: context.hp(1.2),
+                                ),
                                 child: Container(
                                   color: AppColor.subCard.withValues(alpha: 0.2),
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1)),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: context.wp(3),
+                                      vertical: context.hp(1),
+                                    ),
                                     child: Row(
                                       children: [
                                         Text("Extra Runs: ", style: stBarlow(context)),
@@ -112,6 +129,12 @@ class Scoreboard extends StatelessWidget {
                                   ),
                                 ),
                               ),
+
+                              NativeBannerB(
+                                isTransparent: true,
+                                padding: EdgeInsets.only(bottom: context.hp(1.2)),
+                              ),
+
 
                               // Bowlers
                               Container(
@@ -132,6 +155,9 @@ class Scoreboard extends StatelessWidget {
                                 },
                               ),
 
+                              NativeBannerB(
+                                isTransparent: true,
+                              ),
                               // Fall of Wicket
                               scoreboardData?.fallofWickets?.isEmpty ?? true
                                   ? const SizedBox.shrink()
@@ -146,18 +172,21 @@ class Scoreboard extends StatelessWidget {
                               scoreboardData?.fallofWickets?.isEmpty ?? true
                                   ? const SizedBox.shrink()
                                   : ListView.separated(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                padding: EdgeInsets.symmetric(vertical: context.hp(1)),
-                                itemCount: scoreboardData?.fallofWickets?.length ?? 0,
-                                itemBuilder: (context, ptsIndex) {
-                                  final data = scoreboardData?.fallofWickets?[ptsIndex];
-                                  return sbFWInfo(context, data);
-                                },
-                                separatorBuilder: (BuildContext context, int index) {
-                                  return Divider(color: AppColor.tDivider, height: context.hp(2));
-                                },
-                              ),
+                                      physics: const NeverScrollableScrollPhysics(),
+                                      shrinkWrap: true,
+                                      padding: EdgeInsets.symmetric(vertical: context.hp(1)),
+                                      itemCount: scoreboardData?.fallofWickets?.length ?? 0,
+                                      itemBuilder: (context, ptsIndex) {
+                                        final data = scoreboardData?.fallofWickets?[ptsIndex];
+                                        return sbFWInfo(context, data);
+                                      },
+                                      separatorBuilder: (BuildContext context, int index) {
+                                        return Divider(
+                                          color: AppColor.tDivider,
+                                          height: context.hp(2),
+                                        );
+                                      },
+                                    ),
                             ],
                           );
                         },
@@ -166,6 +195,7 @@ class Scoreboard extends StatelessWidget {
                         },
                       ),
                       SizedBox(height: context.hp(1.5)),
+                      MediumNativeB(),
                     ],
                   ),
                 ),

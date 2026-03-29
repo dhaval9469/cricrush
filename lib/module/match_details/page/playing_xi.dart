@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/native/native_banner.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -94,6 +95,9 @@ class _PlayingXiState extends State<PlayingXi> {
                       ],
                     ),
                     Divider(color: AppColor.cDivider, height: 0),
+                    NativeBannerB(
+                      padding: EdgeInsets.only(top: context.hp(1)),
+                    ),
                     ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
                       padding: EdgeInsets.symmetric(

@@ -1,3 +1,7 @@
+import 'dart:async';
+
+import 'package:cricrush/ad_module/app_open.dart';
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/home/page/home.dart';
 import 'package:cricrush/module/schedule/page/schedule.dart';
 import 'package:cricrush/module/setting/page/setting.dart';
@@ -6,9 +10,12 @@ import 'package:cricrush/module/tours/page/tours.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/app_config.dart';
+import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/notification_services.dart';
 import 'package:cricrush/utils/responsive.dart';
+import 'package:cricrush/utils/routing.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_fgbg/flutter_fgbg.dart';
 import 'package:get/get.dart';
 import 'package:in_app_update/in_app_update.dart';
 
@@ -22,13 +29,13 @@ class BottomPage extends StatefulWidget {
 class _BottomPageState extends State<BottomPage> {
   final tourCtrl = Get.find<ToursCtrl>();
   final pages = [HomePage(), SchedulePage(), ToursPage(), Setting()];
-
+  late StreamSubscription<FGBGType> fgbgSubscription;
+  final AppOpenAdManager appOpenAdManager = AppOpenAdManager();
   AppUpdateInfo? _updateInfo;
-
 
   @override
   void initState() {
-    // _setupAppStateListener();
+    _setupAppStateListener();
     init();
     super.initState();
   }
@@ -40,79 +47,96 @@ class _BottomPageState extends State<BottomPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColor.background,
-      body: ValueListenableBuilder(
-        valueListenable: AppConfig.bottomIndex,
-        builder: (context, value, child) {
-          return pages[value];
-        },
-      ),
-      bottomNavigationBar: ValueListenableBuilder(
-        valueListenable: AppConfig.bottomIndex,
-        builder: (context, value, child) {
-          return Obx(
-            () => Theme(
-              data: Theme.of(context).copyWith(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent,
-                splashFactory: NoSplash.splashFactory,
-              ),
-              child: Container(
-                height: context.hp(10),
-                decoration: BoxDecoration(color: AppColor.card),
-                child: BottomNavigationBar(
-                  backgroundColor: AppColor.card,
-                  type: BottomNavigationBarType.fixed,
-                  selectedItemColor: AppColor.text,
-                  unselectedItemColor: AppColor.subText,
-                  showSelectedLabels: false,
-                  showUnselectedLabels: false,
-                  selectedLabelStyle: TextStyle(fontSize: 0),
-                  unselectedLabelStyle: TextStyle(fontSize: 0),
-                  currentIndex: value,
-                  onTap: (value) async {
-                    AppConfig.bottomIndex.value = value;
-                  },
-                  items: [
-                    _navItem(
-                      context: context,
-                      icon: AppAssets.home,
-                      selectedIcon: AppAssets.homes,
-                      label: "Home",
-                      index: 0,
-                      currentIndex: value,
-                    ),
-                    _navItem(
-                      context: context,
-                      icon: AppAssets.schedule,
-                      selectedIcon: AppAssets.schedules,
-                      label: "Schedule",
-                      index: 1,
-                      currentIndex: value,
-                    ),
-                    _navItem(
-                      context: context,
-                      icon: AppAssets.series,
-                      selectedIcon: AppAssets.seriess,
-                      label: tourCtrl.tFooter.value,
-                      index: 2,
-                      currentIndex: value,
-                    ),
-                    _navItem(
-                      context: context,
-                      icon: AppAssets.setting,
-                      selectedIcon: AppAssets.settings,
-                      label: "Setting",
-                      index: 3,
-                      currentIndex: value,
-                    ),
-                  ],
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (didPop) {
+          return;
+        } else {
+          if (AppConfig.bottomIndex.value == 1 ||
+              AppConfig.bottomIndex.value == 2 ||
+              AppConfig.bottomIndex.value == 3) {
+            AppConfig.bottomIndex.value = 0;
+          } else {
+            Navigation.pushNamed(Routes.exitPage);
+          }
+        }
+      },
+      child: Scaffold(
+        backgroundColor: AppColor.background,
+        body: ValueListenableBuilder(
+          valueListenable: AppConfig.bottomIndex,
+          builder: (context, value, child) {
+            return pages[value];
+          },
+        ),
+        bottomNavigationBar: ValueListenableBuilder(
+          valueListenable: AppConfig.bottomIndex,
+          builder: (context, value, child) {
+            return Obx(
+              () => Theme(
+                data: Theme.of(context).copyWith(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  splashFactory: NoSplash.splashFactory,
+                ),
+                child: Container(
+                  height: context.hp(12),
+                  decoration: BoxDecoration(color: AppColor.card),
+                  child: BottomNavigationBar(
+                    backgroundColor: AppColor.card,
+                    type: BottomNavigationBarType.fixed,
+                    selectedItemColor: AppColor.text,
+                    unselectedItemColor: AppColor.subText,
+                    showSelectedLabels: false,
+                    showUnselectedLabels: false,
+                    selectedLabelStyle: TextStyle(fontSize: 0),
+                    unselectedLabelStyle: TextStyle(fontSize: 0),
+                    currentIndex: value,
+                    onTap: (value) async {
+                      AppConfig.bottomIndex.value = value;
+                      Interstitial.showInterstitialByCount();
+                    },
+                    items: [
+                      _navItem(
+                        context: context,
+                        icon: AppAssets.home,
+                        selectedIcon: AppAssets.homes,
+                        label: "Home",
+                        index: 0,
+                        currentIndex: value,
+                      ),
+                      _navItem(
+                        context: context,
+                        icon: AppAssets.schedule,
+                        selectedIcon: AppAssets.schedules,
+                        label: "Schedule",
+                        index: 1,
+                        currentIndex: value,
+                      ),
+                      _navItem(
+                        context: context,
+                        icon: AppAssets.series,
+                        selectedIcon: AppAssets.seriess,
+                        label: tourCtrl.tFooter.value,
+                        index: 2,
+                        currentIndex: value,
+                      ),
+                      _navItem(
+                        context: context,
+                        icon: AppAssets.setting,
+                        selectedIcon: AppAssets.settings,
+                        label: "Setting",
+                        index: 3,
+                        currentIndex: value,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -143,7 +167,7 @@ class _BottomPageState extends State<BottomPage> {
                 curve: Curves.easeInOutCubic,
                 child: Image.asset(
                   isSelected ? selectedIcon : icon,
-                  scale: 20,
+                  scale: 25,
                   color: isSelected ? AppColor.text : AppColor.subText,
                 ),
               ),
@@ -184,5 +208,19 @@ class _BottomPageState extends State<BottomPage> {
     } catch (e) {
       return;
     }
+  }
+
+  void _setupAppStateListener() {
+    fgbgSubscription = FGBGEvents.instance.stream.listen((event) async {
+      if (event == FGBGType.foreground) {
+        if (!AppOpenAdManager.isShowingAd) {
+          appOpenAdManager.showAdIfAvailable();
+        }
+      }
+
+      if (event == FGBGType.background) {
+        appOpenAdManager.loadAd();
+      }
+    });
   }
 }

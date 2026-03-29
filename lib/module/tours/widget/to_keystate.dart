@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -36,6 +37,7 @@ class TOKeyState extends StatelessWidget {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
+                          Interstitial.showInterstitialByCount();
                           tourCtrl.tabController?.index = 2;
                         },
                         child: Text("See All", style: stDmSans(context, fontSize: context.sp(13))),
@@ -63,6 +65,7 @@ class TOKeyState extends StatelessWidget {
 
                       return GestureDetector(
                         onTap: () {
+                          Interstitial.showInterstitialByCount();
                           Navigation.pushNamed(Routes.playerState, arg: data);
                         },
                         child: Container(

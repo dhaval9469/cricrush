@@ -1,4 +1,5 @@
 import 'package:cricrush/ad_module/banner/banner_ad.dart';
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/schedule/page/s_live.dart';
 import 'package:cricrush/module/schedule/page/s_result.dart';
@@ -24,9 +25,8 @@ class _SchedulePageState extends State<SchedulePage> with SingleTickerProviderSt
   void initState() {
     tabController = TabController(vsync: this, length: 3);
     tabController.addListener(() {
-
       if (!tabController.indexIsChanging) {
-        // Interstitial.showInterstitialByCount();
+        Interstitial.showInterstitialByCount();
       }
     });
 
@@ -75,7 +75,10 @@ class _SchedulePageState extends State<SchedulePage> with SingleTickerProviderSt
           ],
         ),
       ),
-      body: TabBarView(controller: tabController, children: [SLiveTab(), SUpcomingTab(), SResultTab()]),
+      body: TabBarView(
+        controller: tabController,
+        children: [SLiveTab(), SUpcomingTab(), SResultTab()],
+      ),
       bottomNavigationBar: BannerAds(),
     );
   }

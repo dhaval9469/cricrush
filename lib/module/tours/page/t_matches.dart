@@ -1,3 +1,5 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
@@ -46,6 +48,7 @@ class TMatches extends StatelessWidget {
                               final lmData = tourCtrl.tMatchData.value?.live?[index];
                               return GestureDetector(
                                 onTap: () {
+                                  Interstitial.showInterstitialByCount();
                                   mdCtrl.seriesId.value = lmData?.matchdetail?.series?.id ?? "";
                                   mdCtrl.tourId.value = lmData?.tourId ?? "";
                                   passLiveData(lmData);
@@ -60,6 +63,17 @@ class TMatches extends StatelessWidget {
                             },
                           ),
 
+                    tourCtrl.tMatchData.value?.live?.isNotEmpty ?? false
+                        ? SmallNativeB(
+                            radius: 10,
+                            padding: EdgeInsets.only(
+                              bottom: context.hp(1.3),
+                              left: context.wp(3),
+                              right: context.wp(3),
+                            ),
+                          )
+                        : const SizedBox.shrink(),
+
                     tourCtrl.tMatchData.value?.upcoming?.isEmpty ?? true
                         ? const SizedBox.shrink()
                         : ListView.separated(
@@ -73,15 +87,26 @@ class TMatches extends StatelessWidget {
                             itemCount: tourCtrl.tMatchData.value?.upcoming?.length ?? 0,
                             itemBuilder: (context, index) {
                               final umData = tourCtrl.tMatchData.value?.upcoming?[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  mdCtrl.seriesId.value = umData?.seriesId ?? "";
-                                  mdCtrl.tourId.value = umData?.tourId ?? "";
-                                  passUpCData(umData);
-                                  Navigation.pushNamed(Routes.matchDetails);
-                                  lmwService.getLSDFUR(umData?.matchfile ?? "");
-                                },
-                                child: tUpComing(context: context, data: umData),
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      Interstitial.showInterstitialByCount();
+                                      mdCtrl.seriesId.value = umData?.seriesId ?? "";
+                                      mdCtrl.tourId.value = umData?.tourId ?? "";
+                                      passUpCData(umData);
+                                      Navigation.pushNamed(Routes.matchDetails);
+                                      lmwService.getLSDFUR(umData?.matchfile ?? "");
+                                    },
+                                    child: tUpComing(context: context, data: umData),
+                                  ),
+                                  (tourCtrl.tMatchData.value?.live?.isEmpty ?? true) && index == 0
+                                      ? SmallNativeB(
+                                          radius: 10,
+                                          padding: EdgeInsets.only(top: context.hp(1.3)),
+                                        )
+                                      : const SizedBox.shrink(),
+                                ],
                               );
                             },
                             separatorBuilder: (BuildContext context, int index) {
@@ -104,6 +129,8 @@ class TMatches extends StatelessWidget {
                               final kmData = tourCtrl.tMatchData.value?.keyMatches?[index];
                               return GestureDetector(
                                 onTap: () {
+                                  Interstitial.showInterstitialByCount();
+
                                   mdCtrl.seriesId.value = kmData?.matchdetail?.series?.id ?? "";
                                   mdCtrl.tourId.value = kmData?.tourId ?? "";
                                   passComData(kmData);
@@ -133,6 +160,8 @@ class TMatches extends StatelessWidget {
                               final fmData = tourCtrl.tMatchData.value?.results?[index];
                               return GestureDetector(
                                 onTap: () {
+                                  Interstitial.showInterstitialByCount();
+
                                   mdCtrl.seriesId.value = fmData?.matchdetail?.series?.id ?? "";
                                   mdCtrl.tourId.value = fmData?.tourId ?? "";
                                   passComData(fmData);
@@ -143,7 +172,14 @@ class TMatches extends StatelessWidget {
                               );
                             },
                             separatorBuilder: (BuildContext context, int index) {
-                              return SizedBox(height: context.hp(1.5));
+                              return (tourCtrl.tMatchData.value?.upcoming?.isEmpty ?? true) &&
+                                      (tourCtrl.tMatchData.value?.live?.isEmpty ?? true) &&
+                                      index == 0
+                                  ? SmallNativeB(
+                                      radius: 10,
+                                      padding: EdgeInsets.symmetric(vertical: context.hp(1.3)),
+                                    )
+                                  : SizedBox(height: context.hp(1.5));
                             },
                           ),
                     SizedBox(height: context.hp(3)),

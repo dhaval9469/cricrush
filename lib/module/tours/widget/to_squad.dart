@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -46,6 +47,7 @@ class TOSquad extends StatelessWidget {
 
                       return GestureDetector(
                         onTap: () {
+                          Interstitial.showInterstitialByCount();
                           Navigation.pushNamed(Routes.teamSquad, arg: data);
                         },
                         child: Container(

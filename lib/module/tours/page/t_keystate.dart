@@ -1,3 +1,5 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/ad_module/native/native_banner.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -25,17 +27,21 @@ class TKeyState extends StatelessWidget {
             : ListView.separated(
                 shrinkWrap: true,
                 itemCount: tourCtrl.tKeyStatsList.length,
-                padding: EdgeInsets.only(top: context.hp(1),bottom: context.hp(3)),
+                padding: EdgeInsets.only(top: context.hp(1), bottom: context.hp(3)),
                 itemBuilder: (context, index) {
                   final data = tourCtrl.tKeyStatsList[index];
                   return GestureDetector(
                     onTap: () {
+                      Interstitial.showInterstitialByCount();
                       Navigation.pushNamed(Routes.playerState, arg: data);
                     },
                     child: Container(
                       decoration: BoxDecoration(color: AppColor.card),
                       child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1.2)),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: context.wp(3),
+                          vertical: context.hp(1.2),
+                        ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -44,7 +50,11 @@ class TKeyState extends StatelessWidget {
                               style: tBarlow(context, fontWeight: FontWeight.w600),
                               strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
                             ),
-                            Icon(Icons.arrow_forward_ios_sharp, color: AppColor.subText, size: context.sp(15)),
+                            Icon(
+                              Icons.arrow_forward_ios_sharp,
+                              color: AppColor.subText,
+                              size: context.sp(15),
+                            ),
                           ],
                         ),
                       ),
@@ -52,7 +62,9 @@ class TKeyState extends StatelessWidget {
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(height: context.hp(0.7));
+                  return index == 0
+                      ? NativeBannerB(padding: EdgeInsets.symmetric(vertical: context.hp(0.6)))
+                      : SizedBox(height: context.hp(0.7));
                 },
               ),
       ),

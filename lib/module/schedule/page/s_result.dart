@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/model/all_match_model.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
@@ -38,6 +39,8 @@ class _SResultTabState extends State<SResultTab> {
                   padding: EdgeInsets.symmetric(horizontal: context.wp(1.5)),
                   child: GestureDetector(
                     onTap: () {
+                      Interstitial.showInterstitialByCount();
+
                       homeCtrl.rsMatchTypes.value = e.mt ?? "";
                       homeCtrl.rSeriesData.clear();
 
@@ -119,6 +122,8 @@ class _SResultTabState extends State<SResultTab> {
                                         GestureDetector(
                                           behavior: HitTestBehavior.translucent,
                                           onTap: () {
+                                            Interstitial.showInterstitialByCount();
+
                                             mdCtrl.seriesId.value = data.seriesId ?? "";
                                             mdCtrl.tourId.value = data.tourId ?? "";
                                             passLiveData(matchData);

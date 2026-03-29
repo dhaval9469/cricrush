@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/native/native_banner.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -66,7 +67,10 @@ class _CommentaryState extends State<Commentary> {
                                       Container(
                                         color: AppColor.card,
                                         child: Padding(
-                                          padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1)),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: context.wp(3),
+                                            vertical: context.hp(1),
+                                          ),
                                           child: Column(
                                             children: [
                                               Row(
@@ -75,15 +79,29 @@ class _CommentaryState extends State<Commentary> {
                                                     width: context.wp(15),
                                                     alignment: Alignment.topLeft,
                                                     decoration: BoxDecoration(
-                                                      border: Border(right: BorderSide(color: AppColor.cDivider, width: 1)),
+                                                      border: Border(
+                                                        right: BorderSide(
+                                                          color: AppColor.cDivider,
+                                                          width: 1,
+                                                        ),
+                                                      ),
                                                     ),
                                                     child: Column(
                                                       children: [
-                                                        Text("OVER", style: stDmSans(context, fontSize: context.sp(12))),
+                                                        Text(
+                                                          "OVER",
+                                                          style: stDmSans(
+                                                            context,
+                                                            fontSize: context.sp(12),
+                                                          ),
+                                                        ),
                                                         SizedBox(height: context.hp(0.2)),
                                                         Text(
                                                           "${data?.totalOver}",
-                                                          style: tDmSans(context, fontWeight: FontWeight.w600),
+                                                          style: tDmSans(
+                                                            context,
+                                                            fontWeight: FontWeight.w600,
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -121,7 +139,8 @@ class _CommentaryState extends State<Commentary> {
                                                               .split(",")
                                                               .map(
                                                                 (e) => TextSpan(
-                                                                  text: "$e   ", // spacing like you used
+                                                                  text: "$e   ",
+                                                                  // spacing like you used
                                                                   style: stDmSans(
                                                                     context,
                                                                     fontSize: context.sp(13),
@@ -156,7 +175,10 @@ class _CommentaryState extends State<Commentary> {
 
                                                       Text(
                                                         "CRR: ${calculateCRR("${data?.score}", "${data?.over}").toStringAsFixed(2)}",
-                                                        style: stDmSans(context, fontSize: context.sp(12)),
+                                                        style: stDmSans(
+                                                          context,
+                                                          fontSize: context.sp(12),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -173,17 +195,26 @@ class _CommentaryState extends State<Commentary> {
                                                         children: [
                                                           Text(
                                                             "${data?.batsmen?.first.batsmenName}",
-                                                            style: stDmSans(context, fontSize: context.sp(12)),
+                                                            style: stDmSans(
+                                                              context,
+                                                              fontSize: context.sp(12),
+                                                            ),
                                                           ),
                                                           SizedBox(width: context.wp(2)),
                                                           Text(
                                                             "${data?.batsmen?.first.runs}",
-                                                            style: stDmSans(context, fontSize: context.sp(12)),
+                                                            style: stDmSans(
+                                                              context,
+                                                              fontSize: context.sp(12),
+                                                            ),
                                                           ),
                                                           SizedBox(width: context.wp(1.5)),
                                                           Text(
                                                             "(${data?.batsmen?.first.balls})",
-                                                            style: stDmSans(context, fontSize: context.sp(12)),
+                                                            style: stDmSans(
+                                                              context,
+                                                              fontSize: context.sp(12),
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
@@ -191,17 +222,26 @@ class _CommentaryState extends State<Commentary> {
                                                         children: [
                                                           Text(
                                                             "${data?.batsmen?.last.nonStrikerName}",
-                                                            style: stDmSans(context, fontSize: context.sp(12)),
+                                                            style: stDmSans(
+                                                              context,
+                                                              fontSize: context.sp(12),
+                                                            ),
                                                           ),
                                                           SizedBox(width: context.wp(2)),
                                                           Text(
                                                             "${data?.batsmen?.last.runs}",
-                                                            style: stDmSans(context, fontSize: context.sp(12)),
+                                                            style: stDmSans(
+                                                              context,
+                                                              fontSize: context.sp(12),
+                                                            ),
                                                           ),
                                                           SizedBox(width: context.wp(1.5)),
                                                           Text(
                                                             "(${data?.batsmen?.last.balls})",
-                                                            style: stDmSans(context, fontSize: context.sp(12)),
+                                                            style: stDmSans(
+                                                              context,
+                                                              fontSize: context.sp(12),
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
@@ -211,17 +251,26 @@ class _CommentaryState extends State<Commentary> {
                                                     children: [
                                                       Text(
                                                         "${data?.bowlers?.last.bowlersName}",
-                                                        style: stDmSans(context, fontSize: context.sp(12)),
+                                                        style: stDmSans(
+                                                          context,
+                                                          fontSize: context.sp(12),
+                                                        ),
                                                       ),
                                                       SizedBox(width: context.wp(2)),
                                                       Text(
                                                         "${data?.bowlers?.last.runs}/${data?.bowlers?.last.wickets}",
-                                                        style: stDmSans(context, fontSize: context.sp(12)),
+                                                        style: stDmSans(
+                                                          context,
+                                                          fontSize: context.sp(12),
+                                                        ),
                                                       ),
                                                       SizedBox(width: context.wp(1.5)),
                                                       Text(
                                                         "(${data?.bowlers?.last.overs})",
-                                                        style: stDmSans(context, fontSize: context.sp(12)),
+                                                        style: stDmSans(
+                                                          context,
+                                                          fontSize: context.sp(12),
+                                                        ),
                                                       ),
                                                     ],
                                                   ),
@@ -249,7 +298,11 @@ class _CommentaryState extends State<Commentary> {
                                       Expanded(
                                         child: Text(
                                           ((data?.defaultCommentary?.split(':').length ?? 0) > 1
-                                              ? data!.defaultCommentary!.split(':').sublist(1).join(':').trim()
+                                              ? data!.defaultCommentary!
+                                                    .split(':')
+                                                    .sublist(1)
+                                                    .join(':')
+                                                    .trim()
                                               : data?.defaultCommentary ?? ""),
                                           style: stBarlow(context, fontSize: context.sp(13)),
                                         ),
@@ -285,10 +338,16 @@ class _CommentaryState extends State<Commentary> {
                                               "${data?.runs}",
                                               style: stDmSans(
                                                 context,
-                                                color: data?.runs == "4" || data?.runs == "6" || data?.runs == "W"
+                                                color:
+                                                    data?.runs == "4" ||
+                                                        data?.runs == "6" ||
+                                                        data?.runs == "W"
                                                     ? AppColor.text
                                                     : AppColor.subText,
-                                                fontWeight: data?.runs == "4" || data?.runs == "6" || data?.runs == "W"
+                                                fontWeight:
+                                                    data?.runs == "4" ||
+                                                        data?.runs == "6" ||
+                                                        data?.runs == "W"
                                                     ? FontWeight.w900
                                                     : FontWeight.w600,
                                               ),
@@ -297,16 +356,25 @@ class _CommentaryState extends State<Commentary> {
                                         ),
                                       ),
                                       Expanded(
-                                        child: Text('${data?.commentary}', style: stBarlow(context, fontSize: context.sp(13))),
+                                        child: Text(
+                                          '${data?.commentary}',
+                                          style: stBarlow(context, fontSize: context.sp(13)),
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
+                                index == 0
+                                    ? NativeBannerB(
+                                        isTransparent: true,
+                                        padding: EdgeInsets.symmetric(vertical: context.hp(1)),
+                                      )
+                                    : SizedBox(),
                               ],
                             );
                           },
                           separatorBuilder: (context, index) {
-                            return SizedBox(height: context.hp(2));
+                            return SizedBox(height: context.hp(index == 0 ? 0 : 2));
                           },
                         ),
                         SizedBox(height: context.hp(5)),

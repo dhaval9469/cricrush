@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -39,6 +40,7 @@ class TopStore extends StatelessWidget {
                     final data = tourCtrl.newsList[index];
                     return GestureDetector(
                       onTap: () {
+                        Interstitial.showInterstitialByCount();
                         tourCtrl.newsTitle.value = data.title.toString();
                         tourCtrl.newsDescription.value = data.description ?? "";
                         tourCtrl.newsURLToImage.value = data.image.toString();

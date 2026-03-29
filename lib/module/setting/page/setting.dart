@@ -1,4 +1,5 @@
 import 'package:cricrush/ad_module/banner/banner_ad.dart';
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/module/setting/ctrl/setting_ctrl.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
@@ -59,6 +60,7 @@ class _SettingState extends State<Setting> {
           SizedBox(height: context.hp(1.5)),
           settingItem(
             onTap: () {
+              Interstitial.showInterstitialByCount();
               Navigation.pushNamed(Routes.playerRanking);
             },
             assetName: AppAssets.ranking,
@@ -67,6 +69,8 @@ class _SettingState extends State<Setting> {
           ),
           settingItem(
             onTap: () {
+              Interstitial.showInterstitialByCount();
+
               Navigation.pushNamed(Routes.teamRanking);
             },
             assetName: AppAssets.rTeam,
@@ -75,6 +79,8 @@ class _SettingState extends State<Setting> {
           ),
           settingItem(
             onTap: () {
+              Interstitial.showInterstitialByCount();
+
               Navigation.pushNamed(Routes.notificationS);
             },
             assetName: AppAssets.bell,
@@ -99,6 +105,8 @@ class _SettingState extends State<Setting> {
           ),
           settingItem(
             onTap: () {
+              Interstitial.showInterstitialByCount();
+
               Navigation.pushNamed(Routes.privacyPolicy);
             },
             assetName: AppAssets.pp,
@@ -238,7 +246,7 @@ class _SettingState extends State<Setting> {
                         child: Padding(
                           padding: EdgeInsets.symmetric(vertical: context.hp(1)),
                           child: Text(
-                            "Rate Now",
+                            "Submit",
                             textAlign: TextAlign.center,
                             style: tDmSans(context, fontSize: context.sp(18), fontWeight: FontWeight.bold),
                           ),

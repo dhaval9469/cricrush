@@ -1,5 +1,8 @@
 import 'dart:developer';
 
+import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/ad_module/native/native_banner.dart';
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/model/all_match_model.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
@@ -35,6 +38,7 @@ class SLiveTab extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: context.wp(1.5)),
                   child: GestureDetector(
                     onTap: () {
+                      Interstitial.showInterstitialByCount();
                       homeCtrl.lsMatchTypes.value = e.mt ?? "";
                       homeCtrl.liveSeriesData.clear();
 
@@ -60,16 +64,24 @@ class SLiveTab extends StatelessWidget {
                         width: context.wp(18),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
+                          color: homeCtrl.lsMatchTypes.value == e.mt
+                              ? AppColor.sTabColor
+                              : AppColor.card,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
+                          border: Border.all(
+                            color: homeCtrl.lsMatchTypes.value == e.mt
+                                ? AppColor.sTabColor
+                                : AppColor.tDivider,
+                          ),
                         ),
                         child: Text(
                           "${e.mt}",
                           style: stDmSans(
                             context,
                             height: 0.9,
-                            color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
+                            color: homeCtrl.lsMatchTypes.value == e.mt
+                                ? AppColor.text
+                                : AppColor.subText,
                           ),
                           strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
                         ),
@@ -114,15 +126,24 @@ class SLiveTab extends StatelessWidget {
                                         GestureDetector(
                                           behavior: HitTestBehavior.translucent,
                                           onTap: () {
-                                            log("check -- : 1");
+                                            Interstitial.showInterstitialByCount();
+
                                             mdCtrl.seriesId.value = data.seriesId ?? "";
                                             mdCtrl.tourId.value = data.tourId ?? "";
                                             passLiveData(matchData);
                                             Navigation.pushNamed(Routes.matchDetails);
-                                            lmwService.openMatch(matchData?.matchdetail?.match?.code ?? "");
+                                            lmwService.openMatch(
+                                              matchData?.matchdetail?.match?.code ?? "",
+                                            );
                                           },
                                           child: sLive(context: context, data: matchData),
                                         ),
+                                        seriesIndex == 0 && index == 0
+                                            ? NativeBannerB(
+                                                radius: 10,
+                                                padding: EdgeInsets.only(top: context.hp(0.5)),
+                                              )
+                                            : const SizedBox.shrink(),
                                       ],
                                     ),
                                   );

@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/utils/navigation.dart';
@@ -33,6 +34,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: isBackAppbar
           ? GestureDetector(
               onTap: () {
+                Interstitial.showInterstitialByBackCount();
                 Navigation.pop();
               },
               child: Image.asset(AppAssets.back, color: AppColor.text, scale: 20),

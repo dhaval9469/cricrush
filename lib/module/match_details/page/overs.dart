@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/native/native_banner.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -81,6 +82,9 @@ class _OversState extends State<Overs> {
                                     ),
                                   ),
                                 ),
+                              ),
+                              NativeBannerB(
+                                padding: EdgeInsets.only(bottom: context.hp(1)),
                               ),
                               ListView.separated(
                                 shrinkWrap: true,

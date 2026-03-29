@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/model/lmw_model.dart';
 import 'package:cricrush/module/match_details/service/lmw_ser.dart';
@@ -319,6 +320,8 @@ class _LmdLiveState extends State<LmdLive> {
             ),
           ),
 
+          SmallNativeB(padding: EdgeInsets.only(top:context.hp(1.3) ),),
+          
           widget.data?.matchdetail?[0].batsmen?.isEmpty ?? true
               ? const SizedBox.shrink()
               : Padding(

@@ -1,3 +1,5 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/setting/ctrl/setting_ctrl.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
@@ -18,133 +20,170 @@ class PlayerRanking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        isBackAppbar: true,
-        backgroundColor: AppColor.card,
-        toolbarHeight: context.hp(5),
-        title: Text(
-          "Player Ranking",
-          style: tDmSans(context, fontSize: context.sp(17), fontWeight: FontWeight.bold),
+    return PopScope(
+      canPop: false,
+      onPopInvokedWithResult: (bool didPop, Object? result) {
+        if (didPop) return;
+        Interstitial.showInterstitialByBackCount();
+        Navigation.pop();
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          isBackAppbar: true,
+          backgroundColor: AppColor.card,
+          toolbarHeight: context.hp(5),
+          title: Text(
+            "Player Ranking",
+            style: tDmSans(context, fontSize: context.sp(17), fontWeight: FontWeight.bold),
+          ),
         ),
-      ),
-      backgroundColor: AppColor.background,
-      body: Column(
-        children: [
-          SizedBox(height: context.hp(1.5)),
+        backgroundColor: AppColor.background,
+        body: Column(
+          children: [
+            SizedBox(height: context.hp(1.5)),
 
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColor.subCard.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColor.tDivider),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColor.card,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColor.subCard.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColor.tDivider),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColor.card,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: context.hp(1)),
+                        child: ranking(
+                          context,
+                          icon: Iconsax.man_copy,
+                          text: "ICC Man's Ranking",
+                          isBold: true,
+                        ),
+                      ),
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: context.hp(1)),
-                      child: ranking(context, icon: Iconsax.man_copy, text: "ICC Man's Ranking", isBold: true),
-                    ),
-                  ),
-                  Divider(color: AppColor.tDivider, height: 0),
-                  SizedBox(height: context.hp(1)),
-                  ranking(
-                    context,
-                    assetName: AppAssets.rBat,
-                    onTap: () {
-                      Navigation.pushNamed(Routes.battingMR);
-                    },
-                    text: "Batting Ranking",
-                  ),
-                  SizedBox(height: context.hp(1)),
-                  ranking(
-                    context,
-                    assetName: AppAssets.rAllR,
-                    onTap: () {
-                      Navigation.pushNamed(Routes.allRounderMr);
-                    },
-                    text: "All-Rounder Ranking",
-                  ),
-                  SizedBox(height: context.hp(1)),
-                  ranking(
-                    context,
-                    assetName: AppAssets.rBall,
-                    icon: Iconsax.flash_1,
-                    onTap: () {
-                      Navigation.pushNamed(Routes.bowlingMR);
-                    },
-                    text: "Bowling Ranking",
-                  ),
+                    Divider(color: AppColor.tDivider, height: 0),
+                    SizedBox(height: context.hp(1)),
+                    ranking(
+                      context,
+                      assetName: AppAssets.rBat,
+                      onTap: () {
+                        Interstitial.showInterstitialByCount();
 
-                  SizedBox(height: context.hp(1.2)),
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: context.hp(1.5)),
-
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
-            child: Container(
-              decoration: BoxDecoration(
-                color: AppColor.subCard.withValues(alpha: 0.2),
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: AppColor.tDivider),
-              ),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: AppColor.card,
-                      borderRadius: BorderRadius.only(topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+                        Navigation.pushNamed(Routes.battingMR);
+                      },
+                      text: "Batting Ranking",
                     ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: context.hp(1)),
-                      child: ranking(context, icon: Iconsax.woman_copy, text: "ICC Women’s PlayerRanking", isBold: true),
-                    ),
-                  ),
-                  Divider(color: AppColor.tDivider, height: 0),
-                  SizedBox(height: context.hp(1)),
-                  ranking(
-                    context,
-                    assetName: AppAssets.rBat,
-                    onTap: () {
-                      Navigation.pushNamed(Routes.battingWr);
-                    },
-                    text: "Batting Ranking",
-                  ),
-                  SizedBox(height: context.hp(1)),
-                  ranking(
-                    context,
-                    assetName: AppAssets.rAllR,
-                    onTap: () {
-                      Navigation.pushNamed(Routes.allRounderWr);
-                    },
-                    text: "All-Rounder Ranking",
-                  ),
-                  SizedBox(height: context.hp(1)),
-                  ranking(
-                    context,
-                    assetName: AppAssets.rBall,
-                    onTap: () {
-                      Navigation.pushNamed(Routes.bowlingWr);
-                    },
-                    text: "Bowling Ranking",
-                  ),
+                    SizedBox(height: context.hp(1)),
+                    ranking(
+                      context,
+                      assetName: AppAssets.rAllR,
+                      onTap: () {
+                        Interstitial.showInterstitialByCount();
 
-                  SizedBox(height: context.hp(1.2)),
-                ],
+                        Navigation.pushNamed(Routes.allRounderMr);
+                      },
+                      text: "All-Rounder Ranking",
+                    ),
+                    SizedBox(height: context.hp(1)),
+                    ranking(
+                      context,
+                      assetName: AppAssets.rBall,
+                      icon: Iconsax.flash_1,
+                      onTap: () {
+                        Interstitial.showInterstitialByCount();
+
+                        Navigation.pushNamed(Routes.bowlingMR);
+                      },
+                      text: "Bowling Ranking",
+                    ),
+
+                    SizedBox(height: context.hp(1.2)),
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+            SizedBox(height: context.hp(1.5)),
+
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: AppColor.subCard.withValues(alpha: 0.2),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColor.tDivider),
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: AppColor.card,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(12),
+                          topRight: Radius.circular(12),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: context.hp(1)),
+                        child: ranking(
+                          context,
+                          icon: Iconsax.woman_copy,
+                          text: "ICC Women’s PlayerRanking",
+                          isBold: true,
+                        ),
+                      ),
+                    ),
+                    Divider(color: AppColor.tDivider, height: 0),
+                    SizedBox(height: context.hp(1)),
+                    ranking(
+                      context,
+                      assetName: AppAssets.rBat,
+                      onTap: () {
+                        Interstitial.showInterstitialByCount();
+
+                        Navigation.pushNamed(Routes.battingWr);
+                      },
+                      text: "Batting Ranking",
+                    ),
+                    SizedBox(height: context.hp(1)),
+                    ranking(
+                      context,
+                      assetName: AppAssets.rAllR,
+                      onTap: () {
+                        Interstitial.showInterstitialByCount();
+
+                        Navigation.pushNamed(Routes.allRounderWr);
+                      },
+                      text: "All-Rounder Ranking",
+                    ),
+                    SizedBox(height: context.hp(1)),
+                    ranking(
+                      context,
+                      assetName: AppAssets.rBall,
+                      onTap: () {
+                        Interstitial.showInterstitialByCount();
+
+                        Navigation.pushNamed(Routes.bowlingWr);
+                      },
+                      text: "Bowling Ranking",
+                    ),
+
+                    SizedBox(height: context.hp(1.2)),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+        bottomNavigationBar: SafeArea(child: SmallNative()),
       ),
     );
   }
@@ -173,7 +212,9 @@ class PlayerRanking extends StatelessWidget {
             SizedBox(width: context.wp(4)),
             Text(
               "$text",
-              style: isBold == true ? tDmSans(context, fontWeight: FontWeight.bold) : stBarlow(context, fontSize: context.sp(15)),
+              style: isBold == true
+                  ? tDmSans(context, fontWeight: FontWeight.bold)
+                  : stBarlow(context, fontSize: context.sp(15)),
             ),
             Spacer(),
             Icon(

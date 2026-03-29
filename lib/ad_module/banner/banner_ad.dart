@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cricrush/res/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -12,6 +14,12 @@ class BannerAds extends StatefulWidget {
 class _BannerAdsState extends State<BannerAds> {
   BannerAd? bannerAd;
   bool _isAdLoaded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {});
+  }
 
   @override
   void didChangeDependencies() {

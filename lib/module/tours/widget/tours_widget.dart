@@ -2,6 +2,7 @@ import 'package:cricrush/module/tours/model/tours_details_model.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/responsive.dart';
+import 'package:cricrush/widget/common_widgets.dart';
 import 'package:cricrush/widget/image_loader.dart';
 import 'package:cricrush/widget/time_manager.dart';
 import 'package:flutter/material.dart';
@@ -16,107 +17,160 @@ Widget tLive({required BuildContext context, TourLiveM? data}) {
       secondInnings.add(element);
     }
   });
-  return Column(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      Row(
-        children: [
-          SizedBox(
-            width: context.wp(60),
-            child: Row(
-              children: [
-                showFlag(context: context, url: data?.teamlist?[0].teamImage ?? ""),
-                SizedBox(width: context.wp(2.5)),
-                Flexible(
-                  child: Text(
-                    "${data?.teamlist?[0].nameFull}",
-                    overflow: TextOverflow.ellipsis,
-                    style: tDmSans(context, fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          firstInnings.isEmpty
-              ? Text("Yet to Bet", style: stDmSans(context, fontSize: context.sp(13)))
-              : Row(
-                  children: [
-                    Text(
-                      "${firstInnings.last.total}/${firstInnings.last.wickets}",
-                      style: tBarlow(
+  return Container(
+    decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(12)),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        padding(
+          context,
+          vertical: context.hp(0.8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                "${data?.matchdetail?.match?.number}, AT ${data?.matchdetail?.match?.city}",
+                style: stDmSans(context, fontSize: context.sp(13)),
+              ),
+              data?.matchdetail?.status?.toLowerCase() == "play in progress"
+                  ? liveDot(context, vertical: context.hp(0.3))
+                  : data?.matchdetail?.status?.toLowerCase() == "match yet to begin"
+                  ? Text("YET TO BEGIN", style: stDmSans(context, fontSize: context.sp(13)))
+                  : Text(
+                      data?.matchdetail?.status ?? "",
+                      style: stDmSans(
                         context,
-                        fontSize: context.sp(15),
-                        fontWeight: firstInnings.last.batting == true
-                            ? FontWeight.w600
-                            : FontWeight.w500,
-                        color: firstInnings.last.batting == true ? AppColor.text : AppColor.subText,
+                        fontSize: context.sp(13),
+                        color: AppColor.status,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
-
-                    Text("  (", style: stBarlow(context)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
-                      child: Text(
-                        "${firstInnings.last.overs}",
-                        style: stBarlow(context, fontSize: context.sp(13)),
-                      ),
-                    ),
-                    Text(")", style: stBarlow(context)),
-                  ],
-                ),
-        ],
-      ),
-      SizedBox(height: context.hp(1)),
-      Row(
-        children: [
-          SizedBox(
-            width: context.wp(60),
-            child: Row(
-              children: [
-                showFlag(context: context, url: data?.teamlist?[1].teamImage ?? ""),
-                SizedBox(width: context.wp(2.5)),
-                Flexible(
-                  child: Text(
-                    "${data?.teamlist?[1].nameFull}",
-                    overflow: TextOverflow.ellipsis,
-                    style: tDmSans(context, fontWeight: FontWeight.w600),
-                  ),
-                ),
-              ],
-            ),
+            ],
           ),
-          secondInnings.isEmpty
-              ? Text("Yet to Bet", style: stDmSans(context, fontSize: context.sp(13)))
-              : Row(
-                  children: [
-                    Text(
-                      "${secondInnings.last.total}/${secondInnings.last.wickets}",
-                      style: tBarlow(
-                        context,
-                        fontSize: context.sp(15),
-                        fontWeight: secondInnings.last.batting == true
-                            ? FontWeight.w600
-                            : FontWeight.w500,
-                        color: secondInnings.last.batting == true
-                            ? AppColor.text
-                            : AppColor.subText,
-                      ),
+        ),
+        Divider(height: 0, color: AppColor.cDivider),
+        padding(
+          vertical: context.hp(1.1),
+          context,
+          Column(
+            children: [
+              Row(
+                children: [
+                  SizedBox(
+                    width: context.wp(60),
+                    child: Row(
+                      children: [
+                        showFlag(context: context, url: data?.teamlist?[0].teamImage ?? ""),
+                        SizedBox(width: context.wp(2.5)),
+                        Flexible(
+                          child: Text(
+                            "${data?.teamlist?[0].nameFull}",
+                            overflow: TextOverflow.ellipsis,
+                            style: tDmSans(context, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
+                  ),
+                  firstInnings.isEmpty
+                      ? Text("Yet to Bet", style: stDmSans(context, fontSize: context.sp(13)))
+                      : Row(
+                          children: [
+                            Text(
+                              "${firstInnings.last.total}/${firstInnings.last.wickets}",
+                              style: tBarlow(
+                                context,
+                                fontSize: context.sp(15),
+                                fontWeight: firstInnings.last.batting == true
+                                    ? FontWeight.w600
+                                    : FontWeight.w500,
+                                color: firstInnings.last.batting == true
+                                    ? AppColor.text
+                                    : AppColor.subText,
+                              ),
+                            ),
 
-                    Text("  (", style: stBarlow(context)),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
-                      child: Text(
-                        "${secondInnings.last.overs}",
-                        style: stBarlow(context, fontSize: context.sp(13)),
-                      ),
+                            Text("  (", style: stBarlow(context)),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
+                              child: Text(
+                                "${firstInnings.last.overs}",
+                                style: stBarlow(context, fontSize: context.sp(13)),
+                              ),
+                            ),
+                            Text(")", style: stBarlow(context)),
+                          ],
+                        ),
+                ],
+              ),
+              SizedBox(height: context.hp(1)),
+              Row(
+                children: [
+                  SizedBox(
+                    width: context.wp(60),
+                    child: Row(
+                      children: [
+                        showFlag(context: context, url: data?.teamlist?[1].teamImage ?? ""),
+                        SizedBox(width: context.wp(2.5)),
+                        Flexible(
+                          child: Text(
+                            "${data?.teamlist?[1].nameFull}",
+                            overflow: TextOverflow.ellipsis,
+                            style: tDmSans(context, fontWeight: FontWeight.w600),
+                          ),
+                        ),
+                      ],
                     ),
-                    Text(")", style: stBarlow(context)),
-                  ],
-                ),
-        ],
-      ),
-    ],
+                  ),
+                  secondInnings.isEmpty
+                      ? Text("Yet to Bet", style: stDmSans(context, fontSize: context.sp(13)))
+                      : Row(
+                          children: [
+                            Text(
+                              "${secondInnings.last.total}/${secondInnings.last.wickets}",
+                              style: tBarlow(
+                                context,
+                                fontSize: context.sp(15),
+                                fontWeight: secondInnings.last.batting == true
+                                    ? FontWeight.w600
+                                    : FontWeight.w500,
+                                color: secondInnings.last.batting == true
+                                    ? AppColor.text
+                                    : AppColor.subText,
+                              ),
+                            ),
+
+                            Text("  (", style: stBarlow(context)),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
+                              child: Text(
+                                "${secondInnings.last.overs}",
+                                style: stBarlow(context, fontSize: context.sp(13)),
+                              ),
+                            ),
+                            Text(")", style: stBarlow(context)),
+                          ],
+                        ),
+                ],
+              ),
+            ],
+          ),
+        ),
+        Divider(height: 0, color: AppColor.cDivider),
+        padding(
+          context,
+          Text(
+            (data?.matchdetail?.equation?.isNotEmpty ?? false)
+                ? data!.matchdetail!.equation!
+                : (data?.matchdetail?.venue?.name ?? ""),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            textAlign: TextAlign.start,
+            style: stDmSans(context, fontSize: context.sp(12)),
+          ),
+        ),
+      ],
+    ),
   );
 }
 

@@ -91,9 +91,7 @@ class _PointTableState extends State<PointTable> {
                                   ListView.separated(
                                     shrinkWrap: true,
                                     physics: const NeverScrollableScrollPhysics(),
-                                    itemCount: (data != null && data.length > 3)
-                                        ? 3
-                                        : (data?.length ?? 0),
+                                    itemCount: data?.length ?? 0,
                                     itemBuilder: (context, index) {
                                       final pData = data?[index];
 
