@@ -1,8 +1,9 @@
-import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
+import 'package:cricrush/module/tours/service/tour_ws_service.dart';
 import 'package:cricrush/module/tours/widget/to_keystate.dart';
 import 'package:cricrush/module/tours/widget/to_news.dart';
 import 'package:cricrush/module/tours/widget/to_point_table.dart';
+import 'package:cricrush/module/tours/widget/to_recent_matches.dart';
 import 'package:cricrush/module/tours/widget/to_squad.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/utils/responsive.dart';
@@ -14,18 +15,20 @@ class TOverview extends StatelessWidget {
   TOverview({super.key});
 
   final tourCtrl = Get.find<ToursCtrl>();
+  final tourWsService = Get.find<TourWSService>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColor.background,
       body: Obx(
-        () => tourCtrl.csl.value
+        () => tourWsService.tourLoading.value && tourCtrl.csl.value
             ? Center(child: const DL())
             : SingleChildScrollView(
                 child: Column(
                   children: [
-                    SmallNativeB(padding: EdgeInsets.only(top: context.hp(1.2))),
+                    // SmallNativeB(padding: EdgeInsets.only(top: context.hp(1.2))),
+                    ToRecentMatches(),
                     TOKeyState(),
                     TOSquad(),
                     TOPointTable(),

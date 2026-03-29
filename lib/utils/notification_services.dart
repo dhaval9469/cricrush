@@ -1,4 +1,5 @@
 import 'dart:async';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -51,7 +52,7 @@ class NotificationService {
   Future<void> _initFirebaseMessaging() async {
     FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
 
-    await _messaging.subscribeToTopic("cricflow");
+    await _messaging.subscribeToTopic("cricrush");
 
     /// Foreground
     FirebaseMessaging.onMessage.listen((msg) {

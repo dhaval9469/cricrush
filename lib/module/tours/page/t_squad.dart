@@ -41,7 +41,7 @@ class TSquad extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: context.wp(3),
-                          vertical: context.hp(1),
+                          vertical: context.hp(1.3),
                         ),
                         child: Row(
                           children: [

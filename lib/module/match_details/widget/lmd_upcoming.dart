@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/model/lmw_model.dart';
 import 'package:cricrush/module/match_details/service/lmw_ser.dart';
@@ -84,6 +85,11 @@ class LmdUpcoming extends StatelessWidget {
                 ),
               ),
             ),
+          ),
+
+          SmallNativeB(
+            padding: EdgeInsets.only(top: context.hp(1.3), right: context.wp(3), left: context.wp(3)),
+            radius: 12,
           ),
 
           Obx(() {
@@ -192,6 +198,7 @@ class LmdUpcoming extends StatelessWidget {
                     ),
                   ],
                 ),
+          SizedBox(height: context.hp(1.5)),
         ],
       ),
     );

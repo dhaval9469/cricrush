@@ -96,10 +96,7 @@ class NativeBannerShimmer extends StatelessWidget {
     return Container(
       width: double.infinity,
       height: 65,
-      decoration: BoxDecoration(
-        color: AppColor.card,
-        borderRadius: BorderRadius.circular(radius ?? 0),
-      ),
+      decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(radius ?? 0)),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -114,10 +111,7 @@ class NativeBannerShimmer extends StatelessWidget {
                   child: Container(
                     width: 48,
                     height: 44,
-                    decoration: BoxDecoration(
-                      color: AppColor.shimmerPlaceholder,
-                      borderRadius: BorderRadius.circular(8),
-                    ),
+                    decoration: BoxDecoration(color: AppColor.shimmerPlaceholder, borderRadius: BorderRadius.circular(8)),
                   ),
                 ),
                 const SizedBox(width: 10),
@@ -140,10 +134,7 @@ class NativeBannerShimmer extends StatelessWidget {
                   child: Container(
                     width: 80,
                     height: 26,
-                    decoration: BoxDecoration(
-                      color: AppColor.shimmerPlaceholder,
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    decoration: BoxDecoration(color: AppColor.shimmerPlaceholder, borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
               ],
@@ -186,7 +177,7 @@ class _NativeBannerBState extends State<NativeBannerB> {
       adUnitId: "${AppConfig.unitIdModel?.native}",
       factoryId: 'native_banner',
       customOptions: {
-        'backgroundColor': widget.isTransparent ?"#20232C":"#2A2E3A",
+        'backgroundColor': widget.isTransparent ? "#20232C" : "#2A2E3A",
         'textColor': '#FFFFFF',
         'subTextColor': '#CDD3E0',
         'buttonColor': '#016BFD',
@@ -247,6 +238,7 @@ class _NativeBannerBState extends State<NativeBannerB> {
 
 class NativeBannerD extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? dPadding;
   final double? radius;
   final double height;
   final double isDividerHeight;
@@ -257,9 +249,10 @@ class NativeBannerD extends StatefulWidget {
   const NativeBannerD({
     super.key,
     this.padding,
+    this.dPadding,
     this.radius,
     this.isTransparent = false,
-    this.height = 100,
+    this.height = 65,
     this.isDividerHeight = 15,
     this.isFirst = true,
     this.isSecond = true,
@@ -317,38 +310,44 @@ class _NativeBannerDState extends State<NativeBannerD> {
 
   @override
   Widget build(BuildContext context) {
-    final double targetHeight = (isLoading || _nativeAd == null) ? 0 : widget.height;
-    return AnimatedSize(
-      duration: const Duration(milliseconds: 500),
-      curve: Curves.easeInOut,
-      child: Padding(
-        padding: widget.padding ?? EdgeInsets.zero,
-        child: _nativeAd != null
-            ? SizedBox(
-                height: targetHeight,
-                width: double.infinity,
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    widget.isFirst == true ? Divider(height: widget.isDividerHeight) : SizedBox(),
-                    Padding(
-                      padding: widget.padding ?? EdgeInsets.zero,
-                      child: ClipRRect(
+    final bool showAd = !isLoading && _nativeAd != null;
+
+    return !showAd
+        ? SizedBox.shrink()
+        : Padding(
+            padding: widget.padding ?? EdgeInsets.zero,
+            child: ClipRect(
+              child: AnimatedSize(
+                duration: const Duration(milliseconds: 500),
+                curve: Curves.easeInOut,
+                alignment: Alignment.topCenter,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  heightFactor: showAd ? 1 : 0,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      if (widget.isFirst)
+                        Padding(
+                          padding: widget.dPadding ?? EdgeInsets.zero,
+                          child: Divider(height: widget.isDividerHeight, color: AppColor.cDivider),
+                        ),
+
+                      ClipRRect(
                         borderRadius: BorderRadius.circular(widget.radius ?? 0),
                         child: SizedBox(
                           height: 65,
                           width: double.infinity,
-                          child: AdWidget(ad: _nativeAd!),
+                          child: showAd ? AdWidget(ad: _nativeAd!) : const SizedBox(),
                         ),
                       ),
-                    ),
-                    widget.isSecond == true ? Divider(height: widget.isDividerHeight) : SizedBox(),
-                  ],
+
+                      if (widget.isSecond) Divider(height: widget.isDividerHeight, color: AppColor.cDivider),
+                    ],
+                  ),
                 ),
-              )
-            : Divider(height: widget.isDividerHeight),
-      ),
-    );
+              ),
+            ),
+          );
   }
 }

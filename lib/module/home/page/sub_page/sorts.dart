@@ -1,7 +1,6 @@
 import 'package:cricrush/ad_module/banner/banner_ad.dart';
 import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/ad_module/native/big_native.dart';
-import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/home/ctrl/sorts_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/app_config.dart';

@@ -2,6 +2,7 @@ import 'package:cricrush/ad_module/native/native_banner.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/analytics_service.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/widget/image_loader.dart';
 import 'package:cricrush/widget/loader.dart';
@@ -17,6 +18,12 @@ class PlayingXi extends StatefulWidget {
 
 class _PlayingXiState extends State<PlayingXi> {
   final mdCtrl = Get.find<MatchDetailsCtrl>();
+
+  @override
+  void initState() {
+    AnalyticsService().logScreen('PlayingXiScreen');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,23 +46,15 @@ class _PlayingXiState extends State<PlayingXi> {
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: mdCtrl.isSquad.value == 0
-                                    ? AppColor.card
-                                    : AppColor.background,
-                              ),
+                              decoration: BoxDecoration(color: mdCtrl.isSquad.value == 0 ? AppColor.card : AppColor.background),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: context.hp(1.3)),
                                 child: Text(
                                   mdCtrl.teamASName.value,
                                   style: tBarlow(
                                     context,
-                                    color: mdCtrl.isSquad.value == 0
-                                        ? AppColor.text
-                                        : AppColor.subText,
-                                    fontWeight: mdCtrl.isSquad.value == 0
-                                        ? FontWeight.bold
-                                        : FontWeight.w500,
+                                    color: mdCtrl.isSquad.value == 0 ? AppColor.text : AppColor.subText,
+                                    fontWeight: mdCtrl.isSquad.value == 0 ? FontWeight.bold : FontWeight.w500,
                                   ),
                                 ),
                               ),
@@ -69,23 +68,15 @@ class _PlayingXiState extends State<PlayingXi> {
                             },
                             child: Container(
                               alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                color: mdCtrl.isSquad.value == 1
-                                    ? AppColor.card
-                                    : AppColor.background,
-                              ),
+                              decoration: BoxDecoration(color: mdCtrl.isSquad.value == 1 ? AppColor.card : AppColor.background),
                               child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: context.hp(1.3)),
                                 child: Text(
                                   mdCtrl.teamBSName.value,
                                   style: tBarlow(
                                     context,
-                                    color: mdCtrl.isSquad.value == 1
-                                        ? AppColor.text
-                                        : AppColor.subText,
-                                    fontWeight: mdCtrl.isSquad.value == 1
-                                        ? FontWeight.bold
-                                        : FontWeight.w500,
+                                    color: mdCtrl.isSquad.value == 1 ? AppColor.text : AppColor.subText,
+                                    fontWeight: mdCtrl.isSquad.value == 1 ? FontWeight.bold : FontWeight.w500,
                                   ),
                                 ),
                               ),
@@ -95,34 +86,18 @@ class _PlayingXiState extends State<PlayingXi> {
                       ],
                     ),
                     Divider(color: AppColor.cDivider, height: 0),
-                    NativeBannerB(
-                      padding: EdgeInsets.only(top: context.hp(1)),
-                    ),
+                    NativeBannerB(padding: EdgeInsets.only(top: context.hp(1))),
                     ListView.separated(
                       physics: const NeverScrollableScrollPhysics(),
-                      padding: EdgeInsets.symmetric(
-                        vertical: context.hp(2),
-                        horizontal: context.wp(3),
-                      ),
+                      padding: EdgeInsets.symmetric(vertical: context.hp(2), horizontal: context.wp(3)),
                       shrinkWrap: true,
-                      itemCount:
-                          mdCtrl.squadData.value?.teamsNew?[mdCtrl.isSquad.value].players?.length ??
-                          0,
+                      itemCount: mdCtrl.squadData.value?.teamsNew?[mdCtrl.isSquad.value].players?.length ?? 0,
                       itemBuilder: (context, batIndex) {
-                        final data = mdCtrl
-                            .squadData
-                            .value
-                            ?.teamsNew?[mdCtrl.isSquad.value]
-                            .players?[batIndex];
+                        final data = mdCtrl.squadData.value?.teamsNew?[mdCtrl.isSquad.value].players?[batIndex];
                         return Expanded(
                           child: Row(
                             children: [
-                              showPlayer(
-                                context: context,
-                                url: data?.image ?? "",
-                                h: context.wp(2),
-                                w: context.wp(2),
-                              ),
+                              showPlayer(context: context, url: data?.image ?? "", h: context.wp(2), w: context.wp(2)),
                               SizedBox(width: context.wp(5)),
                               Expanded(
                                 child: Row(
@@ -131,15 +106,9 @@ class _PlayingXiState extends State<PlayingXi> {
                                       child: Column(
                                         crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                            "${data?.nameFull?.trim()}",
-                                            style: tBarlow(context, fontSize: context.sp(14)),
-                                          ),
+                                          Text("${data?.nameFull?.trim()}", style: tBarlow(context, fontSize: context.sp(14))),
                                           SizedBox(height: context.hp(0.2)),
-                                          Text(
-                                            data?.role ?? "",
-                                            style: stBarlow(context, fontSize: context.sp(12)),
-                                          ),
+                                          Text(data?.role ?? "", style: stBarlow(context, fontSize: context.sp(12))),
                                         ],
                                       ),
                                     ),
@@ -152,19 +121,11 @@ class _PlayingXiState extends State<PlayingXi> {
                                               border: Border.all(color: AppColor.tDivider),
                                             ),
                                             child: Padding(
-                                              padding: EdgeInsets.symmetric(
-                                                horizontal: context.wp(2),
-                                                vertical: context.hp(0.7),
-                                              ),
+                                              padding: EdgeInsets.symmetric(horizontal: context.wp(2), vertical: context.hp(0.7)),
                                               child: Text(
                                                 data?.iscaptain == true ? "C" : "vc",
-                                                style: tBarlow(
-                                                  context,
-                                                  fontSize: context.sp(16),
-                                                  fontWeight: FontWeight.bold,
-                                                ),
+                                                style: tBarlow(context, fontSize: context.sp(16), fontWeight: FontWeight.bold),
                                                 strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
-
                                               ),
                                             ),
                                           )
@@ -178,11 +139,7 @@ class _PlayingXiState extends State<PlayingXi> {
                         );
                       },
                       separatorBuilder: (BuildContext context, int index) {
-                        return Divider(
-                          indent: context.wp(14),
-                          height: context.hp(2),
-                          color: AppColor.tDivider,
-                        );
+                        return Divider(indent: context.wp(14), height: context.hp(2), color: AppColor.tDivider);
                       },
                     ),
 

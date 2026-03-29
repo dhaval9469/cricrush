@@ -83,8 +83,8 @@ class EndPointModel {
   String? pyLive;
   String? seriesHeader;
   String? seriesFooter;
-  int? tourId;
-  int? seriesId;
+  String? tourId;
+  String? seriesId;
   List<SubPlan>? subPlan;
 
   EndPointModel({

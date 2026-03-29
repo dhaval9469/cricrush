@@ -6,6 +6,7 @@ import 'package:cricrush/module/schedule/page/s_result.dart';
 import 'package:cricrush/module/schedule/page/s_upcoming.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/analytics_service.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -31,6 +32,7 @@ class _SchedulePageState extends State<SchedulePage> with SingleTickerProviderSt
     });
 
     super.initState();
+    AnalyticsService().logScreen('ScheduleScreen');
   }
 
   @override

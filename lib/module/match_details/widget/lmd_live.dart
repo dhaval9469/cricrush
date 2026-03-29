@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/livematch_ad.dart';
 import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/module/match_details/model/lmw_model.dart';
@@ -70,6 +71,7 @@ class _LmdLiveState extends State<LmdLive> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       mdCtrl.matchStatus.value = widget.data?.status?.toLowerCase() ?? "";
       processBall(widget.data);
+      showStatusAd(widget.data);
     });
 
     final isSecondBatting = secondInnings.isNotEmpty && secondInnings.last.batting == true;
@@ -320,8 +322,8 @@ class _LmdLiveState extends State<LmdLive> {
             ),
           ),
 
-          SmallNativeB(padding: EdgeInsets.only(top:context.hp(1.3) ),),
-          
+          SmallNativeB(padding: EdgeInsets.only(top: context.hp(1.3))),
+
           widget.data?.matchdetail?[0].batsmen?.isEmpty ?? true
               ? const SizedBox.shrink()
               : Padding(
@@ -572,7 +574,34 @@ class _LmdLiveState extends State<LmdLive> {
 
     await Future.delayed(const Duration(seconds: 7));
 
-    // showOverAd(data);
+    showOverAd(data);
+  }
+
+  void showOverAd(WSLSDetailsModel? data) {
+    if (data == null) return;
+
+    final status = data.status?.toLowerCase() ?? "";
+    final isPlaying = status == "play in progress";
+
+    final currentOver = int.tryParse(data.overNo ?? "") ?? 0;
+    if (isPlaying && OverAdManager.canShow(currentOver)) {
+      OverAdManager.show(currentOver: currentOver);
+    }
+  }
+
+  Future<void> showStatusAd(WSLSDetailsModel? data) async {
+    if (data == null) return;
+
+    final status = data.status?.toLowerCase() ?? "";
+    final isBreak = const ["drinks", "innings break", "lunch", "tea", "tea break"].contains(status);
+
+    if (!isBreak) return;
+
+    await Future.delayed(const Duration(seconds: 5));
+
+    if (StatusAdManager.canShowForStatus(status)) {
+      StatusAdManager.showStatusAd(status);
+    }
   }
 
   Future<void> speakText(String text, int index, {String? over}) async {

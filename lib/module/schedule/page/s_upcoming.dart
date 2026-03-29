@@ -109,40 +109,47 @@ class _SUpcomingTabState extends State<SUpcomingTab> {
                               mcHeader(context: context, tourName: "${data.tourName?.replaceAll(",", " ")}"),
                               ListView.separated(
                                 shrinkWrap: true,
-                                padding: EdgeInsets.symmetric(vertical: context.hp(2)),
                                 physics: NeverScrollableScrollPhysics(),
                                 itemCount: (data.upcoming?.length ?? 0) > 3 ? 3 : (data.upcoming?.length ?? 0),
                                 itemBuilder: (context, index) {
                                   final matchData = data.upcoming?[index];
 
-                                  return padding(
-                                    context,
-                                    isHorizontal: true,
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                          onTap: () {
-                                            Interstitial.showInterstitialByCount();
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      GestureDetector(
+                                        onTap: () {
+                                          Interstitial.showInterstitialByCount();
 
-                                            mdCtrl.seriesId.value = data.seriesId ?? "";
-                                            mdCtrl.tourId.value = data.tourId ?? "";
-                                            passUpCData(matchData);
-                                            Navigation.pushNamed(Routes.matchDetails);
-                                            lmwService.getLSDFUR(matchData?.matchfile ?? "");
-                                          },
+                                          mdCtrl.seriesId.value = data.seriesId ?? "";
+                                          mdCtrl.tourId.value = data.tourId ?? "";
+                                          passUpCData(matchData);
+                                          Navigation.pushNamed(Routes.matchDetails);
+                                          lmwService.getLSDFUR(matchData?.matchfile ?? "");
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1.2)),
                                           child: sUpComing(context: context, data: matchData),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      // seriesIndex == 0 && index == 0
+                                      //     ? NativeBannerD(height: 65, isSecond: false, isDividerHeight: 1)
+                                      //     : const SizedBox.shrink(),
+                                    ],
                                   );
                                 },
                                 separatorBuilder: (BuildContext context, int index) {
-                                  return padding(
-                                    context,
-                                    isHorizontal: true,
-                                    Divider(color: AppColor.cDivider, height: context.hp(2.3)),
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: context.wp(3)),
+                                    child: Divider(color: AppColor.cDivider, height: context.hp(0.5)),
                                   );
+                                  // return
+                                  //   Padding(
+                                  //   padding: seriesIndex == 0 && index == 0
+                                  //       ? EdgeInsets.zero
+                                  //       : EdgeInsets.symmetric(horizontal: context.wp(3)),
+                                  //   child: Divider(color: AppColor.cDivider, height: context.hp(0.5)),
+                                  // );
                                 },
                               ),
                               Divider(color: AppColor.cDivider, height: 0),

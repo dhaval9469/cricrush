@@ -1,8 +1,7 @@
-import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
-import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
-import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
+import 'package:cricrush/module/tours/service/tour_ws_service.dart';
 import 'package:cricrush/res/app_color.dart';
+import 'package:cricrush/utils/analytics_service.dart';
 import 'package:cricrush/utils/routing.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,9 +14,12 @@ class CricRushApp extends StatefulWidget {
 }
 
 class _CricRushAppState extends State<CricRushApp> {
+  final analyticsService = AnalyticsService();
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      navigatorObservers: [analyticsService.observer],
       debugShowCheckedModeBanner: false,
       initialBinding: AppBinding(),
       getPages: Routes.routes,
@@ -44,9 +46,7 @@ class _CricRushAppState extends State<CricRushApp> {
 class AppBinding extends Bindings {
   @override
   void dependencies() {
-    Get.put<HomeCtrl>(HomeCtrl());
     Get.put<ToursCtrl>(ToursCtrl());
-    Get.put<LMWService>(LMWService());
-    Get.put<MatchDetailsCtrl>(MatchDetailsCtrl());
+    Get.put<TourWSService>(TourWSService());
   }
 }

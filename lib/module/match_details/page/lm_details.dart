@@ -4,6 +4,7 @@ import 'package:cricrush/module/match_details/widget/lmd_finish.dart';
 import 'package:cricrush/module/match_details/widget/lmd_live.dart';
 import 'package:cricrush/module/match_details/widget/lmd_upcoming.dart';
 import 'package:cricrush/res/app_color.dart';
+import 'package:cricrush/utils/analytics_service.dart';
 import 'package:cricrush/widget/loader.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -18,6 +19,12 @@ class LmDetails extends StatefulWidget {
 class _LmDetailsState extends State<LmDetails> {
   final mdCtrl = Get.find<MatchDetailsCtrl>();
   final lmwService = Get.find<LMWService>();
+
+  @override
+  void initState() {
+    AnalyticsService().logScreen('LmDetailsScreen');
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -1,3 +1,5 @@
+import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/helper/local_storage_service.dart';
 import 'package:cricrush/module/intro/widget/f_intro.dart';
 import 'package:cricrush/module/intro/widget/s_intro.dart';
@@ -31,6 +33,7 @@ class _IntroPageState extends State<IntroPage> {
     if (currentPage < 2) {
       pageController.animateToPage(currentPage + 1, duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
     } else {
+      Interstitial.showInterstitialAds();
       AppPref().write(AppConfig.intro, true);
       Navigation.pushNamed(Routes.bottomPage);
     }
@@ -55,7 +58,7 @@ class _IntroPageState extends State<IntroPage> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: context.wp(10)),
+              padding: EdgeInsets.only(left: context.wp(10), right: context.wp(10), bottom: context.hp(2)),
               child: GestureDetector(
                 onTap: onNextTap,
                 child: Container(
@@ -78,9 +81,7 @@ class _IntroPageState extends State<IntroPage> {
           ),
         ],
       ),
-      bottomNavigationBar: SafeArea(
-        child: Container(color: AppColor.background, height: 110, width: double.infinity),
-      ),
+      bottomNavigationBar: SafeArea(child: SmallNative()),
     );
   }
 }

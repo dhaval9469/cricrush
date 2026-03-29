@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/ad_module/native/big_native.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';

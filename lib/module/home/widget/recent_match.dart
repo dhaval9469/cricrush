@@ -36,15 +36,8 @@ class RecentMatch extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(
-                    left: context.wp(4),
-                    bottom: context.hp(1),
-                    top: context.hp(1),
-                  ),
-                  child: Text(
-                    "Matches",
-                    style: stDmSans(context, color: AppColor.text, fontWeight: FontWeight.w600),
-                  ),
+                  padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(0.5), top: context.hp(0.5)),
+                  child: Text("Matches", style: tDmSans(context, fontWeight: FontWeight.w600)),
                 ),
                 CarouselSlider.builder(
                   itemCount: homeCtrl.recentMatches.length,
@@ -82,8 +75,7 @@ class RecentMatch extends StatelessWidget {
                                 if (data.type?.toLowerCase() == "upcoming") {
                                   passUpCData(data);
                                   lmwService.getLSDFUR(data.matchfile ?? "");
-                                } else if (data.type?.toLowerCase() == "results" ||
-                                    data.type?.toLowerCase() == "result") {
+                                } else if (data.type?.toLowerCase() == "results" || data.type?.toLowerCase() == "result") {
                                   passComData(data);
                                   lmwService.getLSDFUR(data.matchdetail?.match?.code ?? "");
                                 } else {
@@ -93,10 +85,7 @@ class RecentMatch extends StatelessWidget {
                                 Navigation.pushNamed(Routes.matchDetails);
                               },
                               child: Container(
-                                decoration: BoxDecoration(
-                                  color: AppColor.card,
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
+                                decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(14)),
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -108,10 +97,7 @@ class RecentMatch extends StatelessWidget {
                                             ? Row(
                                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                 children: [
-                                                  Text(
-                                                    "${data.matchnumber}",
-                                                    style: stBarlow(context),
-                                                  ),
+                                                  Text("${data.matchnumber}", style: stBarlow(context)),
                                                   Text(
                                                     "UPCOMING",
                                                     style: stDmSans(
@@ -129,10 +115,7 @@ class RecentMatch extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     "${data.matchdetail?.match?.number}",
-                                                    style: stDmSans(
-                                                      context,
-                                                      fontSize: context.sp(13),
-                                                    ),
+                                                    style: stDmSans(context, fontSize: context.sp(13)),
                                                   ),
                                                   Text(
                                                     "RESULT",
@@ -150,23 +133,12 @@ class RecentMatch extends StatelessWidget {
                                                 children: [
                                                   Text(
                                                     "${data.matchdetail?.match?.number}, AT ${data.matchdetail?.match?.city}",
-                                                    style: stDmSans(
-                                                      context,
-                                                      fontSize: context.sp(13),
-                                                    ),
+                                                    style: stDmSans(context, fontSize: context.sp(13)),
                                                   ),
-                                                  data.matchdetail?.status?.toLowerCase() ==
-                                                          "play in progress"
+                                                  data.matchdetail?.status?.toLowerCase() == "play in progress"
                                                       ? liveDot(context)
-                                                      : data.matchdetail?.status?.toLowerCase() ==
-                                                            "match yet to begin"
-                                                      ? Text(
-                                                          "YET TO BEGIN",
-                                                          style: stDmSans(
-                                                            context,
-                                                            fontSize: context.sp(13),
-                                                          ),
-                                                        )
+                                                      : data.matchdetail?.status?.toLowerCase() == "match yet to begin"
+                                                      ? Text("YET TO BEGIN", style: stDmSans(context, fontSize: context.sp(13)))
                                                       : Text(
                                                           data.matchdetail?.status ?? "",
                                                           style: stDmSans(
@@ -190,39 +162,26 @@ class RecentMatch extends StatelessWidget {
                                                 SizedBox(
                                                   width: context.wp(50),
                                                   child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceAround,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                     children: [
                                                       Row(
                                                         children: [
-                                                          showFlag(
-                                                            context: context,
-                                                            url: data.teamaImage ?? "",
-                                                          ),
+                                                          showFlag(context: context, url: data.teamaImage ?? ""),
                                                           SizedBox(width: context.wp(3)),
                                                           Text(
                                                             "${data.teamaShort}",
-                                                            style: tDmSans(
-                                                              context,
-                                                              fontWeight: FontWeight.w600,
-                                                            ),
+                                                            style: tDmSans(context, fontWeight: FontWeight.w600),
                                                           ),
                                                         ],
                                                       ),
                                                       SizedBox(height: context.hp(1)),
                                                       Row(
                                                         children: [
-                                                          showFlag(
-                                                            context: context,
-                                                            url: data.teambImage ?? "",
-                                                          ),
+                                                          showFlag(context: context, url: data.teambImage ?? ""),
                                                           SizedBox(width: context.wp(3)),
                                                           Text(
                                                             "${data.teambShort}",
-                                                            style: tDmSans(
-                                                              context,
-                                                              fontWeight: FontWeight.w600,
-                                                            ),
+                                                            style: tDmSans(context, fontWeight: FontWeight.w600),
                                                           ),
                                                         ],
                                                       ),
@@ -232,14 +191,9 @@ class RecentMatch extends StatelessWidget {
 
                                                 Expanded(
                                                   child: Text(
-                                                    TimeManager.rmTime(
-                                                      '${data.matchdateIst} ${data.matchtimeIst}',
-                                                    ),
+                                                    TimeManager.rmTime('${data.matchdateIst} ${data.matchtimeIst}'),
                                                     textAlign: TextAlign.center,
-                                                    style: stBarlow(
-                                                      context,
-                                                      color: AppColor.timeText,
-                                                    ),
+                                                    style: stBarlow(context, color: AppColor.timeText),
                                                   ),
                                                 ),
                                               ],
@@ -256,23 +210,14 @@ class RecentMatch extends StatelessWidget {
                                                           width: context.wp(50),
                                                           child: Row(
                                                             children: [
-                                                              showFlag(
-                                                                context: context,
-                                                                url:
-                                                                    data.teamlist?[0].teamImage ??
-                                                                    "",
-                                                              ),
+                                                              showFlag(context: context, url: data.teamlist?[0].teamImage ?? ""),
                                                               SizedBox(width: context.wp(3)),
                                                               Text(
                                                                 "${data.teamlist?[0].nameShort}",
                                                                 style: tDmSans(
                                                                   context,
                                                                   fontWeight: FontWeight.w600,
-                                                                  color:
-                                                                      data.matchdetail?.win ==
-                                                                          data
-                                                                              .teamlist?[0]
-                                                                              .nameShort
+                                                                  color: data.matchdetail?.win == data.teamlist?[0].nameShort
                                                                       ? AppColor.text
                                                                       : AppColor.subText,
                                                                 ),
@@ -283,10 +228,7 @@ class RecentMatch extends StatelessWidget {
                                                         firstInnings.isEmpty
                                                             ? Text(
                                                                 "Yet to Bet",
-                                                                style: stDmSans(
-                                                                  context,
-                                                                  fontSize: context.sp(13),
-                                                                ),
+                                                                style: stDmSans(context, fontSize: context.sp(13)),
                                                               )
                                                             : Row(
                                                                 children: [
@@ -296,17 +238,10 @@ class RecentMatch extends StatelessWidget {
                                                                       context,
                                                                       fontSize: context.sp(15),
                                                                       fontWeight:
-                                                                          data.matchdetail?.win ==
-                                                                              data
-                                                                                  .teamlist?[0]
-                                                                                  .nameShort
+                                                                          data.matchdetail?.win == data.teamlist?[0].nameShort
                                                                           ? FontWeight.w600
                                                                           : FontWeight.w500,
-                                                                      color:
-                                                                          data.matchdetail?.win ==
-                                                                              data
-                                                                                  .teamlist?[0]
-                                                                                  .nameShort
+                                                                      color: data.matchdetail?.win == data.teamlist?[0].nameShort
                                                                           ? AppColor.winText
                                                                           : AppColor.subText,
                                                                     ),
@@ -316,29 +251,20 @@ class RecentMatch extends StatelessWidget {
                                                                     "  (",
                                                                     style: stBarlow(
                                                                       context,
-                                                                      color:
-                                                                          data.matchdetail?.win ==
-                                                                              data
-                                                                                  .teamlist?[0]
-                                                                                  .nameShort
+                                                                      color: data.matchdetail?.win == data.teamlist?[0].nameShort
                                                                           ? AppColor.winText
                                                                           : AppColor.subText,
                                                                     ),
                                                                   ),
                                                                   Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                      horizontal: context.sp(1),
-                                                                    ),
+                                                                    padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
                                                                     child: Text(
                                                                       "${firstInnings.last.overs}",
                                                                       style: stBarlow(
                                                                         context,
                                                                         fontSize: context.sp(13),
                                                                         color:
-                                                                            data.matchdetail?.win ==
-                                                                                data
-                                                                                    .teamlist?[0]
-                                                                                    .nameShort
+                                                                            data.matchdetail?.win == data.teamlist?[0].nameShort
                                                                             ? AppColor.winText
                                                                             : AppColor.subText,
                                                                       ),
@@ -348,11 +274,7 @@ class RecentMatch extends StatelessWidget {
                                                                     ")",
                                                                     style: stBarlow(
                                                                       context,
-                                                                      color:
-                                                                          data.matchdetail?.win ==
-                                                                              data
-                                                                                  .teamlist?[0]
-                                                                                  .nameShort
+                                                                      color: data.matchdetail?.win == data.teamlist?[0].nameShort
                                                                           ? AppColor.winText
                                                                           : AppColor.subText,
                                                                     ),
@@ -368,23 +290,14 @@ class RecentMatch extends StatelessWidget {
                                                           width: context.wp(50),
                                                           child: Row(
                                                             children: [
-                                                              showFlag(
-                                                                context: context,
-                                                                url:
-                                                                    data.teamlist?[1].teamImage ??
-                                                                    "",
-                                                              ),
+                                                              showFlag(context: context, url: data.teamlist?[1].teamImage ?? ""),
                                                               SizedBox(width: context.wp(3)),
                                                               Text(
                                                                 "${data.teamlist?[1].nameShort}",
                                                                 style: tDmSans(
                                                                   context,
                                                                   fontWeight: FontWeight.w600,
-                                                                  color:
-                                                                      data.matchdetail?.win ==
-                                                                          data
-                                                                              .teamlist?[1]
-                                                                              .nameShort
+                                                                  color: data.matchdetail?.win == data.teamlist?[1].nameShort
                                                                       ? AppColor.text
                                                                       : AppColor.subText,
                                                                 ),
@@ -395,10 +308,7 @@ class RecentMatch extends StatelessWidget {
                                                         secondInnings.isEmpty
                                                             ? Text(
                                                                 "Yet to Bet",
-                                                                style: stDmSans(
-                                                                  context,
-                                                                  fontSize: context.sp(13),
-                                                                ),
+                                                                style: stDmSans(context, fontSize: context.sp(13)),
                                                               )
                                                             : Row(
                                                                 children: [
@@ -408,17 +318,10 @@ class RecentMatch extends StatelessWidget {
                                                                       context,
                                                                       fontSize: context.sp(15),
                                                                       fontWeight:
-                                                                          data.matchdetail?.win ==
-                                                                              data
-                                                                                  .teamlist?[1]
-                                                                                  .nameShort
+                                                                          data.matchdetail?.win == data.teamlist?[1].nameShort
                                                                           ? FontWeight.w600
                                                                           : FontWeight.w500,
-                                                                      color:
-                                                                          data.matchdetail?.win ==
-                                                                              data
-                                                                                  .teamlist?[1]
-                                                                                  .nameShort
+                                                                      color: data.matchdetail?.win == data.teamlist?[1].nameShort
                                                                           ? AppColor.winText
                                                                           : AppColor.subText,
                                                                     ),
@@ -428,29 +331,20 @@ class RecentMatch extends StatelessWidget {
                                                                     "  (",
                                                                     style: stBarlow(
                                                                       context,
-                                                                      color:
-                                                                          data.matchdetail?.win ==
-                                                                              data
-                                                                                  .teamlist?[1]
-                                                                                  .nameShort
+                                                                      color: data.matchdetail?.win == data.teamlist?[1].nameShort
                                                                           ? AppColor.winText
                                                                           : AppColor.subText,
                                                                     ),
                                                                   ),
                                                                   Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                      horizontal: context.sp(1),
-                                                                    ),
+                                                                    padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
                                                                     child: Text(
                                                                       "${secondInnings.last.overs}",
                                                                       style: stBarlow(
                                                                         context,
                                                                         fontSize: context.sp(13),
                                                                         color:
-                                                                            data.matchdetail?.win ==
-                                                                                data
-                                                                                    .teamlist?[1]
-                                                                                    .nameShort
+                                                                            data.matchdetail?.win == data.teamlist?[1].nameShort
                                                                             ? AppColor.winText
                                                                             : AppColor.subText,
                                                                       ),
@@ -460,11 +354,7 @@ class RecentMatch extends StatelessWidget {
                                                                     ")",
                                                                     style: stBarlow(
                                                                       context,
-                                                                      color:
-                                                                          data.matchdetail?.win ==
-                                                                              data
-                                                                                  .teamlist?[1]
-                                                                                  .nameShort
+                                                                      color: data.matchdetail?.win == data.teamlist?[1].nameShort
                                                                           ? AppColor.winText
                                                                           : AppColor.subText,
                                                                     ),
@@ -488,19 +378,11 @@ class RecentMatch extends StatelessWidget {
                                                           width: context.wp(50),
                                                           child: Row(
                                                             children: [
-                                                              showFlag(
-                                                                context: context,
-                                                                url:
-                                                                    data.teamlist?[0].teamImage ??
-                                                                    "",
-                                                              ),
+                                                              showFlag(context: context, url: data.teamlist?[0].teamImage ?? ""),
                                                               SizedBox(width: context.wp(3)),
                                                               Text(
                                                                 "${data.teamlist?[0].nameShort}",
-                                                                style: tDmSans(
-                                                                  context,
-                                                                  fontWeight: FontWeight.w600,
-                                                                ),
+                                                                style: tDmSans(context, fontWeight: FontWeight.w600),
                                                               ),
                                                             ],
                                                           ),
@@ -508,10 +390,7 @@ class RecentMatch extends StatelessWidget {
                                                         firstInnings.isEmpty
                                                             ? Text(
                                                                 "Yet to Bet",
-                                                                style: stDmSans(
-                                                                  context,
-                                                                  fontSize: context.sp(13),
-                                                                ),
+                                                                style: stDmSans(context, fontSize: context.sp(13)),
                                                               )
                                                             : Row(
                                                                 children: [
@@ -520,43 +399,24 @@ class RecentMatch extends StatelessWidget {
                                                                     style: tBarlow(
                                                                       context,
                                                                       fontSize: context.sp(15),
-                                                                      fontWeight:
-                                                                          firstInnings
-                                                                                  .last
-                                                                                  .batting ==
-                                                                              true
+                                                                      fontWeight: firstInnings.last.batting == true
                                                                           ? FontWeight.w600
                                                                           : FontWeight.w500,
-                                                                      color:
-                                                                          firstInnings
-                                                                                  .last
-                                                                                  .batting ==
-                                                                              true
+                                                                      color: firstInnings.last.batting == true
                                                                           ? AppColor.text
                                                                           : AppColor.subText,
                                                                     ),
                                                                   ),
 
-                                                                  Text(
-                                                                    "  (",
-                                                                    style: stBarlow(context),
-                                                                  ),
+                                                                  Text("  (", style: stBarlow(context)),
                                                                   Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                      horizontal: context.sp(1),
-                                                                    ),
+                                                                    padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
                                                                     child: Text(
                                                                       "${firstInnings.last.overs}",
-                                                                      style: stBarlow(
-                                                                        context,
-                                                                        fontSize: context.sp(13),
-                                                                      ),
+                                                                      style: stBarlow(context, fontSize: context.sp(13)),
                                                                     ),
                                                                   ),
-                                                                  Text(
-                                                                    ")",
-                                                                    style: stBarlow(context),
-                                                                  ),
+                                                                  Text(")", style: stBarlow(context)),
                                                                 ],
                                                               ),
                                                       ],
@@ -568,19 +428,11 @@ class RecentMatch extends StatelessWidget {
                                                           width: context.wp(50),
                                                           child: Row(
                                                             children: [
-                                                              showFlag(
-                                                                context: context,
-                                                                url:
-                                                                    data.teamlist?[1].teamImage ??
-                                                                    "",
-                                                              ),
+                                                              showFlag(context: context, url: data.teamlist?[1].teamImage ?? ""),
                                                               SizedBox(width: context.wp(3)),
                                                               Text(
                                                                 "${data.teamlist?[1].nameShort}",
-                                                                style: tDmSans(
-                                                                  context,
-                                                                  fontWeight: FontWeight.w600,
-                                                                ),
+                                                                style: tDmSans(context, fontWeight: FontWeight.w600),
                                                               ),
                                                             ],
                                                           ),
@@ -588,10 +440,7 @@ class RecentMatch extends StatelessWidget {
                                                         secondInnings.isEmpty
                                                             ? Text(
                                                                 "Yet to Bet",
-                                                                style: stDmSans(
-                                                                  context,
-                                                                  fontSize: context.sp(13),
-                                                                ),
+                                                                style: stDmSans(context, fontSize: context.sp(13)),
                                                               )
                                                             : Row(
                                                                 children: [
@@ -600,43 +449,24 @@ class RecentMatch extends StatelessWidget {
                                                                     style: tBarlow(
                                                                       context,
                                                                       fontSize: context.sp(15),
-                                                                      fontWeight:
-                                                                          secondInnings
-                                                                                  .last
-                                                                                  .batting ==
-                                                                              true
+                                                                      fontWeight: secondInnings.last.batting == true
                                                                           ? FontWeight.w600
                                                                           : FontWeight.w500,
-                                                                      color:
-                                                                          secondInnings
-                                                                                  .last
-                                                                                  .batting ==
-                                                                              true
+                                                                      color: secondInnings.last.batting == true
                                                                           ? AppColor.text
                                                                           : AppColor.subText,
                                                                     ),
                                                                   ),
 
-                                                                  Text(
-                                                                    "  (",
-                                                                    style: stBarlow(context),
-                                                                  ),
+                                                                  Text("  (", style: stBarlow(context)),
                                                                   Padding(
-                                                                    padding: EdgeInsets.symmetric(
-                                                                      horizontal: context.sp(1),
-                                                                    ),
+                                                                    padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
                                                                     child: Text(
                                                                       "${secondInnings.last.overs}",
-                                                                      style: stBarlow(
-                                                                        context,
-                                                                        fontSize: context.sp(13),
-                                                                      ),
+                                                                      style: stBarlow(context, fontSize: context.sp(13)),
                                                                     ),
                                                                   ),
-                                                                  Text(
-                                                                    ")",
-                                                                    style: stBarlow(context),
-                                                                  ),
+                                                                  Text(")", style: stBarlow(context)),
                                                                 ],
                                                               ),
                                                       ],
@@ -668,8 +498,7 @@ class RecentMatch extends StatelessWidget {
                                                 style: stDmSans(context, fontSize: context.sp(12)),
                                               )
                                             : Text(
-                                                (data.matchdetail?.equation != null &&
-                                                        data.matchdetail!.equation!.isNotEmpty)
+                                                (data.matchdetail?.equation != null && data.matchdetail!.equation!.isNotEmpty)
                                                     ? data.matchdetail!.equation!
                                                     : (data.matchdetail?.venue?.name ?? ""),
                                                 maxLines: 1,

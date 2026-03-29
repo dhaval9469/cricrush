@@ -6,7 +6,7 @@ import 'package:encrypt/encrypt.dart' as encrypt;
 import 'package:flutter/material.dart';
 
 abstract class AppConfig {
-  static ValueNotifier<int> bottomIndex = ValueNotifier<int>(0);
+  static ValueNotifier<int> bottomIndex = ValueNotifier<int>(2);
 
   static String allN = 'ALL_N';
   static String lmaN = 'LMA_N';

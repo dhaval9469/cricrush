@@ -1,6 +1,7 @@
 import 'package:cricrush/module/home/model/all_nss_model.dart';
 import 'package:cricrush/module/tours/model/tours_details_model.dart';
 import 'package:cricrush/module/tours/service/tours_ser.dart';
+import 'package:cricrush/res/app_config.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -40,13 +41,15 @@ class ToursCtrl extends GetxController {
   RxList<TourSquadPlayers> tARList = <TourSquadPlayers>[].obs;
   RxList<TourSquadPlayers> tWkList = <TourSquadPlayers>[].obs;
 
-  Future<void> getAllTD({String? tourId, String? seriesId}) async {
+  Future<void> getAllTD({String? tourId, String? seriesId, bool silentRefresh = false}) async {
     try {
-      tDL.value = true;
-      tMatchData.value = null;
-      tTeamsList.clear();
-      tKeyStatsList.clear();
-      tPTList.clear();
+      if (!silentRefresh) {
+        tDL.value = true;
+        tMatchData.value = null;
+        tTeamsList.clear();
+        tKeyStatsList.clear();
+        tPTList.clear();
+      }
 
       final toursDetailModel = await ToursSer().allTD(tId: tourId, sId: seriesId);
       final bundle = toursDetailModel.iplBundle;
@@ -98,8 +101,10 @@ class ToursCtrl extends GetxController {
 
   @override
   void onInit() {
+    tourId.value = "${AppConfig.endPoint?.tourId}";
+    seriesId.value = "${AppConfig.endPoint?.seriesId}";
     getAllNSS();
-    getAllTD(tourId: '9935', seriesId: '13180');
+    getAllTD(tourId: tourId.value, seriesId: seriesId.value);
     super.onInit();
   }
 }
