@@ -16,13 +16,9 @@ class _BannerAdsState extends State<BannerAds> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {});
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    loadAd();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadAd();
+    });
   }
 
   Future<void> loadAd() async {

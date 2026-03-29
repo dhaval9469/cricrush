@@ -18,6 +18,7 @@ abstract class AppAssets {
   static final String itt = '${image}it_t.png';
   static final String ift = '${image}if_t.png';
   static final String mdf = '${image}mdf.png';
+  static final String noInternet = '${image}no_internet.png';
 
   static final String rTeam = '${icons}r_team.svg';
   static final String rBall = '${icons}r_ball.svg';

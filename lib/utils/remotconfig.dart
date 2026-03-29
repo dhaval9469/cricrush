@@ -45,7 +45,7 @@ class FirebaseRemoteConfigService {
   }
 
   Future<void> getInfoData() async {
-    AppConfig.unitIdModel = await _parseUnitId();
+    // AppConfig.unitIdModel = await _parseUnitId();
     AppConfig.endPoint = await _parseEndPoint();
 
     AppConfig.iv = remoteConfig.getString('iv_encrypt');

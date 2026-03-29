@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cricrush/ad_module/app_open.dart';
 import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/helper/connection_service.dart';
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/page/home.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
@@ -45,6 +46,7 @@ class _BottomPageState extends State<BottomPage> {
   void initState() {
     _setupAppStateListener();
     init();
+    ConnectionService.instance.listenForStatusChange(context);
     super.initState();
   }
 
@@ -228,5 +230,12 @@ class _BottomPageState extends State<BottomPage> {
         appOpenAdManager.loadAd();
       }
     });
+  }
+
+  @override
+  void dispose() {
+    ConnectionService.instance.cancelConnectionListener();
+    fgbgSubscription.cancel();
+    super.dispose();
   }
 }

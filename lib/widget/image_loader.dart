@@ -23,7 +23,7 @@ Widget showFlag({required BuildContext context, required String url, double bord
               width: width,
               child: Center(
                 child: CircularProgressIndicator.adaptive(
-                  strokeWidth: 2,
+                  strokeWidth: 1,
                   backgroundColor: AppColor.tDivider,
                   valueColor: AlwaysStoppedAnimation<Color>(AppColor.subText),
                 ),

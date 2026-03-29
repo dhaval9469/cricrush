@@ -15,9 +15,11 @@ class _LargeBannerAdState extends State<LargeBannerAd> {
   BannerAd? bannerAd;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    loadAd();
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      loadAd();
+    });
   }
 
   @override

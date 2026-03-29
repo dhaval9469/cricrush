@@ -1,11 +1,13 @@
 import 'dart:async';
 
 import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/helper/connection_service.dart';
 import 'package:cricrush/helper/local_storage_service.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/app_config.dart';
 import 'package:cricrush/res/textstyle.dart';
 import 'package:cricrush/utils/navigation.dart';
+import 'package:cricrush/utils/no_internet_popup.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/utils/routing.dart';
 import 'package:cricrush/widget/common_widgets.dart';
@@ -31,6 +33,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   void initState() {
     super.initState();
+    connection();
     loadBannerAd();
     loadInterstitialAds();
     startLoading();
@@ -103,10 +106,10 @@ class _SplashPageState extends State<SplashPage> {
               curve: Curves.easeInOutCubic,
               child: bannerAd != null
                   ? SizedBox(
-                width: bannerAd?.size.width.toDouble(),
-                height: bannerAd?.size.height.toDouble(),
-                child: AdWidget(ad: bannerAd!),
-              )
+                      width: bannerAd?.size.width.toDouble(),
+                      height: bannerAd?.size.height.toDouble(),
+                      child: AdWidget(ad: bannerAd!),
+                    )
                   : const SizedBox.shrink(),
             ),
           ),
@@ -146,7 +149,6 @@ class _SplashPageState extends State<SplashPage> {
     Interstitial.loadInterstitialAds();
   }
 
-
   void loadBannerAd() async {
     final ad = BannerAd(
       adUnitId: 'ca-app-pub-3940256099942544/6300978111',
@@ -185,6 +187,25 @@ class _SplashPageState extends State<SplashPage> {
       ),
     );
   }
+
+  Future<void> connection() async {
+    final hasConnection = await ConnectionService.instance.checkConnection();
+
+    if (!mounted) return;
+
+    if (!hasConnection) {
+      NoInternetPopup.show(
+        context,
+        onTryAgain: () {
+          loadBannerAd();
+          loadInterstitialAds();
+          startLoading();
+          connection();
+        },
+      );
+    }
+  }
+
   @override
   void dispose() {
     _timer?.cancel();
