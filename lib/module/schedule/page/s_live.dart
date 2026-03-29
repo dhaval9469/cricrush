@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:cricrush/ad_module/interstitial_ad.dart';
 import 'package:cricrush/ad_module/native/native_banner.dart';
-import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/model/all_match_model.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
@@ -64,24 +61,16 @@ class SLiveTab extends StatelessWidget {
                         width: context.wp(18),
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
-                          color: homeCtrl.lsMatchTypes.value == e.mt
-                              ? AppColor.sTabColor
-                              : AppColor.card,
+                          color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.card,
                           borderRadius: BorderRadius.circular(8),
-                          border: Border.all(
-                            color: homeCtrl.lsMatchTypes.value == e.mt
-                                ? AppColor.sTabColor
-                                : AppColor.tDivider,
-                          ),
+                          border: Border.all(color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.sTabColor : AppColor.tDivider),
                         ),
                         child: Text(
                           "${e.mt}",
                           style: stDmSans(
                             context,
                             height: 0.9,
-                            color: homeCtrl.lsMatchTypes.value == e.mt
-                                ? AppColor.text
-                                : AppColor.subText,
+                            color: homeCtrl.lsMatchTypes.value == e.mt ? AppColor.text : AppColor.subText,
                           ),
                           strutStyle: const StrutStyle(height: 1, forceStrutHeight: true),
                         ),
@@ -113,46 +102,40 @@ class SLiveTab extends StatelessWidget {
                               mcHeader(context: context, tourName: "${data.tourName}"),
                               ListView.separated(
                                 shrinkWrap: true,
-                                padding: EdgeInsets.symmetric(vertical: context.hp(1.3)),
                                 itemCount: data.live?.length ?? 0,
                                 itemBuilder: (context, index) {
                                   final matchData = data.live?[index];
-                                  return padding(
-                                    context,
-                                    isHorizontal: true,
-                                    Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        GestureDetector(
-                                          behavior: HitTestBehavior.translucent,
-                                          onTap: () {
-                                            Interstitial.showInterstitialByCount();
+                                  return Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      GestureDetector(
+                                        behavior: HitTestBehavior.translucent,
+                                        onTap: () {
+                                          Interstitial.showInterstitialByCount();
 
-                                            mdCtrl.seriesId.value = data.seriesId ?? "";
-                                            mdCtrl.tourId.value = data.tourId ?? "";
-                                            passLiveData(matchData);
-                                            Navigation.pushNamed(Routes.matchDetails);
-                                            lmwService.openMatch(
-                                              matchData?.matchdetail?.match?.code ?? "",
-                                            );
-                                          },
+                                          mdCtrl.seriesId.value = data.seriesId ?? "";
+                                          mdCtrl.tourId.value = data.tourId ?? "";
+                                          passLiveData(matchData);
+                                          Navigation.pushNamed(Routes.matchDetails);
+                                          lmwService.openMatch(matchData?.matchdetail?.match?.code ?? "");
+                                        },
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(horizontal: context.wp(3), vertical: context.hp(1)),
                                           child: sLive(context: context, data: matchData),
                                         ),
-                                        seriesIndex == 0 && index == 0
-                                            ? NativeBannerB(
-                                                radius: 10,
-                                                padding: EdgeInsets.only(top: context.hp(0.5)),
-                                              )
-                                            : const SizedBox.shrink(),
-                                      ],
-                                    ),
+                                      ),
+                                      seriesIndex == 0 && index == 0
+                                          ? NativeBannerD(height: 65, isSecond: false, isDividerHeight: 1)
+                                          : const SizedBox.shrink(),
+                                    ],
                                   );
                                 },
                                 separatorBuilder: (BuildContext context, int index) {
-                                  return padding(
-                                    context,
-                                    isHorizontal: true,
-                                    Divider(color: AppColor.cDivider, height: context.hp(2.3)),
+                                  return Padding(
+                                    padding: seriesIndex == 0 && index == 0
+                                        ? EdgeInsets.zero
+                                        : EdgeInsets.symmetric(horizontal: context.wp(3)),
+                                    child: Divider(color: AppColor.cDivider, height: context.hp(0.5)),
                                   );
                                 },
                               ),

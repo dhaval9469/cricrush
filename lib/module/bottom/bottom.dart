@@ -2,7 +2,10 @@ import 'dart:async';
 
 import 'package:cricrush/ad_module/app_open.dart';
 import 'package:cricrush/ad_module/interstitial_ad.dart';
+import 'package:cricrush/module/home/ctrl/home_ctrl.dart';
 import 'package:cricrush/module/home/page/home.dart';
+import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
+import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/schedule/page/schedule.dart';
 import 'package:cricrush/module/setting/page/setting.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
@@ -27,8 +30,13 @@ class BottomPage extends StatefulWidget {
 }
 
 class _BottomPageState extends State<BottomPage> {
+  final homeCtrl = Get.put(HomeCtrl());
+  final lmwService = Get.put(LMWService());
+  final matchDetailsCtrl = Get.put(MatchDetailsCtrl());
   final tourCtrl = Get.find<ToursCtrl>();
+
   final pages = [HomePage(), SchedulePage(), ToursPage(), Setting()];
+
   late StreamSubscription<FGBGType> fgbgSubscription;
   final AppOpenAdManager appOpenAdManager = AppOpenAdManager();
   AppUpdateInfo? _updateInfo;
@@ -53,9 +61,7 @@ class _BottomPageState extends State<BottomPage> {
         if (didPop) {
           return;
         } else {
-          if (AppConfig.bottomIndex.value == 1 ||
-              AppConfig.bottomIndex.value == 2 ||
-              AppConfig.bottomIndex.value == 3) {
+          if (AppConfig.bottomIndex.value == 1 || AppConfig.bottomIndex.value == 2 || AppConfig.bottomIndex.value == 3) {
             AppConfig.bottomIndex.value = 0;
           } else {
             Navigation.pushNamed(Routes.exitPage);
@@ -81,7 +87,7 @@ class _BottomPageState extends State<BottomPage> {
                   splashFactory: NoSplash.splashFactory,
                 ),
                 child: Container(
-                  height: context.hp(12),
+                  height: context.hp(12.5),
                   decoration: BoxDecoration(color: AppColor.card),
                   child: BottomNavigationBar(
                     backgroundColor: AppColor.card,

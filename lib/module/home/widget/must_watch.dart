@@ -3,6 +3,7 @@ import 'package:cricrush/module/home/ctrl/sorts_ctrl.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/analytics_service.dart';
 import 'package:cricrush/utils/navigation.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/utils/routing.dart';
@@ -45,6 +46,7 @@ class MustWatch extends StatelessWidget {
                       Spacer(),
                       GestureDetector(
                         onTap: () {
+                          AnalyticsService().logScreen('SortScreen');
                           Interstitial.showInterstitialByCount();
                           sortsCtrl.sortIndex.value = 0;
                           sortsCtrl.shortsList = tourCtrl.shortsList;

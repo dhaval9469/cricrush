@@ -40,7 +40,7 @@ class TKeyState extends StatelessWidget {
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal: context.wp(3),
-                          vertical: context.hp(1.2),
+                          vertical: context.hp(1.3),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,

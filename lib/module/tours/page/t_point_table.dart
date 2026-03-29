@@ -33,7 +33,7 @@ class TPointTable extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       groupName == null || groupName == ""
-                          ? SizedBox(height: context.hp(1.5))
+                          ? SizedBox.shrink()
                           : Padding(
                               padding: EdgeInsets.only(left: context.wp(3), top: context.hp(1), bottom: context.hp(0.6)),
                               child: Text(
@@ -68,7 +68,7 @@ class TPointTable extends StatelessWidget {
                                 ],
                               ),
                             ),
-                            Divider(color: AppColor.cDivider, height: 0),
+                            Divider(color: AppColor.cDivider, height: context.hp(1)),
                             ListView.separated(
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
@@ -124,7 +124,7 @@ class TPointTable extends StatelessWidget {
                                 );
                               },
                               separatorBuilder: (context, index) {
-                                return Divider(color: AppColor.cDivider, height: 0);
+                                return Divider(color: AppColor.cDivider, height: context.hp(1));
                               },
                             ),
                           ],

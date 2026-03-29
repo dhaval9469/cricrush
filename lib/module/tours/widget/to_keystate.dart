@@ -27,8 +27,8 @@ class TOKeyState extends StatelessWidget {
                   padding: EdgeInsets.only(
                     left: context.wp(4),
                     right: context.wp(2),
-                    bottom: context.hp(0.7),
-                    top: context.hp(1.5),
+                    bottom: context.hp(0.8),
+                    top: context.hp(1.7),
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,7 +48,7 @@ class TOKeyState extends StatelessWidget {
                   ),
                 ),
                 SizedBox(
-                  height: context.hp(11.3),
+                  height: context.hp(10),
                   child: ListView.separated(
                     shrinkWrap: true,
                     itemCount: tourCtrl.tKeyStatsList.length,
@@ -64,44 +64,71 @@ class TOKeyState extends StatelessWidget {
                       }
 
                       return GestureDetector(
-                        onTap: () {
-                          Interstitial.showInterstitialByCount();
-                          Navigation.pushNamed(Routes.playerState, arg: data);
-                        },
-                        child: Container(
-                          height: context.hp(11.3),
-                          width: context.wp(50),
-                          decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(12)),
-                          child: Column(
-                            children: [
-                              Padding(
-                                padding: EdgeInsetsGeometry.only(
-                                  left: context.wp(1.5),
-                                  right: context.wp(2),
-                                  top: context.hp(0.5),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              onTap: () {
+                                Interstitial.showInterstitialByCount();
+                                Navigation.pushNamed(Routes.playerState, arg: data);
+                              },
+                              child: Container(
+                                height: context.hp(10),
+                                width: context.wp(50),
+                                decoration: BoxDecoration(color: AppColor.card, borderRadius: BorderRadius.circular(12)),
+                                child: Column(
                                   children: [
-                                    showPlayer(
-                                      context: context,
-                                      url: e.playerImage ?? '',
-                                      w: context.wp(3.5),
-                                      h: context.wp(3.5),
-                                      r: 1,
-                                    ),
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.end,
+                                    Padding(
+                                      padding: EdgeInsetsGeometry.only(
+                                        left: context.wp(1.5),
+                                        right: context.wp(2),
+                                        top: context.hp(0.5),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          Text(
-                                            data.statName ?? "",
-                                            overflow: TextOverflow.ellipsis,
-                                            style: stBarlow(context, fontSize: context.sp(15)),
+                                          showPlayer(
+                                            context: context,
+                                            url: e.playerImage ?? '',
+                                            w: context.wp(3.5),
+                                            h: context.wp(3.5),
+                                            r: 1,
                                           ),
-                                          Text(
-                                            e.trilling ?? "",
-                                            style: tDmSans(context, fontSize: context.sp(20), fontWeight: FontWeight.bold),
+                                          Expanded(
+                                            child: Column(
+                                              crossAxisAlignment: CrossAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  data.statName ?? "",
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: stBarlow(context, fontSize: context.sp(15)),
+                                                ),
+                                                Text(
+                                                  e.trilling ?? "",
+                                                  style: tDmSans(context, fontSize: context.sp(20), fontWeight: FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Divider(color: AppColor.tDivider, height: 0),
+                                    Padding(
+                                      padding: EdgeInsetsGeometry.only(
+                                        left: context.wp(2),
+                                        right: context.wp(2),
+                                        top: context.hp(0.5),
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.only(right: context.wp(5)),
+                                            child: Text(e.teamShortName ?? "", style: stBarlow(context)),
+                                          ),
+                                          Flexible(
+                                            child: Text(
+                                              "${e.playerName}",
+                                              overflow: TextOverflow.ellipsis,
+                                              style: tBarlow(context),
+                                            ),
                                           ),
                                         ],
                                       ),
@@ -109,26 +136,7 @@ class TOKeyState extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              Divider(color: AppColor.tDivider, height: 0),
-                              Padding(
-                                padding: EdgeInsetsGeometry.only(left: context.wp(2), right: context.wp(2), top: context.hp(0.5)),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsets.only(right: context.wp(5)),
-                                      child: Text(e.teamShortName ?? "", style: stBarlow(context)),
-                                    ),
-                                    Flexible(
-                                      child: Text("${e.playerName}", overflow: TextOverflow.ellipsis, style: tBarlow(context)),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      );
+                            );
                     },
                     separatorBuilder: (BuildContext context, int index) {
                       return SizedBox(width: context.wp(2.5));

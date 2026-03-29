@@ -11,6 +11,7 @@ import 'package:cricrush/module/match_details/page/scoreboard.dart';
 import 'package:cricrush/module/match_details/service/lmw_ser.dart';
 import 'package:cricrush/module/match_details/widget/md_widget.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
+import 'package:cricrush/module/tours/service/tour_ws_service.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -33,6 +34,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   final mdCtrl = Get.find<MatchDetailsCtrl>();
   final lmwService = Get.find<LMWService>();
   final tourCtrl = Get.find<ToursCtrl>();
+  final tourWsService = Get.find<TourWSService>();
   final homeCtrl = Get.find<HomeCtrl>();
 
   @override
@@ -55,6 +57,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   }
 
   Future<void> callData() async {
+    tourWsService.disconnectSocket(clearData: false);
     final matchId = mdCtrl.matchId.value;
     await Future.wait([
       mdCtrl.getScoreBoard(matchId),
@@ -95,11 +98,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                   children: [
                     Text(
                       mdCtrl.teamASName.value,
-                      style: tDmSans(
-                        context,
-                        fontWeight: FontWeight.w600,
-                        fontSize: context.sp(16),
-                      ),
+                      style: tDmSans(context, fontWeight: FontWeight.w600, fontSize: context.sp(16)),
                     ),
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: context.wp(2)),
@@ -107,11 +106,7 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
                     ),
                     Text(
                       mdCtrl.teamBSName.value,
-                      style: tDmSans(
-                        context,
-                        fontWeight: FontWeight.w600,
-                        fontSize: context.sp(16),
-                      ),
+                      style: tDmSans(context, fontWeight: FontWeight.w600, fontSize: context.sp(16)),
                     ),
                   ],
                 ),
@@ -122,39 +117,34 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
               ),
             ],
           ),
-          bottom: TabBar(
-            isScrollable: true,
-            tabAlignment: TabAlignment.center,
-            controller: tabController,
-            labelStyle: tabLabelTextStyle(context),
-            unselectedLabelStyle: tabUnLabelTextStyle(context),
-            indicatorSize: TabBarIndicatorSize.label,
-            padding: EdgeInsets.zero,
-            labelPadding: EdgeInsets.symmetric(horizontal: context.wp(1)),
-            indicatorColor: AppColor.sTabColor,
-            dividerColor: AppColor.tDivider,
-            tabs: [
-              commonTab(context, title: "Match Info"),
-              commonTab(context, title: "Scoreboard"),
-              commonTab(context, title: "Live"),
-              commonTab(context, title: "Commentary"),
-              commonTab(context, title: "Playing XI"),
-              commonTab(context, title: "Overs"),
-              commonTab(context, title: "Point Table"),
-            ],
+          bottom: PreferredSize(
+            preferredSize: Size.fromHeight(context.hp(3.5)),
+            child: TabBar(
+              isScrollable: true,
+              tabAlignment: TabAlignment.center,
+              controller: tabController,
+              labelStyle: tabLabelTextStyle(context),
+              unselectedLabelStyle: tabUnLabelTextStyle(context),
+              indicatorSize: TabBarIndicatorSize.label,
+              padding: EdgeInsets.zero,
+              labelPadding: EdgeInsets.symmetric(horizontal: context.wp(1)),
+              indicatorColor: AppColor.sTabColor,
+              dividerColor: AppColor.tDivider,
+              tabs: [
+                commonTab(context, title: "Match Info"),
+                commonTab(context, title: "Scoreboard"),
+                commonTab(context, title: "Live"),
+                commonTab(context, title: "Commentary"),
+                commonTab(context, title: "Playing XI"),
+                commonTab(context, title: "Overs"),
+                commonTab(context, title: "Point Table"),
+              ],
+            ),
           ),
         ),
         body: TabBarView(
           controller: tabController,
-          children: [
-            MatchInfo(),
-            Scoreboard(),
-            LmDetails(),
-            Commentary(),
-            PlayingXi(),
-            Overs(),
-            PointTable(),
-          ],
+          children: [MatchInfo(), Scoreboard(), LmDetails(), Commentary(), PlayingXi(), Overs(), PointTable()],
         ),
         bottomNavigationBar: SafeArea(child: BannerAds()),
       ),
@@ -164,7 +154,8 @@ class _MatchDetailsState extends State<MatchDetails> with SingleTickerProviderSt
   void handleExit() {
     lmwService.disconnectSocket();
     homeCtrl.getAllMatch(silentRefresh: true);
-    tourCtrl.getAllTD(tourId: tourCtrl.tourId.value, seriesId: tourCtrl.seriesId.value);
+    tourWsService.connectTourSocket(tourWsService.tourId.value, tourWsService.seriesId.value);
+    tourCtrl.getAllTD(tourId: tourCtrl.tourId.value, seriesId: tourCtrl.seriesId.value, silentRefresh: true);
     Navigation.pop();
   }
 }

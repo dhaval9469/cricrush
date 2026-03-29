@@ -443,7 +443,7 @@ Widget nextUpCoMatch(BuildContext context, WSLMUPCMatch? data) {
           ),
           Divider(color: AppColor.tDivider, height: context.hp(1.5)),
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: context.wp(2.5)),
+            padding: EdgeInsets.symmetric(horizontal: context.wp(2.5),vertical: context.hp(0.5)),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -494,7 +494,7 @@ Widget finishMatch(BuildContext context, WSLMMatchesFinal? data) {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: context.hp(0.3)),
+          SizedBox(height: context.hp(0.4)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.wp(2.5)),
             child: Row(

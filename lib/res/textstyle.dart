@@ -95,7 +95,7 @@ TextStyle tabLabelTextStyle(BuildContext context) {
 }
 
 TextStyle tabUnLabelTextStyle(BuildContext context) {
-  return stBarlow(context, fontSize: context.sp(14));
+  return stBarlow(context, fontSize: context.sp(15));
 }
 
 TextStyle scHeaderStyle(BuildContext context) => stDmSans(context, fontSize: context.sp(13));

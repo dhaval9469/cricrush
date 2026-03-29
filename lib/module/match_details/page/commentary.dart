@@ -2,6 +2,7 @@ import 'package:cricrush/ad_module/native/native_banner.dart';
 import 'package:cricrush/module/match_details/ctrl/match_details_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/analytics_service.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/widget/loader.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,12 @@ class Commentary extends StatefulWidget {
 class _CommentaryState extends State<Commentary> {
   final mdCtrl = Get.find<MatchDetailsCtrl>();
 
+
+  @override
+  void initState() {
+    AnalyticsService().logScreen('CommentaryScreen');
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(

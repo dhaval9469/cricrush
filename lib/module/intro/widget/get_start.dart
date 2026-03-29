@@ -1,3 +1,4 @@
+import 'package:cricrush/ad_module/native/small_native.dart';
 import 'package:cricrush/res/app_assets.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
@@ -30,7 +31,9 @@ class GetStarted extends StatelessWidget {
               letterSpacing: 2,
             ),
           ),
+          SizedBox(height: context.hp(6)),
           Expanded(child: Center(child: Image.asset(AppAssets.fIntro))),
+          SizedBox(height: context.hp(6)),
           Padding(
             padding: EdgeInsets.symmetric(horizontal: context.wp(7)),
             child: Text(
@@ -66,9 +69,10 @@ class GetStarted extends StatelessWidget {
               ),
             ),
           ),
-          SizedBox(height: context.hp(10)),
+          SizedBox(height: context.hp(3)),
         ],
       ),
+      bottomNavigationBar: SafeArea(child: SmallNative()),
     );
   }
 }

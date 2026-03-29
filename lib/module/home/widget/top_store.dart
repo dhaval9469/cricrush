@@ -24,11 +24,8 @@ class TopStore extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(1), top: context.hp(2.5)),
-                  child: Text(
-                    "Top Store",
-                    style: stDmSans(context, color: AppColor.text, fontWeight: FontWeight.w600),
-                  ),
+                  padding: EdgeInsets.only(left: context.wp(4), bottom: context.hp(1), top: context.hp(1.5)),
+                  child: Text("Top Store", style: tDmSans(context, fontWeight: FontWeight.w600)),
                 ),
 
                 ListView.separated(
@@ -52,7 +49,7 @@ class TopStore extends StatelessWidget {
                         children: [
                           Hero(
                             tag: data.image ?? "defaultHeroTag",
-                            child: showPlayer(context: context, url: data.image ?? "", h: context.wp(4), w: context.wp(6), r: 4),
+                            child: showPlayer(context: context, url: data.image ?? "", h: context.wp(4.5), w: context.wp(7), r: 4),
                           ),
                           SizedBox(width: context.wp(4)),
                           Flexible(

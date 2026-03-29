@@ -8,6 +8,7 @@ import 'package:cricrush/module/home/widget/top_store.dart';
 import 'package:cricrush/module/tours/ctrl/tours_ctrl.dart';
 import 'package:cricrush/res/app_color.dart';
 import 'package:cricrush/res/textstyle.dart';
+import 'package:cricrush/utils/analytics_service.dart';
 import 'package:cricrush/utils/responsive.dart';
 import 'package:cricrush/widget/custom_appbar.dart';
 import 'package:cricrush/widget/loader.dart';
@@ -25,6 +26,12 @@ class _HomePageState extends State<HomePage> {
   final sortsCtrl = Get.put(SortsCtrl());
   final homeCtrl = Get.find<HomeCtrl>();
   final tourCtrl = Get.find<ToursCtrl>();
+
+  @override
+  void initState() {
+    super.initState();
+    AnalyticsService().logScreen('HomeScreen');
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +54,7 @@ class _HomePageState extends State<HomePage> {
                   children: [
                     RecentMatch(),
                     Padding(
-                      padding: EdgeInsets.only(top: context.hp(1)),
+                      padding: EdgeInsets.only(top: context.hp(1.3)),
                       child: Center(child: LargeBannerAd()),
                     ),
                     MustWatch(),
