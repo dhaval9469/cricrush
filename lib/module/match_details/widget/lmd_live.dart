@@ -88,7 +88,10 @@ class _LmdLiveState extends State<LmdLive> {
               : Container(
                   decoration: BoxDecoration(color: AppColor.card),
                   child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: context.hp(1.5), horizontal: context.wp(3)),
+                    padding: EdgeInsets.symmetric(
+                      vertical: context.hp(1.5),
+                      horizontal: context.wp(3),
+                    ),
                     child: Column(
                       children: [
                         Row(
@@ -98,7 +101,12 @@ class _LmdLiveState extends State<LmdLive> {
                               children: [
                                 Column(
                                   children: [
-                                    showFlag(context: context, url: mdCtrl.teamAFlag.value, w: context.wp(2), h: context.wp(2)),
+                                    showFlag(
+                                      context: context,
+                                      url: mdCtrl.teamAFlag.value,
+                                      w: context.wp(2),
+                                      h: context.wp(2),
+                                    ),
                                     SizedBox(height: context.hp(0.5)),
                                     Text(
                                       mdCtrl.teamASName.value,
@@ -106,8 +114,12 @@ class _LmdLiveState extends State<LmdLive> {
                                       maxLines: 1,
                                       style: tBarlow(
                                         context,
-                                        fontWeight: firstInnings.last.batting == true ? FontWeight.w600 : FontWeight.w500,
-                                        color: firstInnings.last.batting == true ? AppColor.text : AppColor.subText,
+                                        fontWeight: firstInnings.last.batting == true
+                                            ? FontWeight.w600
+                                            : FontWeight.w500,
+                                        color: firstInnings.last.batting == true
+                                            ? AppColor.text
+                                            : AppColor.subText,
                                       ),
                                     ),
                                   ],
@@ -124,21 +136,36 @@ class _LmdLiveState extends State<LmdLive> {
                                             style: tBarlow(
                                               context,
                                               fontSize: context.sp(18),
-                                              fontWeight: firstInnings.last.batting == true ? FontWeight.w600 : FontWeight.w500,
-                                              color: firstInnings.last.batting == true ? AppColor.text : AppColor.subText,
+                                              fontWeight: firstInnings.last.batting == true
+                                                  ? FontWeight.w600
+                                                  : FontWeight.w500,
+                                              color: firstInnings.last.batting == true
+                                                  ? AppColor.text
+                                                  : AppColor.subText,
                                             ),
                                           ),
                                           Row(
                                             children: [
-                                              Text("(", style: stBarlow(context, fontSize: context.sp(15))),
+                                              Text(
+                                                "(",
+                                                style: stBarlow(context, fontSize: context.sp(15)),
+                                              ),
                                               Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: context.sp(1),
+                                                ),
                                                 child: Text(
                                                   "${firstInnings.last.overs}",
-                                                  style: stBarlow(context, fontSize: context.sp(15)),
+                                                  style: stBarlow(
+                                                    context,
+                                                    fontSize: context.sp(15),
+                                                  ),
                                                 ),
                                               ),
-                                              Text(")", style: stBarlow(context, fontSize: context.sp(15))),
+                                              Text(
+                                                ")",
+                                                style: stBarlow(context, fontSize: context.sp(15)),
+                                              ),
                                             ],
                                           ),
                                         ],
@@ -148,7 +175,10 @@ class _LmdLiveState extends State<LmdLive> {
                             Expanded(
                               child: Padding(
                                 padding: EdgeInsets.symmetric(horizontal: context.wp(2)),
-                                child: SizedBox(height: context.hp(6), child: showBallDetails(context, showBall)),
+                                child: SizedBox(
+                                  height: context.hp(6),
+                                  child: showBallDetails(context, showBall),
+                                ),
                               ),
                             ),
                             Row(
@@ -164,21 +194,36 @@ class _LmdLiveState extends State<LmdLive> {
                                             style: tBarlow(
                                               context,
                                               fontSize: context.sp(18),
-                                              fontWeight: secondInnings.last.batting == true ? FontWeight.w600 : FontWeight.w500,
-                                              color: secondInnings.last.batting == true ? AppColor.text : AppColor.subText,
+                                              fontWeight: secondInnings.last.batting == true
+                                                  ? FontWeight.w600
+                                                  : FontWeight.w500,
+                                              color: secondInnings.last.batting == true
+                                                  ? AppColor.text
+                                                  : AppColor.subText,
                                             ),
                                           ),
                                           Row(
                                             children: [
-                                              Text("(", style: stBarlow(context, fontSize: context.sp(15))),
+                                              Text(
+                                                "(",
+                                                style: stBarlow(context, fontSize: context.sp(15)),
+                                              ),
                                               Padding(
-                                                padding: EdgeInsets.symmetric(horizontal: context.sp(1)),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: context.sp(1),
+                                                ),
                                                 child: Text(
                                                   "${secondInnings.last.overs}",
-                                                  style: stBarlow(context, fontSize: context.sp(15)),
+                                                  style: stBarlow(
+                                                    context,
+                                                    fontSize: context.sp(15),
+                                                  ),
                                                 ),
                                               ),
-                                              Text(")", style: stBarlow(context, fontSize: context.sp(15))),
+                                              Text(
+                                                ")",
+                                                style: stBarlow(context, fontSize: context.sp(15)),
+                                              ),
                                             ],
                                           ),
                                         ],
@@ -186,15 +231,24 @@ class _LmdLiveState extends State<LmdLive> {
                                 SizedBox(width: context.wp(3)),
                                 Column(
                                   children: [
-                                    showFlag(context: context, url: mdCtrl.teamBFlag.value, w: context.wp(2), h: context.wp(2)),
+                                    showFlag(
+                                      context: context,
+                                      url: mdCtrl.teamBFlag.value,
+                                      w: context.wp(2),
+                                      h: context.wp(2),
+                                    ),
                                     SizedBox(height: context.hp(0.5)),
                                     Text(
                                       mdCtrl.teamBSName.value,
                                       overflow: TextOverflow.ellipsis,
                                       style: tBarlow(
                                         context,
-                                        fontWeight: secondInnings.last.batting == true ? FontWeight.w600 : FontWeight.w500,
-                                        color: secondInnings.last.batting == true ? AppColor.text : AppColor.subText,
+                                        fontWeight: secondInnings.last.batting == true
+                                            ? FontWeight.w600
+                                            : FontWeight.w500,
+                                        color: secondInnings.last.batting == true
+                                            ? AppColor.text
+                                            : AppColor.subText,
                                       ),
                                     ),
                                   ],
@@ -207,9 +261,15 @@ class _LmdLiveState extends State<LmdLive> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(isSecondBatting ? rrText : crrText, style: stBarlow(context, fontSize: context.sp(13))),
+                            Text(
+                              isSecondBatting ? rrText : crrText,
+                              style: stBarlow(context, fontSize: context.sp(13)),
+                            ),
                             widget.data?.status?.toLowerCase() == "match ended"
-                                ? Text("${widget.data?.equation}", style: stBarlow(context, fontSize: context.sp(13)))
+                                ? Text(
+                                    "${widget.data?.equation}",
+                                    style: stBarlow(context, fontSize: context.sp(13)),
+                                  )
                                 : widget.data?.status?.toLowerCase() != "play in progress"
                                 ? Text(
                                     "${widget.data?.status}",
@@ -221,7 +281,10 @@ class _LmdLiveState extends State<LmdLive> {
                                     ),
                                   )
                                 : SizedBox.shrink(),
-                            Text(isSecondBatting ? crrText : rrText, style: stBarlow(context, fontSize: context.sp(13))),
+                            Text(
+                              isSecondBatting ? crrText : rrText,
+                              style: stBarlow(context, fontSize: context.sp(13)),
+                            ),
                           ],
                         ),
                       ],
@@ -249,7 +312,11 @@ class _LmdLiveState extends State<LmdLive> {
                       children: [
                         Text(
                           getOrdinal(overDetails?.overNumber ?? 0),
-                          style: stBarlow(context, fontSize: context.sp(15), fontWeight: FontWeight.w600),
+                          style: stBarlow(
+                            context,
+                            fontSize: context.sp(15),
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
 
                         SizedBox(width: context.wp(2.5)),
@@ -259,7 +326,9 @@ class _LmdLiveState extends State<LmdLive> {
                             final ballData = endOver[index];
 
                             return Padding(
-                              padding: EdgeInsets.only(right: index == endOver.length - 1 ? 0 : context.wp(1.8)),
+                              padding: EdgeInsets.only(
+                                right: index == endOver.length - 1 ? 0 : context.wp(1.8),
+                              ),
                               child: Container(
                                 height: context.hp(3),
                                 width: context.wp(8),
@@ -298,8 +367,13 @@ class _LmdLiveState extends State<LmdLive> {
                         SizedBox(width: context.wp(2)),
 
                         Text(
-                          "= ${overDetails?.totalRuns ?? 0}",
-                          style: tDmSans(context, fontSize: context.sp(18), fontWeight: FontWeight.w600, color: AppColor.text),
+                          "  =  ${overDetails?.totalRuns}",
+                          style: tDmSans(
+                            context,
+                            fontSize: context.sp(18),
+                            fontWeight: FontWeight.w600,
+                            color: AppColor.text,
+                          ),
                         ),
 
                         if (ovDetailsIndex != (widget.data?.overDetails?.length ?? 0) - 1) ...[
@@ -320,8 +394,8 @@ class _LmdLiveState extends State<LmdLive> {
             ),
           ),
 
-          SmallNativeB(padding: EdgeInsets.only(top:context.hp(1.3) ),),
-          
+          SmallNativeB(padding: EdgeInsets.only(top: context.hp(1.3))),
+
           widget.data?.matchdetail?[0].batsmen?.isEmpty ?? true
               ? const SizedBox.shrink()
               : Padding(
@@ -406,8 +480,16 @@ class _LmdLiveState extends State<LmdLive> {
                       Container(
                         decoration: BoxDecoration(color: AppColor.card),
                         child: Padding(
-                          padding: EdgeInsets.only(top: context.hp(1), bottom: context.hp(1), left: context.sp(7)),
-                          child: Row(children: [Text("Last 6 Balls Momentum", style: scHeaderStyle(context))]),
+                          padding: EdgeInsets.only(
+                            top: context.hp(1),
+                            bottom: context.hp(1),
+                            left: context.sp(7),
+                          ),
+                          child: Row(
+                            children: [
+                              Text("Last 6 Balls Momentum", style: scHeaderStyle(context)),
+                            ],
+                          ),
                         ),
                       ),
                       ListView.separated(
@@ -431,7 +513,11 @@ class _LmdLiveState extends State<LmdLive> {
                                     Expanded(
                                       child: Text(
                                         ((cData?.defaultCommentary?.split(':').length ?? 0) > 1
-                                            ? cData!.defaultCommentary!.split(':').sublist(1).join(':').trim()
+                                            ? cData!.defaultCommentary!
+                                                  .split(':')
+                                                  .sublist(1)
+                                                  .join(':')
+                                                  .trim()
                                             : cData?.defaultCommentary ?? ""),
                                         style: stBarlow(context, fontSize: context.sp(13)),
                                       ),
@@ -467,10 +553,16 @@ class _LmdLiveState extends State<LmdLive> {
                                             "${cData?.runs}",
                                             style: stDmSans(
                                               context,
-                                              color: cData?.runs == "4" || cData?.runs == "6" || cData?.runs == "W"
+                                              color:
+                                                  cData?.runs == "4" ||
+                                                      cData?.runs == "6" ||
+                                                      cData?.runs == "W"
                                                   ? AppColor.text
                                                   : AppColor.subText,
-                                              fontWeight: cData?.runs == "4" || cData?.runs == "6" || cData?.runs == "W"
+                                              fontWeight:
+                                                  cData?.runs == "4" ||
+                                                      cData?.runs == "6" ||
+                                                      cData?.runs == "W"
                                                   ? FontWeight.w900
                                                   : FontWeight.w600,
                                             ),
@@ -479,7 +571,10 @@ class _LmdLiveState extends State<LmdLive> {
                                       ),
                                     ),
                                     Expanded(
-                                      child: Text('${cData?.commentary}', style: stBarlow(context, fontSize: context.sp(13))),
+                                      child: Text(
+                                        '${cData?.commentary}',
+                                        style: stBarlow(context, fontSize: context.sp(13)),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -648,7 +743,12 @@ class _LmdLiveState extends State<LmdLive> {
               key: ValueKey(ball),
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: tDmSans(context, fontSize: context.sp(22), fontWeight: FontWeight.bold, color: AppColor.text),
+              style: tDmSans(
+                context,
+                fontSize: context.sp(22),
+                fontWeight: FontWeight.bold,
+                color: AppColor.text,
+              ),
             ),
           ),
         );
@@ -665,7 +765,12 @@ class _LmdLiveState extends State<LmdLive> {
         key: ValueKey(text),
         text,
         textAlign: TextAlign.center,
-        style: tDmSans(context, fontSize: fontSize ?? context.sp(35), fontWeight: FontWeight.bold, color: color ?? AppColor.text),
+        style: tDmSans(
+          context,
+          fontSize: fontSize ?? context.sp(35),
+          fontWeight: FontWeight.bold,
+          color: color ?? AppColor.text,
+        ),
       ),
     );
   }
